@@ -63,11 +63,12 @@ li:first-child {
   padding: 14px 21px 0px 0px;
 }
 
-li a:hover, li a:active {
+li a:hover, li a:active, li a.on {
   color: rgb(68,92,142);
   background: rgb(252,252,252);
   border-radius: 2px;
 }
+
 #open {
   padding: 0;
   margin: 0;
@@ -82,8 +83,9 @@ li a:hover, li a:active {
 #shoe {
   padding: 6px;
   margin: 0;
-  height: 100px;
+  height: 64px;
   width: 100%;
   bottom: 0;
   background: rgb(36,36,45);
+  text-align: center;
 }
