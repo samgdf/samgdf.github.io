@@ -35,7 +35,7 @@ h2 {
   font-family: 'Lato', sans-serif;
   padding: 3px 10px 10px 14px;
   margin: 0px 0 0 14%;
-  max-width: 900px;
+  max-width: 890px;
   float: left;
 }
 p {
@@ -59,16 +59,11 @@ li {
   line-height: 18px;
   text-transform: uppercase;
 }
-li:first-child {
-  padding: 14px 21px 0px 0px;
-}
-
 li a:hover, li a:active, li a.on {
   color: rgb(68,92,142);
   background: rgb(252,252,252);
   border-radius: 2px;
 }
-
 #open {
   padding: 0;
   margin: 0;
@@ -88,4 +83,56 @@ li a:hover, li a:active, li a.on {
   bottom: 0;
   background: rgb(36,36,45);
   text-align: center;
+}
+a.minimal {
+  color: rgb(168,192,242);
+}
+
+li.downu {
+  text-decoration: none;
+  color: rgb(252,252,252);
+  text-align: center;
+}
+
+li.downu:hover, li.downu:active {
+  color: rgb(68,92,142);
+  background: rgb(252,252,252);
+  border-radius: 2px;
+  padding: 2px;
+  margin: 12px 58px 0px -2px;
+}
+
+li.con {
+  font-size: 14px;
+  line-height: 14px;
+  padding: 6px;
+  margin: 0;
+  text-align: center;
+  align: center;
+  width: 450px;
+}
+
+label {
+  cursor: pointer;
+}
+
+#menu-toggle {
+  display: none; /* hide the checkbox */
+}
+
+#menu {
+  display: none;
+}
+
+#menu-toggle:checked + #menu {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: 450px;
+  height: 156px;
+  overflow: hidden;
+  margin: 2px 0px 0px 0px;
+  padding: 0;
+  background-color: rgb(68,92,142);
+  color: rgb(252,252,252);
 }
