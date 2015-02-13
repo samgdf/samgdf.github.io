@@ -1,0 +1,91 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+ol, ul, li {
+  list-style: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+body {
+   margin: 0;
+   padding: 0;
+   background: rgb(68,92,142);
+}
+h1 {
+  font-size: 45px;
+  line-height: 45px;
+  color: rgb(239,239,239);
+  background: rgb(68,92,142);
+  font-family: 'Lato', sans-serif;
+  padding: 3px 6px 6px 10px;
+  margin: 260px 0 0 14%;
+  width: 340px;
+  float: left;
+}
+h2 {
+  font-size: 28px;
+  line-height: 28px;
+  color: rgb(239,239,239);
+  background: rgb(68,92,142);
+  font-family: 'Lato', sans-serif;
+  padding: 3px 10px 10px 14px;
+  margin: 0px 0 0 14%;
+  max-width: 900px;
+  float: left;
+}
+p {
+  font-size: 16px;
+  line-height: 16px;
+  color: rgb(252,252,252);
+  font-family: 'Lato', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: rgb(252,252,252);
+  padding: 0px 4px 0px 4px;
+}
+li {
+  padding: 14px 60px 0px 0px;
+  float: right;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+li:first-child {
+  padding: 14px 21px 0px 0px;
+}
+
+li a:hover, li a:active, li a.on {
+  color: rgb(68,92,142);
+  background: rgb(252,252,252);
+  border-radius: 2px;
+}
+
+#open {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+  background: url(cover.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#shoe {
+  padding: 6px;
+  margin: 0;
+  height: 64px;
+  width: 100%;
+  bottom: 0;
+  background: rgb(36,36,45);
+  text-align: center;
+}
