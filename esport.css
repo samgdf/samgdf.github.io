@@ -136,3 +136,60 @@ label {
   background-color: rgb(68,92,142);
   color: rgb(252,252,252);
 }
+
+.logo {
+  position: absolute;
+  padding: 0;
+  margin: 5px 0 0 22px;
+}
+
+@media screen and (max-width: 710px) {
+  .logo {
+  position: absolute;
+  padding: 0;
+  margin: 5px 0 0 5px;
+  }
+  h1 {
+    font-size: 30px;
+    line-height: 30px;
+    color: rgb(239,239,239);
+    background: rgb(68,92,142);
+    font-family: 'Lato', sans-serif;
+    padding: 3px 6px 6px 10px;
+    margin: 200px 0 0 0;
+    width: 340px;
+    float: left;
+  }
+  h2 {
+    font-size: 18px;
+    line-height: 18px;
+    color: rgb(239,239,239);
+    background: rgb(68,92,142);
+    font-family: 'Lato', sans-serif;
+    padding: 3px 10px 10px 14px;
+    margin: 0px 0 0 0;
+    max-width: 100%;
+    float: left;
+  }
+  #menu-toggle:checked + #menu {
+    position: absolute;
+    z-index: 3;
+    display: block;
+    width: 300px;
+    height: 240px;
+    overflow: hidden;
+    margin: 2px 0px 0px -150px;
+    padding: 0;
+    background-color: rgb(68,92,142);
+    color: rgb(252,252,252);
+  }
+  li.con {
+    font-size: 14px;
+    line-height: 14px;
+    padding: 6px;
+    margin: 0;
+    text-align: center;
+    align: center;
+    width: 100%;
+  }
+}
