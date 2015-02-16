@@ -75,6 +75,9 @@ li a:hover, li a:active, li a.on {
   -o-background-size: cover;
   background-size: cover;
 }
+#main{
+  position: absolute;
+}
 #shoe {
   padding: 6px;
   margin: 0;
