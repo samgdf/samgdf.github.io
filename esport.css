@@ -50,6 +50,8 @@ a {
   text-decoration: none;
   color: rgb(252,252,252);
   padding: 0px 4px 0px 4px;
+  z-index: 5;
+  position: relative;
 }
 li {
   padding: 14px 60px 0px 0px;
@@ -58,11 +60,13 @@ li {
   font-size: 18px;
   line-height: 18px;
   text-transform: uppercase;
+
 }
 li a:hover, li a:active, li a.on {
   color: rgb(68,92,142);
   background: rgb(252,252,252);
   border-radius: 2px;
+  position: relative;
 }
 #open {
   padding: 0;
@@ -74,6 +78,7 @@ li a:hover, li a:active, li a.on {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  position: relative;
 }
 #main{
   position: absolute;
@@ -95,6 +100,8 @@ li.downu {
   text-decoration: none;
   color: rgb(252,252,252);
   text-align: center;
+  position: relative;
+  z-index: 5;
 }
 
 li.downu:hover, li.downu:active {
