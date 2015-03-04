@@ -20,18 +20,18 @@ h1 {
   font-size: 45px;
   line-height: 45px;
   color: rgb(239,239,239);
-  background: rgb(68,92,142);
+  background: rgb(36,36,45);
   font-family: 'Lato', sans-serif;
   padding: 3px 6px 6px 10px;
   margin: 260px 0 0 14%;
-  width: 350px;
+  width: 360px;
   float: left;
 }
 h2 {
   font-size: 28px;
   line-height: 28px;
   color: rgb(239,239,239);
-  background: rgb(68,92,142);
+  background: rgb(36,36,45);
   font-family: 'Lato', sans-serif;
   padding: 3px 10px 10px 14px;
   margin: 0px 0 0 14%;
@@ -198,18 +198,11 @@ label {
   h1 {
     font-size: 35px;
     line-height: 35px;
-    color: rgb(239,239,239);
-    background: rgb(68,92,142);
-    font-family: 'Lato', sans-serif;
     padding: 3px 6px 6px 10px;
     margin: 200px 0 0px 0;
     width: 340px;
-    float: left;
   }
   h2 {
-    color: rgb(239,239,239);
-    background: rgb(68,92,142);
-    font-family: 'Lato', sans-serif;
     padding: 3px 10px 10px 14px;
     margin: 0px 0 0 0;
     max-width: 100%;
