@@ -9,6 +9,9 @@
       <meta name="author" content="Sam Goldfield">
       <link rel="shortcut icon" href="favicon.png">
     <link rel="stylesheet" href="esport.css" type="text/css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/easy-responsive-tabs.css " />
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/easyResponsiveTabs.js"></script>
   </head>
     <body>
       <div id="teams">
@@ -27,13 +30,127 @@
         <li><a href="index.html">Home</a></li>
         </ul>
 		<div id="main">
-        	<h1>Coming Soon</h1>
-        	<h2>A team of highly trained cells evolved over millions of years is working on this!</h2>
+      <div id="parentVerticalTab">
+          <ul class="resp-tabs-list hor_1">
+              <li>Starcraft 2</li>
+              <li>Counter Strike GO</li>
+              <li>Hearthstone</li>
+              <li>DOTA 2 D1</li>
+              <li>DOTA 2 D2</li>
+              <li>League of Legends</li>
+          </ul>
+          <div class="resp-tabs-container hor_1">
+              <div>
+                  <p>Fil "Carnage" Donskoy / Zerg</p>
+                  <p>Alex "Fleet" Yasenchak / Zerg</p>
+                  <p>Adam "AdamBomb" Baugh / Terran</p>
+                  <p>Brandon "PhoenixHawk" Hengchua / Terran</p>
+                  <p>Ronald "Phlash" Luyo / Terran</p>
+                  <p>Dean "Dean" Alphonso / Zerg</p>
+                  <p>Seo Bo "TZLFluffy" Shim / Zerg</p>
+                  <p>Zaid "Fox" Qumei / Zerg</p>
+              </div>
+              <div>
+                  <p>Edward "✁" Chen / Rifler</p>
+                  <p>Samuel "etree" Fang	/ Awper/Rifler</p>
+                  <p>Edmund "KobeWest" Law	/ Rifler</p>
+                  <p>Dylan "Black Label" Stankowitz	/ Entry/Rifler</p>
+                  <p>Kenneth "TMP koosta" Suen	/ Awper/In game leader</p>
+                  <p>Manny "drill_sergeant" Montero	/ Entry/Rifler</p>
+                  <p>Christopher "Chris" Ng	/ Rifler</p>
+                  <p>Zaid "AriA" Qumei	/ Coordinator</p>
+              </div>
+              <div>
+                  <p>Samuel "Blackwolf" Gluzberg</p>
+                  <p>Eric "reggi" Song</p>
+                  <p>Thomas "Ristaccia" Kang</p>
+                  <p>Alex "muu" Um</p>
+                  <p>Jacob "jpengland" England</p>
+                  <p>Casey "nori" Weber</p>
+                  <p>Andrew "Shwayze" Flick</p>
+                  <p>Brian "jax" Searls</p>
+                  <p>Zaid "Snow" Qumei</p>
+              </div>
+              <div>
+                  <p>Dan "Striderxd" Louie	/ 1</p>
+                  <p>Xi "Pumpkin." Chen	/ 2/Captain</p>
+                  <p>Brian "♥ Sugar Glider ♥" Blaney	/ 3</p>
+                  <p>Nico "Banapple" Cuitino	/ 4</p>
+                  <p>Harrison "blueballs" Truong	/ 5</p>
+                  <p>Jeremy "Crazy" Karl	/ 3</p>
+              </div>
+              <div>
+                  <p>Lon Hau "Lonhau" Pang	/ 1</p>
+                  <p>Diego "Stormsoldat" Corea	/ 2/Captain</p>
+                  <p>Garrett "Imagination Man" Luzadder	/ 3</p>
+                  <p>Michael "Andra" Marcelian /	4</p>
+                  <p>Tae-Min "Tames" Kim /	5</p>
+                  <p>Michael "Trippy" Sagliocco /	2</p>
+                  <p>Chenyu "CCY" Cao /	2</p>
+                  <p>Gleb "EatClenTrenHardAnavarGiveup" Kalmykov	/ 3</p>
+                  <p>Kevin "Heartlesskev" Sandoval	/ 4</p>
+              </div>
+              <div>
+                  <p>Billy "Billyboss" Yu	/ Top</p>
+                  <p>Brendon "TET Miracle" Kang	/ Jungle/Captain</p>
+                  <p>Jin "Pianist" Park /	Mid</p>
+                  <p>Dj "Sarenu" Park	/ ADC</p>
+                  <p>Ray "Ray Xu" Xu	/ Support</p>
+              </div>
+          </div>
+      </div>
 		</div>
       </div>
       <div id="shoe">
         <p>All video games © their respective owners 2015. Rutgers eSports © 2015. Reduced by <a class="minimal" href="http://twitter.com/samgdf">Sam Goldfield</a>.</p>
       </div>
+      <!--Plug-in Initialisation-->
+    	<script type="text/javascript">
+        $(document).ready(function() {
+            //Horizontal Tab
+            $('#parentHorizontalTab').easyResponsiveTabs({
+                type: 'default', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true, // 100% fit in a container
+                tabidentify: 'hor_1', // The tab groups identifier
+                activate: function(event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#nested-tabInfo');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+
+            // Child Tab
+            $('#ChildVerticalTab_1').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true,
+                tabidentify: 'ver_1', // The tab groups identifier
+                activetab_bg: '#445c8e', // background color for active tabs in this group
+                inactive_bg: '#F5F5F5', // background color for inactive tabs in this group
+                active_border_color: '#445c8e', // border color for active tabs heads in this group
+                active_content_border_color: '#445c8e' // border color for active tabs contect in this group so that it matches the tab head border
+            });
+
+            //Vertical Tab
+            $('#parentVerticalTab').easyResponsiveTabs({
+                type: 'vertical', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true, // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                tabidentify: 'hor_1', // The tab groups identifier
+                activate: function(event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#nested-tabInfo2');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+        });
+    </script>
     </body>
     <link href='http://fonts.googleapis.com/css?family=Lato:400' rel='stylesheet' type='text/css'>
 </html>
