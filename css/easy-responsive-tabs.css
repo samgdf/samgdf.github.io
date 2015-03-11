@@ -77,7 +77,7 @@ h2.resp-tab-title:last-child {
 /*-----------Vertical tabs-----------*/
 .resp-vtabs ul.resp-tabs-list {
     float: left;
-    width: 30%;
+    width: 40%;
 }
 
 .resp-vtabs .resp-tabs-list li {
@@ -93,8 +93,8 @@ h2.resp-tab-title:last-child {
     background-color: rgb(36,36,45);
     border: 1px solid #445c8e;
     float: left;
-    width: 68%;
-    min-height: 316px;
+    width: 58%;
+    min-height: 354px;
     border-radius: 4px;
     clear: none;
 }

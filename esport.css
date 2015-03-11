@@ -21,7 +21,7 @@ h1 {
   background: rgb(36,36,45);
   font-family: 'Lato', sans-serif;
   padding: 3px 6px 6px 10px;
-  margin: 260px 0 0 14%;
+  margin: 0px;
   width: 360px;
   float: left;
 }
@@ -32,7 +32,7 @@ h2 {
   background: rgb(36,36,45);
   font-family: 'Lato', sans-serif;
   padding: 3px 10px 10px 14px;
-  margin: 0px 0 0 14%;
+  margin: 0px;
   max-width: 890px;
   float: left;
 }
@@ -81,9 +81,15 @@ li a:hover, li a:active, li a.on {
   margin: 0;
   height: 100vh;
   width: 100%;
-  background: rgb(68,92,142);
+  background: url(cover.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
-
+.wow {
+  padding: 260px 0 0 14%;
+}
 #main{
   position: absolute;
   margin-top: 145px;
@@ -162,12 +168,8 @@ label {
 /* Queries */
 
 @media screen and (max-width: 1100px) {
-  h1 {
-    margin: 260px 0 0 9%;
-  }
-  h2 {
-    max-width: 621px;
-    margin: 0 0 0 9%;
+  .wow {
+    padding: 260px 0 0 9%;
   }
   #menu-toggle:checked + #menu {
     position: absolute;
@@ -198,11 +200,14 @@ label {
   padding: 0;
   margin: 5px 0 0 5px;
   }
+  .wow {
+    padding: 210px 0 0;
+  }
   h1 {
     font-size: 35px;
     line-height: 35px;
     padding: 3px 6px 6px 10px;
-    margin: 200px 0 0px 0;
+    margin: 0;
     width: 340px;
   }
   h2 {
