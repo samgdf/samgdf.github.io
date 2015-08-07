@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>Slice 1</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M0,3.16601562 L0,18.1660156 L18,18.1660156 L18,3.16601562 L0,3.16601562 Z M1,4 L1,17 L17,17 L17,4 L1,4 Z" id="Rectangle-4" fill="#BBBCBF" sketch:type="MSShapeGroup"></path>
+        <path d="M5.99703014,0 C5.4463856,0 5,0.437881351 5,1.00292933 L5,5.99707067 C5,6.55097324 5.45303631,7 5.99703014,7 L12.0029699,7 C12.5536144,7 13,6.56211865 13,5.99707067 L13,1.00292933 C13,0.449026756 12.5469637,0 12.0029699,0 L5.99703014,0 Z M6.99077797,1 C6.44358641,1 6,1.45097518 6,1.99077797 L6,6.00922203 C6,6.55641359 6.45097518,7 6.99077797,7 L11.009222,7 C11.5564136,7 12,6.54902482 12,6.00922203 L12,1.99077797 C12,1.44358641 11.5490248,1 11.009222,1 L6.99077797,1 Z" id="Rectangle-5" fill="#BBBCBF" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>
