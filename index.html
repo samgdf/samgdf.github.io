@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+<html>
+
   <head>
-    <title>Rutgers eSports</title>
+
     <meta charset="utf-8">
-       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0", minimal-ui>
-      <meta name="description" content="rutgers esports e sports video games starcraft dota smash bros melee 1 2 3 4 cs go hearthstone lol league tespa">
-      <meta name="author" content="Sam Goldfield">
-      <link rel="shortcut icon" href="favicon.png">
-    <link rel="stylesheet" href="esport.css" type="text/css" media="screen">
+    <title>Sam — Showcase</title>
+   		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   	 	<meta name="viewport" content="width=device-width, initial-scale=1.0", minimal-ui>
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<meta name="mobile-web-app-capable" content="yes" />
+			<meta name="apple-mobile-web-app-status-bar-style" content="#332f30" />
+			<meta name="theme-color" content="#251823">
+    	<meta name="description" content="Rutgers.io is the personal website of Sam Goldfield.">
+      <link rel="icon" href="favicon.ico" type="image/x-icon">
+      <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+      <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/fontello.css" type="text/css" media="screen">
+    <script>
+    function randomize() {
+      document.getElementById('logo').style.color = randomColors();
+    }
+    // random colors - taken from here:
+    // http://www.paulirish.com/2009/random-hex-color-code-snippets/
+    function randomColors() {
+      return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
+    </script>
   </head>
-    <body>
-      <div id="open">
-        <img class="logo" src="logo.png" height="100px" width="115px">
-        <ul>
-        <label for="menu-toggle"><li class="downu" class="first">Contact<input type="checkbox" id="menu-toggle"/></label>
-<ul id="menu">
-<li class="con">DOTA 2 / Garrett - Exnagu59@gmail.com</li>
-<li class="con">Starcraft 2 / Adam - abaugh005@gmail.com</li>
-<li class="con">Hearthstone / Eric - eric.song@rutgers.edu</li>
-<li class="con">Smash Bros. Melee / Sam - samjacobs169@gmail.com</li>
-<li class="con">CS: GO / Albert - Rutgers.counterstrike@gmail.com</li>
-<li class="con">LoL / Malav - league.rutgers@gmail.com</li>
-</ul></li>
-        <li><a href="teams.html">Teams</a></li>
-        <li><a class="on" href="#">Home</a></li>
-        </ul>
-        <div class="wow">
-        	<h1>Rutgers eSports</h1>
-        	<h2>A large community focused on providing a welcoming environment in competitive gaming.</h2>
-        </div>
-      </div>
-      <div id="shoe">
-        <p>All video games © their respective owners 2015. Rutgers eSports © 2015. Reduced by <a class="minimal" href="http://twitter.com/samgdf">Sam Goldfield</a>.</p>
-      </div>
-    </body>
-    <link href='http://fonts.googleapis.com/css?family=Lato:400' rel='stylesheet' type='text/css'>
+
+  <body>
+
+    <div id="menu">
+      <button onclick="randomize()"><i class="icon-logo" id="logo"></i></button>
+      <ul>
+        <li><a class="active" href="index.html">Showcase</a></li>
+        <li><a href="thoughts.html">Thoughts</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="#">sam@rutgers.io</a></li>
+      </ul>
+    </div>
+
+    <div class="plus">
+      <h1>At <a href="#" target="_blank">Wolfram Research</a>, I educated consumers about Wolfram's platform through technical workshops.</h1>
+    </div>
+
+    <div class="plus">
+      <p>This page is still a work in progress. Check back <a href="#">soon</a>.</p>
+    </div>
+
+    <div class="sea">
+      <p>Other companies that I had the pleasure to work with: <a href="#" target="_blank">VICE Media</a>, <a href="#" target="_blank">Rutgers Computing Services</a>, & <a href="#" target="_blank">Medical Aesthetics of NJ</a>.</p>
+      <p>Personal projects of mine include <a href="#" target="_blank">this website</a>, <a href="#" target="_blank">Rutgers Course Sniper</a>, & my involvement in <a href="#" target="_blank">Hack RU</a>.</p>
+    </div>
+
+    <div id="footer">
+      <small>Copyright 2016 Sam Goldfield. Thanks to my family, Fontello, and Paul Irish. All Rights Reserved. <a href="https://twitter.com/samgdf"><i class="icon-twitter-squared"></i></a><a href="https://www.snapchat.com/add/samgoldfield"><i class="icon-snapchat-square"></i></a><a href="https://www.linkedin.com/in/samgdf"><i class="icon-linkedin-squared"></i></a><a href="https://github.com/samgdf"><i class="icon-git-squared"></i></a></small>
+  </div>
+
+  </body>
+
 </html>
