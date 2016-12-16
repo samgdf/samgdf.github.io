@@ -19,7 +19,7 @@ ol, ul, li {
 body {
  	margin: 0;
  	padding: 0;
-  background: #FAFAFA;
+  background: #f6f3ed;
   font-family: 'Work Sans', sans-serif;
   font-weight: 400;
   font-size: 100%;
@@ -109,7 +109,7 @@ button {
   width: 100%;
   height: 79px;
  margin: auto;
- background: #F5F5F5;
+ background: #f6f3ed;
  background-repeat: no-repeat;
  background-position: top 18px left 33px;
  margin-bottom: 8px;
@@ -146,7 +146,7 @@ button {
 
 .sea {
   float: left;
-  background: #FAFAFA;
+  background: #f6f3ed;
   width: 100%;
   margin: 0;
   padding: 4px 25px 0 25px;
@@ -155,7 +155,7 @@ button {
 
 .plus {
   float: left;
-  background: #FAFAFA;
+  background: #f6f3ed;
   width: 50%;
   margin: 0;
   padding: 4px 25px 4px 25px;
