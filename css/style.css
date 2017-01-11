@@ -32,6 +32,7 @@ p {
   color: inherit;
   margin: 0;
   padding: 0;
+  max-width: 610px;
 }
 
 a {
@@ -55,7 +56,8 @@ a:hover, a:active {
 h1 {
   font-size: 23px;
   font-weight: 400;
-  margin: 0;
+  margin: auto;
+  padding: 0;
 }
 
 small {
@@ -79,9 +81,10 @@ small a:hover, small a:active {
 
 img {
   background-repeat: no-repeat;
-  width: 160px;
-  height: 160px;
+  width: 100vw;
+  height: auto;
   margin: auto;
+  padding: 0;
   float: left;
 }
 
@@ -118,9 +121,10 @@ button {
  height: 79px;
  margin: auto;
  background: #f6f3ed;
+ padding-left: 36px;
  background-repeat: no-repeat;
  background-position: top 18px left 33px;
- margin-bottom: 8px;
+ margin-bottom: 10px;
  top: 0;
  position: fixed;
 }
@@ -145,7 +149,6 @@ button {
 
 #menu li:last-child {
   float: right;
-  margin-right: -11px;
 }
 
 #menu a:hover, #menu a:active, #menu a.active {
@@ -157,11 +160,11 @@ button {
 
 .sea {
   float: left;
-  background: inherit;
+  background: #FFFCFC;
   width: 100%;
-  margin: 0;
-  padding: 0px;
-  height: auto;
+  margin: 0px;
+  padding: 10px 36px 0 54px;
+  height: 100vh;
 }
 
 .plus {

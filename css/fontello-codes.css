@@ -1,9 +1,12 @@
 
-.icon-right-hand:before { content: '\e800'; } /* '' */
+.icon-key:before { content: '\e800'; } /* '' */
 .icon-logo:before { content: '\e801'; } /* '' */
 .icon-linkedin-squared:before { content: '\e802'; } /* '' */
 .icon-leaf:before { content: '\e803'; } /* '' */
+.icon-folder:before { content: '\f115'; } /* '' */
 .icon-git-squared:before { content: '\f1d2'; } /* '' */
-.icon-soccer-ball:before { content: '\f1e3'; } /* '' */
+.icon-soccer:before { content: '\f1e3'; } /* '' */
 .icon-snapchat-square:before { content: '\f2ad'; } /* '' */
+.icon-envelope:before { content: '\f2b7'; } /* '' */
+.icon-user:before { content: '\f2c0'; } /* '' */
 .icon-twitter-squared:before { content: '\f304'; } /* '' */
