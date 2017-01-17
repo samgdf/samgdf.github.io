@@ -32,12 +32,11 @@ p {
   color: inherit;
   margin: 0;
   padding: 0;
-  max-width: 610px;
 }
 
 a {
-  -webkit-transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-  transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  -webkit-transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 0.1 s cubic-bezier(0.42, 0, 0.58, 1);
   background-color: inherit;
   color: #345CCD;
 	font-size: inherit;
@@ -45,12 +44,19 @@ a {
   text-decoration: none;
 }
 
-a:hover, a:active {
-  -webkit-transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-  transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+a:hover {
+  border-radius: 3px;
+  -webkit-transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
   background-color: #251823;
   color: #f6f3ed;
 
+}
+
+a:active {
+  border-radius: 3px;
+  background-color: #52354D;
+  color: #f6f3ed;
 }
 
 h1 {
@@ -74,8 +80,13 @@ small a {
   color: #345CCD;
 }
 
-small a:hover, small a:active {
+small a:hover {
   color: #251823;
+  background: none;
+}
+
+small a:active {
+  color: #52354D;
   background: none;
 }
 
@@ -141,7 +152,7 @@ button {
   font-size: inherit;
   line-height: 23px;
   margin: 25px 36px 0 0;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 1px;
   padding: 2px;
   background-color: inherit;
@@ -151,8 +162,15 @@ button {
   float: right;
 }
 
-#menu a:hover, #menu a:active, #menu a.active {
+#menu a:hover, #menu a.active {
+  border-radius: 3px;
   background-color: #251823;
+  color: #f6f3ed;
+}
+
+#menu a:active {
+  border-radius: 3px;
+  background-color: #52354D;
   color: #f6f3ed;
 }
 
@@ -160,7 +178,7 @@ button {
 
 .sea {
   float: left;
-  background: #FFFCFC;
+  background: inherit;
   width: 100%;
   margin: 0px;
   padding: 10px 36px 0 54px;
@@ -194,9 +212,10 @@ button {
 @media (max-width: 640px) {
 @viewport {
   width: auto;
-  }
-
-#menu ul {
-  display: none;
 }
+
+#footer {
+  padding: 0 54px 0 54px;
+}
+
 }
