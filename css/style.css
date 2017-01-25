@@ -20,7 +20,7 @@ body {
  	margin: 0;
  	padding: 0;
   background: #f6f3ed;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Helvetica Neue', serif;
   font-weight: 400;
   font-size: 100%;
   color: #251823;
@@ -51,7 +51,6 @@ a:hover {
   transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
   background-color: #251823;
   color: #f6f3ed;
-
 }
 
 a:active {
@@ -104,7 +103,7 @@ button {
   float: left;
   width: auto;
   height: 79px;
-  margin: 0px 30px 0 0;
+  margin: 0px 0px 0 0;
   font-size: 48px;
   line-height: 48px;
   border: none;
@@ -117,15 +116,15 @@ button {
 
 /* fontello */
 @font-face {
-      font-family: 'fontello';
-      src: url('./font/fontello.eot?68631172');
-      src: url('./font/fontello.eot?68631172#iefix') format('embedded-opentype'),
-           url('./font/fontello.woff?68631172') format('woff'),
-           url('./font/fontello.ttf?68631172') format('truetype'),
-           url('./font/fontello.svg?68631172#fontello') format('svg');
-      font-weight: normal;
-      font-style: normal;
-    }
+  font-family: 'fontello';
+  src: url('./font/fontello.eot?68631172');
+  src: url('./font/fontello.eot?68631172#iefix') format('embedded-opentype'),
+  url('./font/fontello.woff?68631172') format('woff'),
+  url('./font/fontello.ttf?68631172') format('truetype'),
+  url('./font/fontello.svg?68631172#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 #menu {
  float: left;
@@ -212,10 +211,6 @@ button {
 @media (max-width: 640px) {
 @viewport {
   width: auto;
-}
-
-p {
-  text-align: justify;
 }
 
 #menu {
