@@ -101,7 +101,7 @@ img {
 
 button {
   float: left;
-  width: auto;
+  width: 60px;
   height: 79px;
   margin: 0px 0px 0 0;
   font-size: 48px;
@@ -136,7 +136,6 @@ button {
  background-repeat: no-repeat;
  background-position: top 18px left 33px;
  margin-bottom: 10px;
- top: 0;
  position: fixed;
 }
 
@@ -212,6 +211,10 @@ button {
 @viewport {
   width: auto;
 }
+
+#menu {
+ background-position: top 18px left 18px;
+ }
 
 #menu {
  padding-left: 0px;
