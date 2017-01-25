@@ -101,7 +101,7 @@ img {
 
 button {
   float: left;
-  width: 68px;
+  width: 79px;
   height: 79px;
   margin: 0px 0px 0 0;
   font-size: 48px;
@@ -215,10 +215,11 @@ button {
 
 #menu {
  padding-left: 0px;
+ background-position: top 18px left 0px;
 }
 
 #menu li a {
-  margin: 25px 13px 0 0;
+  margin: 25px 15px 0 0;
 }
 
 p {
