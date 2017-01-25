@@ -101,12 +101,12 @@ img {
 
 button {
   float: left;
-  width: auto;
+  width: 79px;
   height: 79px;
-  margin: 0px 0px 0 0;
   font-size: 48px;
   line-height: 48px;
   margin: 0;
+  padding: 0;
   border: none;
   background-color: transparent;
   overflow: hidden;
@@ -213,17 +213,27 @@ button {
   width: auto;
 }
 
+p {
+  text-align: justify;
+}
+
+button {
+  float: left;
+  width: 79px;
+  height: 79px;
+  padding: 0;
+  font-size: 48px;
+  line-height: 48px;
+  margin: 0;
+}
+
 #menu {
  padding-left: 0px;
  background-position: top 18px left 0px;
 }
 
 #menu li a {
-  margin: 25px 15px 0 -18px;
-}
-
-p {
-  text-align: justify;
+  margin: 25px 15px 0 0;
 }
 
 .sea {
