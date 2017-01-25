@@ -101,11 +101,12 @@ img {
 
 button {
   float: left;
-  width: 60px;
+  width: 68px;
   height: 79px;
   margin: 0px 0px 0 0;
   font-size: 48px;
   line-height: 48px;
+  margin: 0;
   border: none;
   background-color: transparent;
   overflow: hidden;
@@ -213,15 +214,15 @@ button {
 }
 
 #menu {
- background-position: top 18px left 18px;
- }
-
-#menu {
  padding-left: 0px;
 }
 
 #menu li a {
   margin: 25px 13px 0 0;
+}
+
+p {
+  text-align: justify;
 }
 
 .sea {
