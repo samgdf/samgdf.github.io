@@ -32,6 +32,7 @@ p {
   color: inherit;
   margin: 0;
   padding: 0;
+  max-width: 1000px;
 }
 
 a {
@@ -141,7 +142,6 @@ button {
 }
 
 #menu ul {
-  margin: 0 0 0 118px;
   overflow: hidden;
 }
 
@@ -182,7 +182,7 @@ button {
   width: 100%;
   margin: 0px;
   padding: 10px 36px 0 54px;
-  height: 100vh;
+  height: 100%;
 }
 
 .plus {
@@ -214,8 +214,24 @@ button {
   width: auto;
 }
 
+p {
+  text-align: justify;
+}
+
+#menu {
+ padding-left: 0px;
+}
+
+#menu li a {
+  margin: 25px 13px 0 0;
+}
+
+.sea {
+  padding: 0 18px 0 18px;
+}
+
 #footer {
-  padding: 0 54px 0 54px;
+  padding: 0 18px 0 18px;
 }
 
 }
