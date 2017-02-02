@@ -20,7 +20,7 @@ body {
  	margin: 0;
  	padding: 0;
   background: #f6f3ed;
-  font-family: 'Helvetica Neue', serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 100%;
   color: #251823;
@@ -39,7 +39,7 @@ a {
   -webkit-transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
   transition: all 0.1 s cubic-bezier(0.42, 0, 0.58, 1);
   background-color: inherit;
-  color: #345CCD;
+  color: #5472ab;
 	font-size: inherit;
 	line-height: inherit;
   text-decoration: none;
@@ -61,7 +61,7 @@ a:active {
 
 h1 {
   font-size: 23px;
-  font-weight: 400;
+  font-weight: 700;
   margin: auto;
   padding: 0;
 }
@@ -77,7 +77,7 @@ small {
 
 small a {
   font-size: 18px;
-  color: #345CCD;
+  color: #5472ab;
 }
 
 small a:hover {
@@ -92,9 +92,9 @@ small a:active {
 
 img {
   background-repeat: no-repeat;
-  width: 100vw;
-  height: auto;
-  margin: auto;
+  width: 160px;
+  height: 250px;
+  margin: 0;
   padding: 0;
   float: left;
 }
@@ -155,6 +155,7 @@ button {
   letter-spacing: 1px;
   padding: 2px;
   background-color: inherit;
+  font-weight: 700;
 }
 
 #menu li:last-child {
