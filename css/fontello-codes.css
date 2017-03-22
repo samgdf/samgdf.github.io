@@ -1,4 +1,5 @@
 
-.icon-mail:before { content: '\f1'; } /* 'ñ' */
-.icon-twitter:before { content: '\f2'; } /* 'ò' */
-.icon-github:before { content: '\f3'; } /* 'ó' */
+.icon-twitter:before { content: '\f099'; } /* '' */
+.icon-mail:before { content: '\f0e0'; } /* '' */
+.icon-github:before { content: '\f113'; } /* '' */
+.icon-chat:before { content: '\f4ac'; } /* '' */
