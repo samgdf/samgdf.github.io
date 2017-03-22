@@ -20,217 +20,44 @@ body {
  	margin: 0;
  	padding: 0;
   width: 100%;
-  background: #f6f3ed;
+  background: #190425;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 100%;
-  color: #251823;
 }
 
 p {
-  font-size: 18px;
-  line-height: inherit;
-  color: inherit;
   margin: 0;
-  padding: 0;
-  max-width: 1000px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: 23px;
+  color: #eee;
+  max-width: 600px;
+}
+
+b {
+  font-weight: 600;
 }
 
 a {
   -webkit-transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
   transition: all 0.1 s cubic-bezier(0.42, 0, 0.58, 1);
-  background-color: inherit;
-  color: #5472ab;
-	font-size: inherit;
-	line-height: inherit;
-  text-decoration: none;
-}
-
-a:hover {
-  border-radius: 3px;
-  -webkit-transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
-  transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
-  background-color: #251823;
-  color: #f6f3ed;
-}
-
-a:active {
-  border-radius: 3px;
-  background-color: #52354D;
-  color: #f6f3ed;
-}
-
-h1 {
-  font-size: 23px;
-  font-weight: 700;
-  margin: auto;
-  padding: 0;
-}
-
-small {
-  font-size: 75%;
-  display: block;
+  font-weight: 600;
   color: inherit;
-  font-family: inherit;
-  font-weight: 400;
-  letter-spacing: .5px;
 }
 
-small a {
-  font-size: 18px;
-  color: #5472ab;
-}
-
-small a:hover {
-  color: #251823;
-  background: none;
-}
-
-small a:active {
-  color: #52354D;
-  background: none;
-}
-
-img {
-  background-repeat: no-repeat;
-  width: 160px;
-  height: 250px;
-  margin: 0;
-  padding: 0;
-  float: left;
-}
-
-button {
-  float: left;
-  width: 79px;
-  height: 79px;
-  font-size: 48px;
-  line-height: 48px;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  overflow: hidden;
-  color: #251823;
-  outline: none;
-}
-
-
-/* fontello */
 @font-face {
-  font-family: 'fontello';
-  src: url('./font/fontello.eot?68631172');
-  src: url('./font/fontello.eot?68631172#iefix') format('embedded-opentype'),
-  url('./font/fontello.woff?68631172') format('woff'),
-  url('./font/fontello.ttf?68631172') format('truetype'),
-  url('./font/fontello.svg?68631172#fontello') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-#menu {
- float: left;
- width: 90vw;
- height: 79px;
- margin: 0 5vw 0 5vw;
- background: #f6f3ed;
- padding-left: 36px;
- background-repeat: no-repeat;
- background-position: top 18px left 33px;
- margin-bottom: 10px;
- position: fixed;
-}
-
-#menu ul {
-  overflow: hidden;
-}
-
-#menu li a {
-  float: left;
-  display: block;
-  color: #251823;
-  font-size: inherit;
-  line-height: 23px;
-  margin: 25px 36px 0 0;
-  font-weight: 400;
-  letter-spacing: 1px;
-  padding: 2px;
-  background-color: inherit;
-  font-weight: 700;
-}
-
-#menu li:last-child {
-  float: right;
-}
-
-#menu a:hover, #menu a.active {
-  border-radius: 3px;
-  background-color: #251823;
-  color: #f6f3ed;
-}
-
-#menu a:active {
-  border-radius: 3px;
-  background-color: #52354D;
-  color: #f6f3ed;
-}
-
-/* body */
-
-.sea {
-  float: none;
-  background: inherit;
-  width: 90vw;
-  display: table;
-  margin: 0 5vw 0 5vw;
-  padding: 10px 36px 0 54px;
-  height: 100%;
-}
-
-.plus {
-  float: left;
-  width: 100%;
-  margin: 0;
-  padding: 0px;
-  height: 79px;
-}
-
-/* footer */
-
-#footer {
-  margin: 25px 0 0 0;
-  height: 75px;
-  padding: 0 18px 0 18px;
-  width: 100%;
-  clear: both;
-  bottom: 0;
-  background: inherit;
-  color: #251823;
-  text-align: center;
-}
-
-/* Viewport */
-
-@media (max-width: 640px) {
-@viewport {
-  width: auto;
-}
-
-p {
-  text-align: justify;
-}
-
-#menu {
- padding-left: 0px;
- background-position: top 18px left 0px;
-}
-
-#menu li a {
-  margin: 25px 15px 0 0;
-}
-
-.sea {
-  padding: 0 18px 0 18px;
-}
-
-}
+      font-family: 'fontello';
+      src: url('./font/fontello.eot?633703');
+      src: url('./font/fontello.eot?633703#iefix') format('embedded-opentype'),
+           url('./font/fontello.woff?633703') format('woff'),
+           url('./font/fontello.ttf?633703') format('truetype'),
+           url('./font/fontello.svg?633703#fontello') format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
+  

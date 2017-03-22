@@ -1,11 +1,4 @@
 
-.icon-logo:before { content: '\e801'; } /* '' */
-.icon-linkedin-squared:before { content: '\e802'; } /* '' */
-.icon-bookmark:before { content: '\f097'; } /* '' */
-.icon-folder:before { content: '\f115'; } /* '' */
-.icon-git-squared:before { content: '\f1d2'; } /* '' */
-.icon-soccer:before { content: '\f1e3'; } /* '' */
-.icon-snapchat-square:before { content: '\f2ad'; } /* '' */
-.icon-envelope:before { content: '\f2b7'; } /* '' */
-.icon-user:before { content: '\f2c0'; } /* '' */
-.icon-twitter-squared:before { content: '\f304'; } /* '' */
+.icon-mail:before { content: '\f1'; } /* 'ñ' */
+.icon-twitter:before { content: '\f2'; } /* 'ò' */
+.icon-github:before { content: '\f3'; } /* 'ó' */
