@@ -43,15 +43,63 @@ a {
   text-decoration: none;
 }
 
-a .pov:hover {
+a[data-tooltip] {
   position: relative;
 }
-a .pov:hover:after {
-    content: url(img/profile.png);
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50px;
+a[data-tooltip]::before,
+a[data-tooltip]::after {
+  position: absolute;
+  display: none;
+  opacity: 0.85;
+}
+a[data-tooltip]::before {
+  content: attr(data-tooltip);
+  background: #eee;
+  color: #190425;
+  font-size: 13px;
+  padding: 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+a[data-tooltip]::after {
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  content: '';
+}
+
+a[data-tooltip]:hover::before,
+a[data-tooltip]:hover::after {
+  display: block;
+}
+
+/* top tooltip */
+a[data-tooltip][data-placement="top"]::before {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 4px;
+}
+a[data-tooltip][data-placement="top"]::after {
+  border-top-color: #eee;
+  border-bottom: none;
+  bottom: 100%;
+  left: 10px;
+  margin-bottom: -2px;
+}
+
+/* bottom tooltip */
+a[data-tooltip][data-placement="bottom"]::before {
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+}
+a[data-tooltip][data-placement="bottom"]::after {
+  border-bottom-color: #eee;
+  border-top: none;
+  top: 100%;
+  left: 10px;
+  margin-top: -2px;
 }
 
 @font-face {
