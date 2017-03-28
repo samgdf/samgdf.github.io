@@ -25,7 +25,7 @@ p {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /* absolute center */
   font-family: inherit;
   font-weight: inherit;
   font-size: 23px;
@@ -43,6 +43,7 @@ a {
   text-decoration: none;
 }
 
+/* tooltip */
 a[data-tooltip] {
   position: relative;
 }
@@ -74,13 +75,48 @@ a[data-tooltip]:hover::after {
   display: block;
 }
 
+/* img tooltip */
+a[data-img] {
+  position: relative;
+}
+a[data-img]::before,
+a[data-img]::after {
+  position: absolute;
+  display: none;
+  opacity: 0.85;
+}
+a[data-img]::before {
+  content: attr(data-img url);
+  back
+  background: #eee;
+  color: #190425;
+  font-size: 13px;
+  padding: 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+a[data-img]::after {
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  content: '';
+}
+
+a[data-img]:hover::before,
+a[data-img]:hover::after {
+  display: block;
+}
+
 /* top tooltip */
-a[data-tooltip][data-placement="top"]::before {
+a[data-tooltip][data-placement="top"]::before,
+a[data-img][data-placement="top"]::before  {
   bottom: 100%;
   left: 0;
   margin-bottom: 4px;
 }
-a[data-tooltip][data-placement="top"]::after {
+a[data-tooltip][data-placement="top"]::after,
+a[data-img][data-placement="top"]::before {
   border-top-color: #eee;
   border-bottom: none;
   bottom: 100%;
