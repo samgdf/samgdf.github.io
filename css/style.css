@@ -80,11 +80,11 @@ a.tool {
   position: relative;
 }
 a.tool:hover:after {
-    content: url(../img/tooltip.png); /* no need for qoutes */
+    content: url(../img/tooltip.png);
     display: block;
     position: absolute;
-    left: 0; /* change this value to one that suits you */
-    top: -150px; /* change this value to one that suits you */
+    left: 0;
+    top: -150px;
 }
 
 /* top tooltip */
