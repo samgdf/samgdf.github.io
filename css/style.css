@@ -128,7 +128,8 @@ a[data-tooltip][data-placement="bottom"]::after {
 
 @media (max-width: 600px) {
   a.tool:hover:after {
-    content: url(../img/tooltip_small.png);
-    top: -30px;
+    content: none;
+    left: 0;
+    top: 0;
   }
 }
