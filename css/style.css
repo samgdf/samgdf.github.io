@@ -125,3 +125,10 @@ a[data-tooltip][data-placement="bottom"]::after {
   font-weight: normal;
   font-style: normal;
 }
+
+@media (max-width: 600px) {
+  a.tool:hover:after {
+    content: url(../img/tooltip_small.png);
+    top: -30px;
+  }
+}
