@@ -76,47 +76,24 @@ a[data-tooltip]:hover::after {
 }
 
 /* img tooltip */
-a[data-img] {
+a.tool {
   position: relative;
 }
-a[data-img]::before,
-a[data-img]::after {
-  position: absolute;
-  display: none;
-  opacity: 0.85;
-}
-a[data-img]::before {
-  content: attr(data-img url);
-  back
-  background: #eee;
-  color: #190425;
-  font-size: 13px;
-  padding: 4px;
-  border-radius: 4px;
-  white-space: nowrap;
-  text-decoration: none;
-}
-a[data-img]::after {
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  content: '';
-}
-
-a[data-img]:hover::before,
-a[data-img]:hover::after {
-  display: block;
+a.tool:hover:after {
+    content: url(../img/tooltip.png); /* no need for qoutes */
+    display: block;
+    position: absolute;
+    left: 0; /* change this value to one that suits you */
+    top: -150px; /* change this value to one that suits you */
 }
 
 /* top tooltip */
-a[data-tooltip][data-placement="top"]::before,
-a[data-img][data-placement="top"]::before  {
+a[data-tooltip][data-placement="top"]::before {
   bottom: 100%;
   left: 0;
   margin-bottom: 4px;
 }
-a[data-tooltip][data-placement="top"]::after,
-a[data-img][data-placement="top"]::before {
+a[data-tooltip][data-placement="top"]::after {
   border-top-color: #eee;
   border-bottom: none;
   bottom: 100%;
