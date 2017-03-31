@@ -25,7 +25,7 @@ p {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* absolute center */
+  transform: translate(-50%, -50%); /* parent center */
   font-family: inherit;
   font-weight: inherit;
   font-size: 23px;
