@@ -80,11 +80,14 @@ a.tool {
   position: relative;
 }
 a.tool:hover:after {
-    content: url(../img/tooltip.png);
+    content: url(../img/pro_tip.png);
     display: block;
     position: absolute;
+    display: block;
+    -webkit-clip-path: polygon(0% 2%, .5% 1%, 2% 0%, 98% 0%, 99.5% 1%, 100% 2%, 100% 88%, 99% 89.5%, 98% 90%, 55% 90%, 50% 95%, 45% 90%, 2% 90%, .5% 89.5%, 0% 88%);
+    clip-path: polygon(0% 2%, .5% 1%, 2% 0%, 98% 0%, 99.5% 1%, 100% 2%, 100% 88%, 99% 89.5%, 98% 90%, 55% 90%, 50% 95%, 45% 90%, 2% 90%, .5% 89.5%, 0% 88%);
     left: 0;
-    top: -150px;
+    top: -210px;
 }
 
 /* top tooltip */
