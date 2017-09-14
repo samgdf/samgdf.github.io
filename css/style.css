@@ -14,8 +14,8 @@ body {
  	margin: 0;
  	padding: 0;
   width: 100%;
-  background: #190425;
-  font-family: 'Open Sans', sans-serif;
+  background: #ffffff;
+  font-family: 'Source Serif Pro', serif;
   font-weight: 300;
   font-size: 100%;
 }
@@ -29,8 +29,8 @@ p {
   font-family: inherit;
   font-weight: inherit;
   font-size: 23px;
-  color: #eee;
-  max-width: 600px;
+  color: #121212;
+  max-width: 1000px;
 }
 
 b {
@@ -51,14 +51,16 @@ a[data-tooltip]::before,
 a[data-tooltip]::after {
   position: absolute;
   display: none;
-  opacity: 0.85;
+  opacity: 0.80;
 }
 a[data-tooltip]::before {
   content: attr(data-tooltip);
-  background: #eee;
-  color: #190425;
-  font-size: 13px;
-  padding: 4px;
+  background: #121212;
+  color: #fafafa;
+  font-family: 'Helvetica', sans serif;
+  letter-spacing: .4px;
+  font-size: 14px;
+  padding: 3px;
   border-radius: 4px;
   white-space: nowrap;
   text-decoration: none;
@@ -75,47 +77,18 @@ a[data-tooltip]:hover::after {
   display: block;
 }
 
-/* img tooltip */
-a.tool {
-  position: relative;
-}
-a.tool:hover:after {
-    content: url(../img/pro_tip.png);
-    display: block;
-    position: absolute;
-    display: block;
-    -webkit-clip-path: polygon(0% 2%, .5% 1%, 2% 0%, 98% 0%, 99.5% 1%, 100% 2%, 100% 88%, 99% 89.5%, 98% 90%, 55% 90%, 50% 95%, 45% 90%, 2% 90%, .5% 89.5%, 0% 88%);
-    clip-path: polygon(0% 2%, .5% 1%, 2% 0%, 98% 0%, 99.5% 1%, 100% 2%, 100% 88%, 99% 89.5%, 98% 90%, 55% 90%, 50% 95%, 45% 90%, 2% 90%, .5% 89.5%, 0% 88%);
-    left: 0;
-    top: -210px;
-}
-
 /* top tooltip */
 a[data-tooltip][data-placement="top"]::before {
   bottom: 100%;
   left: 0;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 a[data-tooltip][data-placement="top"]::after {
-  border-top-color: #eee;
+  border-top-color: #121212;
   border-bottom: none;
   bottom: 100%;
   left: 10px;
-  margin-bottom: -2px;
-}
-
-/* bottom tooltip */
-a[data-tooltip][data-placement="bottom"]::before {
-  top: 100%;
-  left: 0;
-  margin-top: 4px;
-}
-a[data-tooltip][data-placement="bottom"]::after {
-  border-bottom-color: #eee;
-  border-top: none;
-  top: 100%;
-  left: 10px;
-  margin-top: -2px;
+  margin-bottom: 0px;
 }
 
 @font-face {
@@ -129,7 +102,10 @@ a[data-tooltip][data-placement="bottom"]::after {
   font-style: normal;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
+  p {
+    max-width: 600px;
+  }
   a.tool:hover:after {
     content: none;
     left: 0;
