@@ -5,33 +5,46 @@
     <meta charset="utf-8">
     <title>Sam Goldfield</title>
 
-   		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-   	 	<meta name="viewport" content="width=device-width, initial-scale=1.0", minimal-ui>
-			<meta name="apple-mobile-web-app-capable" content="yes" />
-			<meta name="mobile-web-app-capable" content="yes" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0", minimal-ui>
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="mobile-web-app-capable" content="yes" />
       <!-- -->
-			<meta name="apple-mobile-web-app-status-bar-style" content="#121212" />
-			<meta name="theme-color" content="#121212">
+      <meta name="apple-mobile-web-app-status-bar-style" content="#b7b7b7" />
+      <meta name="theme-color" content="#b7b7b7">
       <!-- -->
-    	<meta name="description" content="Sam Goldfield creates data computation algorithms at Compound VC.">
+      <meta name="description" content="Sam Goldfield creates data computation algorithms at Compound VC.">
       <link rel="icon" href="favicon.ico" type="image/x-icon">
       <!-- -->
-		  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
-      <link rel="stylesheet" href="css/fontello.css" type="text/css" media="screen">
-      <!-- -->
-      <link rel="preload" as="font" href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet" crossorigin>
+      <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
 
   </head>
   <body>
-  <p>
-  Sam Goldfield creates data computation algorithms at <a href="https://compound.vc/">Compound VC</a>. 
-  </br></br>
-  <a href="https://twitter.com/samgdf" data-tooltip="Twitter" data-placement="top"><span class="icon-twitter"></span></a>
-  <a href="https://github.com/samgdf" data-tooltip="Github" data-placement="top"><span class="icon-github"></span></a>
-  <a href="mailto:sam@compound.vc?subject=Hey%20Sam!" data-tooltip="Email" data-placement="top"><span class="icon-mail"></span</a> 
-  <a href="sms:1-732-309-8920" data-tooltip="iMessage" data-placement="top"><span class="icon-chat"></span></a>
-  </br></br>
-  </p>
+
+<div class="gameboy">
+  <div class="gameboy__screen" id="text__box">SAM GOLDFIELD does data at Compound VC</div>
+  <div class="gameboy__actions">
+    <div class="action" onclick="myFunction()">A</div>
+    <div class="action">B</div>
+  </div>
+  <div class="gameboy__arrows">
+    <div class="gameboy__arrow gameboy__arrow--up">UP</div>
+    <div class="gameboy__arrow gameboy__arrow--down">DOWN</div>
+    <div class="gameboy__arrow gameboy__arrow--left">LEFT</div>
+    <div class="gameboy__arrow gameboy__arrow--right">RIGHT</div>
+    <div class="gameboy__arrow gameboy__arrow--center">o</div>
+  </div>
+  <div id="options">
+    <div class="btn start"></div>
+    <div class="btn select"></div>
+  </div>
+</div>
+
+<script>
+function myFunction() {
+  document.getElementById("text__box").innerHTML = "To contact him, please email SAM@RUTGERS.IO";
+}
+</script>
 
   </body>
 </html>
