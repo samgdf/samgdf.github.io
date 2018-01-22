@@ -239,7 +239,7 @@ body {
   width: 15px;
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .gameboy {
     width: 300px;
   }
