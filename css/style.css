@@ -138,7 +138,6 @@ body {
 .gameboy__arrow--up {
   border-radius: 5px 5px 0 0;
   left: 30px;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 .gameboy__arrow--up::after {
   border-bottom: 8px solid #373737;
@@ -156,7 +155,6 @@ body {
 .gameboy__arrow--down {
   bottom: 0;
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
   left: 30px;
 }
 .gameboy__arrow--down::after {
@@ -176,7 +174,6 @@ body {
 .gameboy__arrow--left {
   top: 30px;
   border-radius: 5px 0 0 5px;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 .gameboy__arrow--left::after {
   border-bottom: 8px solid transparent;
@@ -198,7 +195,6 @@ body {
 
 .gameboy__arrow--right {
   border-radius: 0 5px 5px 0;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 1px 1px rgba(0, 0, 0, 0.5);
   right: 0;
   top: 30px;
 }
