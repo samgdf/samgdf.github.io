@@ -21,30 +21,55 @@
   </head>
   <body>
 
-<div class="gameboy">
-  <div class="gameboy__screen" id="text__box">SAM GOLDFIELD does data at Compound VC</div>
-  <div class="gameboy__actions">
-    <div class="action" onclick="myFunction()">A</div>
-    <div class="action">B</div>
-  </div>
-  <div class="gameboy__arrows">
-    <div class="gameboy__arrow gameboy__arrow--up">UP</div>
-    <div class="gameboy__arrow gameboy__arrow--down">DOWN</div>
-    <div class="gameboy__arrow gameboy__arrow--left">LEFT</div>
-    <div class="gameboy__arrow gameboy__arrow--right">RIGHT</div>
-    <div class="gameboy__arrow gameboy__arrow--center">o</div>
-  </div>
-  <div id="options">
-    <div class="btn start"></div>
-    <div class="btn select"></div>
-  </div>
-</div>
+    <div class="gameboy">
+      <div class="gameboy__screen" id="text__box">Please enable Javascript for the complete experience</div>
+      <div class="gameboy__actions">
+        <div class="action" id="next_button">A</div>
+        <div class="action" id="prev_button">B</div>
+      </div>
+      <div class="gameboy__arrows">
+        <div class="gameboy__arrow gameboy__arrow--up">UP</div>
+        <div class="gameboy__arrow gameboy__arrow--down">DOWN</div>
+        <div class="gameboy__arrow gameboy__arrow--left">LEFT</div>
+        <div class="gameboy__arrow gameboy__arrow--right">RIGHT</div>
+        <div class="gameboy__arrow gameboy__arrow--center">o</div>
+      </div>
+      <div id="options">
+        <a href="./SamGoldfield.pdf" target="_top"><div class="btn start">SELECT</div></a>
+        <a href="mailto:sam@rutgers.io?Subject=Email%20From%20Website" target="_top"><div class="btn select">START</div></a>
+      </div>
+    </div>
 
-<script>
-function myFunction() {
-  document.getElementById("text__box").innerHTML = "To contact him, please email SAM@RUTGERS.IO";
-}
-</script>
-
+    <script>
+    var arr = ['SAM GOLDFIELD does data at Compound VC', 'Press the SELECT button to see his Resume', 'Press START to email him at SAM@RUTGERS.IO', 'THANK YOU for visiting, check back soon'];
+    var i = 0;
+    function nextItem() {
+    i = i + 1; // increase i by one
+    i = i % arr.length; // if we've gone too high, start from `0` again
+    return arr[i]; // give us back the item of where we are now
+    }
+    function prevItem() {
+    if (i === 0) { // i would become 0
+        i = arr.length; // so put it at the other end of the array
+    }
+    i = i - 1; // decrease by one
+    return arr[i]; // give us back the item of where we are now
+    }
+    window.addEventListener('load', function () {
+    document.getElementById('prev_button').addEventListener(
+    'click', // we want to listen for a click
+    function (e) { // the e here is the event itself
+        document.getElementById('text__box').textContent = prevItem();
+        }
+    );
+    document.getElementById('next_button').addEventListener(
+    'click', // we want to listen for a click
+    function (e) { // the e here is the event itself
+        document.getElementById('text__box').textContent = nextItem();
+        }
+    );
+    document.getElementById('text__box').textContent = arr[0];
+    });
+    </script>
   </body>
 </html>
