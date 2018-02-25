@@ -1,5 +1,5 @@
 body {
-  background-color: #b7b7b7;
+  background-color: #DBDBDB;
 }
 @font-face {
   font-family: Alert;
@@ -15,6 +15,9 @@ h3 {
 h3 a {
   color: #000;
   text-decoration: none;
+  border-bottom: 1px dashed #000;
+}
+h3 a:hover {
   border-bottom: 1px solid #000;
 }
 .gameboy {
@@ -32,7 +35,7 @@ h3 a {
 }
 .gameboy__screen {
   background: #E3EBBB;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, .8);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, .8);
   font-family: Alert;
   font-size: 20px;
   width: 240px;
@@ -279,6 +282,9 @@ h3 a {
 }
 
 @media (max-width: 480px) {
+  body {
+    background-color: #a9a9a9;
+  }
   h3 {
     display: none;
   }
@@ -286,6 +292,7 @@ h3 a {
     background: none;
     width: auto;
     height: auto;
+    box-shadow: none;
 }
   }
   .wrapper {

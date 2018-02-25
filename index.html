@@ -10,8 +10,8 @@
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="mobile-web-app-capable" content="yes" />
       <!-- -->
-      <meta name="apple-mobile-web-app-status-bar-style" content="#b7b7b7" />
-      <meta name="theme-color" content="#b7b7b7">
+      <meta name="apple-mobile-web-app-status-bar-style" content="#DBDBDB" />
+      <meta name="theme-color" content="#DBDBDB">
       <!-- -->
       <meta name="description" content="Sam Goldfield does data at Compound VC.">
       <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -73,6 +73,14 @@
     );
     document.getElementById('text__box').textContent = arr[0];
     });
+    document.body.onkeyup = function(y){
+    if(y.keyCode === 65 || y.key === 'a' || y.key === 'A'){
+        document.getElementById('text__box').textContent = nextItem();
+      }
+    if(y.keyCode === 66 || y.key === 'b' || y.key === 'B'){
+        document.getElementById('text__box').textContent = prevItem();
+      }
+    }
     </script>
   </body>
 </html>
