@@ -284,13 +284,14 @@ h3 a {
   }
   .gameboy {
     background: none;
+    width: auto;
+}
   }
   .wrapper {
-    width: auto;
-    margin: 0px auto;
+    width: 0 auto;
   }
   .gameboy__screen {
-    border: none;
-    border-bottom-right-radius: 0;
+    margin: 0 0 30px;
+
   }
 }
