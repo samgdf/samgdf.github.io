@@ -5,25 +5,44 @@ body {
   font-family: Alert;
   src: url('../font/Alert.ttf');
 }
+h3 {
+  font-weight: normal;
+  float: left;
+  margin: 0 0 0 15px;
+  padding: 0;
+  width: 410px;
+}
+a {
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid #000;
+}
 .gameboy {
   width: 420px;
-  margin: 0 auto;
+  height: 650px;
+  margin: 0px auto;
   font-family: Arial;
+  background: #a9a9a9;
+  border-radius: 16px;
 }
 .wrapper {
-  width: 450px;
+  width: 360px;
   margin: 20px auto;
+  padding-top: 25px;
 }
 .gameboy__screen {
   background: #E3EBBB;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, .8);
   font-family: Alert;
   font-size: 20px;
-  width: 280px;
-  height: 280px;
+  width: 240px;
+  height: 240px;
   margin: 0 auto 30px;
   padding: 10px;
-  border: 1px solid #aaa;
+  border: 20px solid #878787;
+  border-right: 50px solid #878787;
+  border-left: 50px solid #878787;
+  border-bottom-right-radius: 16px 16px;
 }
 .gameboy__screen::after {
   background: #000;
@@ -38,7 +57,7 @@ body {
   display: inline-block;
   float: right;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 10px 0 10px 10px;
   position: relative;
   user-select: none;
   width: 110px;
@@ -47,7 +66,7 @@ body {
   background-color: #7C1D4F;
   border-radius: 50%;
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.5);
-  color: #531335;
+  color: #531212;
   cursor: pointer;
   display: block;
   float: left;
@@ -177,7 +196,7 @@ body {
 
 .gameboy__arrow--left {
   top: 30px;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 0px 0 5px;
 }
 .gameboy__arrow--left::after {
   border-bottom: 8px solid transparent;
