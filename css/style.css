@@ -12,7 +12,7 @@ h3 {
   padding: 0;
   width: 410px;
 }
-a {
+h3 a {
   color: #000;
   text-decoration: none;
   border-bottom: 1px solid #000;
@@ -37,7 +37,7 @@ a {
   font-size: 20px;
   width: 240px;
   height: 240px;
-  margin: 0 auto 30px;
+  margin: 0 0 30px;
   padding: 10px;
   border: 20px solid #878787;
   border-right: 50px solid #878787;
@@ -196,7 +196,7 @@ a {
 
 .gameboy__arrow--left {
   top: 30px;
-  border-radius: 5px 0px 0 5px;
+  border-radius: 5px 0 0 5px;
 }
 .gameboy__arrow--left::after {
   border-bottom: 8px solid transparent;
@@ -262,8 +262,35 @@ a {
   width: 15px;
 }
 
+@media (max-width: 1287px) {
+  h3 {
+    font-weight: normal;
+    float: left;
+    margin: 0 0 0 15px;
+    padding: 0;
+    width: 250px;
+  }
+}
+
+@media (max-width: 976px) {
+  h3 {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
+  h3 {
+    display: none;
+  }
   .gameboy {
-    width: 300px;
+    background: none;
+  }
+  .wrapper {
+    width: auto;
+    margin: 0px auto;
+  }
+  .gameboy__screen {
+    border: none;
+    border-bottom-right-radius: 0;
   }
 }
