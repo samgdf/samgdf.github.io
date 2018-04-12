@@ -20,4 +20,18 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-I use this to document my portfolio. All of the code here is open source, and available on the MIT License. This contains my code, the CSS to accompany it, and the various contents relevant to that, like a font file. When I say there are no image files, that is only a half truth. The .ico for the page is listed. The Gameboy is entirely code, however.
+Features
+--------
+
+- Basic demonstration of technical abilities
+- Accessible at rutgers.io and samgoldfield.com
+- Open source, and available under the MIT License
+
+Installation
+------------
+
+Install $project by running:
+
+    github clone https://github.com/samgdf/samgdf.github.io
+
+
