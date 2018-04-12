@@ -11,13 +11,13 @@ Welcome to Sam Goldfield's Portfolio's documentation!
    :font
 
 
-Indices and tables
-==================
+Table of Contents
+--------
 
 * Features
 * Installation
 * Notes
-* Liecense
+* License
 * :ref:`search`
 
 Features
