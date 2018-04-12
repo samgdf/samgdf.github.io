@@ -1,7 +1,7 @@
 .. Sam Goldfield's Portfolio documentation master file, created by
    sphinx-quickstart on Thu Apr 12 11:47:09 2018.
 
-Welcome to Sam Goldfield's Portfolio's documentation!
+Homepage Doc
 =====================================================
 
 .. toctree::
