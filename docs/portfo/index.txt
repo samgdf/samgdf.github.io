@@ -26,6 +26,7 @@ Features
 - Basic demonstration of technical abilities
 - Accessible at rutgers.io and samgoldfield.com
 - Open source, and available under the MIT License
+- Live testing support
 
 Installation
 ------------
