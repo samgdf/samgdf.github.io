@@ -6,7 +6,7 @@ body {
   src: url('../font/Alert.ttf');
 }
 h3 {
-  font-family: 'PT Mono', monospace;
+  font-family: 'PT Sans', sans-serif;
   font-weight: normal;
   float: left;
   margin: 0 0 0 15px;
