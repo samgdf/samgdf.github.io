@@ -31,6 +31,7 @@ h3 a:hover {
 }
 .wrapper {
   width: 360px;
+  height: auto;
   margin: 20px auto;
   padding-top: 25px;
 }
@@ -92,11 +93,12 @@ h3 a:hover {
 #options {
   clear: both;
   height: 30px;
-  margin: 0 auto 20px;
+  margin: 20px 0px 0px 120px;
   padding: 10px;
   position: relative;
   width: 100px;
   user-select: none;
+  position: absolute;
 }
 #options .btn {
   background-color: #444;
@@ -268,10 +270,6 @@ h3 a:hover {
 
 @media (max-width: 1287px) {
   h3 {
-    font-weight: normal;
-    float: left;
-    margin: 0 0 0 15px;
-    padding: 0;
     width: 250px;
   }
 }
