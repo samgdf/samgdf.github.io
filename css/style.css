@@ -5,13 +5,26 @@ body {
   font-family: Alert;
   src: url('../font/Alert.ttf');
 }
+@font-face {
+  font-family: Publico;
+  src: url('../font/PublicoText.woff');
+}
 h3 {
-  font-family: 'PT Sans', sans-serif;
+  font-family: 'Publico', sans-serif;
   font-weight: normal;
   float: left;
   margin: 0 0 0 15px;
   padding: 0;
   width: 410px;
+  line-height: 1.43;
+}
+p {
+  font-family: 'Publico', sans-serif;
+  font-weight: normal;
+  float: left;
+  font-size: 17.6px;
+  line-height: 1.43;
+  margin: 10px 0 10px 0;
 }
 h3 a {
   color: #000;
