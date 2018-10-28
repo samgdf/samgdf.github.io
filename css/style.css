@@ -18,6 +18,13 @@ h3 {
   width: 410px;
   line-height: 1.43;
 }
+h2 {
+  font-family: 'Publico', sans-serif;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 1.43;
+  margin-bottom: -10px;
+}
 p {
   font-family: 'Publico', sans-serif;
   font-weight: normal;
@@ -33,6 +40,28 @@ h3 a {
 }
 h3 a:hover {
   border-bottom: 1px solid #000;
+}
+a {
+  color: #443474;
+  text-decoration: none;
+}
+a:hover {
+  color: #695C8F;
+}
+.post {
+  text-align: left;
+  margin: auto;
+  width: 52%;
+  overflow: auto;
+}
+.left-col {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0px 0 0 10px;
+  float: left;
+  height: 100%;
+  max-width: 200px;
 }
 .gameboy {
   width: 420px;
@@ -291,6 +320,9 @@ h3 a:hover {
   h3 {
     display: none;
   }
+  .left-col {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -299,6 +331,12 @@ h3 a:hover {
   }
   h3 {
     display: none;
+  }
+  .left-col {
+    display: none;
+  }
+  .post {
+    width: 95%;
   }
   .gameboy {
     background: none;
