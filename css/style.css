@@ -9,6 +9,17 @@ body {
   font-family: Publico;
   src: url('../font/PublicoText.woff');
 }
+h4 {
+  font-family: 'Publico', sans-serif;
+  font-weight: normal;
+  float: right;
+  margin: 0 15px 0 0px;
+  padding: 0;
+  width: 410px;
+  font-size: 18.7167px;
+  line-height: 1.43;
+  overflow: hidden;
+}
 h3 {
   font-family: 'Publico', sans-serif;
   font-weight: normal;
@@ -33,12 +44,12 @@ p {
   line-height: 1.43;
   margin: 10px 0 10px 0;
 }
-h3 a {
+h3 a, h4 a {
   color: #000;
   text-decoration: none;
   border-bottom: 1px dashed #000;
 }
-h3 a:hover {
+h3 a:hover, h4 a:hover {
   border-bottom: 1px solid #000;
 }
 a {
@@ -47,21 +58,6 @@ a {
 }
 a:hover {
   color: #695C8F;
-}
-.post {
-  text-align: left;
-  margin: auto;
-  width: 52%;
-  overflow: auto;
-}
-.left-col {
-  position: fixed;
-  top: 0;
-  left: 0;
-  margin: 0px 0 0 10px;
-  float: left;
-  height: 100%;
-  max-width: 200px;
 }
 .gameboy {
   width: 420px;
@@ -311,16 +307,19 @@ a:hover {
 }
 
 @media (max-width: 1287px) {
+  h4 {
+    width: 250px;
+  }
   h3 {
     width: 250px;
   }
 }
 
 @media (max-width: 976px) {
-  h3 {
+  h4 {
     display: none;
   }
-  .left-col {
+  h3 {
     display: none;
   }
 }
@@ -329,14 +328,11 @@ a:hover {
   body {
     background-color: #a9a9a9;
   }
+  h4 {
+    display: none;
+  }
   h3 {
     display: none;
-  }
-  .left-col {
-    display: none;
-  }
-  .post {
-    width: 95%;
   }
   .gameboy {
     background: none;
