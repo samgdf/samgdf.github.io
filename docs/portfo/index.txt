@@ -27,6 +27,7 @@ Features
 - Accessible at rutgers.io and samgoldfield.com
 - Open source, and available under the MIT License
 - Live testing support
+- readable at multiple resolutions
 
 Installation
 ------------
