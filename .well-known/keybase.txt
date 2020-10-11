@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/samgdf
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://samgdf.com
+  * I am samgdf (https://keybase.io/samgdf) on keybase.
+  * I have a public key ASANbnt-gA1XKgPXyLKxWsu3SBKWZnDA2SpxXellMAjwswo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101796cbd7feafcd2f358cbd0059ac347c9fb0669372ab85b083da142bd1c5d2e270a",
+      "host": "keybase.io",
+      "kid": "01200d6e7b7e800d572a03d7c8b2b15acbb74812966670c0d92a715de9653008f0b30a",
+      "uid": "fa8be94d292917e96e5c0f5943ce7619",
+      "username": "samgdf"
+    },
+    "merkle_root": {
+      "ctime": 1602455394,
+      "hash": "85d29ca64911aa6b13a1350c8baa0f77f3b94df930b4e5b1215e4d3d8e653d5fc28cd90221973046b3938209b7227d177582de0bed9473d25e212b63bba59a49",
+      "hash_meta": "14af53221ded625366dd260b03584c07e50b9af7f149eb9f0750818dd61fc78c",
+      "seqno": 17802922
+    },
+    "service": {
+      "entropy": "XKtUCyGv70ymfbsglkPqSrsj",
+      "hostname": "samgdf.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "3.0.0"
+  },
+  "ctime": 1602455402,
+  "expire_in": 504576000,
+  "prev": "85b5eeefdd19ee6892c4cac96816f755712f1680033bbe34fb33e6e67bc9cce8",
+  "seqno": 19,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgDW57foANVyoD18iysVrLt0gSlmZwwNkqcV3pZTAI8LMKp3BheWxvYWTESpcCE8QghbXu790Z7miSxMrJaBb3VXEvFoADO740+zPm5nvJzOjEIDvEV8egC70dXT5nA4kj6FqjzEFtcBDkM0xXAe6VV8dSAgHCo3NpZ8RA4W5cu7EF3CYNtvLZGIWvUSLFXw9VhMIcrjozetG8VqpCrPAbdYiNUFJMiRBmRfx8z0XAdSqscBztFHr6AS9JAKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIK0ataPQ2P2UF+mACxqPJYujfY0pqAXic2i5Fo0oGTxAo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/samgdf
+
+==================================================================
