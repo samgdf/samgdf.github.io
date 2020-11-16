@@ -65,25 +65,37 @@
     return arr[i]; // give us back the item of where we are now
     }
     window.addEventListener('load', function () {
-    document.getElementById('prev_button').addEventListener(
-    'click', // we want to listen for a click
-    function (e) { // the e here is the event itself
-        document.getElementById('text__box').textContent = prevItem();
-        }
-    );
     document.getElementById('next_button').addEventListener(
     'click', // we want to listen for a click
     function (e) { // the e here is the event itself
         document.getElementById('text__box').textContent = nextItem();
         }
     );
+    document.getElementById('right_button').addEventListener(
+    'click', // we want to listen for a click
+    function (e) { // the e here is the event itself
+        document.getElementById('text__box').textContent = nextItem();
+        }
+    );
+    document.getElementById('prev_button').addEventListener(
+    'click', // we want to listen for a click
+    function (e) { // the e here is the event itself
+        document.getElementById('text__box').textContent = prevItem();
+        }
+    );
+    document.getElementById('left_button').addEventListener(
+    'click', // we want to listen for a click
+    function (e) { // the e here is the event itself
+        document.getElementById('text__box').textContent = prevItem();
+        }
+    );
     document.getElementById('text__box').textContent = arr[0];
     });
     document.body.onkeyup = function(y){
-    if(y.keyCode === 65 || y.key === 'a' || y.key === 'A'){
+    if(y.keyCode === 65 || y.key === 'a' || y.key === 'A' || y.keyCode === 39){
         document.getElementById('text__box').textContent = nextItem();
       }
-    if(y.keyCode === 66 || y.key === 'b' || y.key === 'B'){
+    if(y.keyCode === 66 || y.key === 'b' || y.key === 'B' || y.keyCode === 37){
         document.getElementById('text__box').textContent = prevItem();
       }
     }
