@@ -348,6 +348,9 @@ a:hover {
 }
 
 @media (max-width: 976px) {
+  body {
+    border-radius: 5px;
+  }
   h4 {
     display: none;
   }
@@ -359,6 +362,7 @@ a:hover {
 @media (max-width: 480px) {
   body {
     background-color: #a9a9a9;
+    border-radius: 5px;
   }
   h4 {
     display: none;
