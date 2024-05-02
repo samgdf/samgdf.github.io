@@ -13,7 +13,7 @@ h4 {
   font-family: 'Publico', sans-serif;
   font-weight: normal;
   float: right;
-  margin: 0 15px 0 0px;
+  margin: 0 5px 0 0px;
   padding: 0;
   width: 410px;
   font-size: 18.7167px;
@@ -340,10 +340,10 @@ a:hover {
 
 @media (max-width: 1287px) {
   h4 {
-    width: 250px;
+    width: 25%;
   }
   h3 {
-    width: 250px;
+    width: 25%;
   }
 }
 
