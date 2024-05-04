@@ -340,10 +340,12 @@ a:hover {
 
 @media (max-width: 1287px) {
   h4 {
-    width: 25%;
+    width: 26%;
+    font-size: 17px;
   }
   h3 {
-    width: 25%;
+    width: 26%;
+    font-size: 17px;
   }
 }
 
