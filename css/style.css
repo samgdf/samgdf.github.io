@@ -4,10 +4,12 @@ body {
 @font-face {
   font-family: Alert;
   src: url('../font/Alert.ttf');
+  font-display: swap;
 }
 @font-face {
   font-family: Publico;
   src: url('../font/PublicoText.woff');
+  font-display: swap;
 }
 h4 {
   font-family: 'Publico', sans-serif;
