@@ -368,24 +368,25 @@ a:hover {
     background-color: #a9a9a9;
     border-radius: 5px;
   }
-  h4 {
-    display: none;
-  }
+
+  h4,
   h3 {
     display: none;
   }
+
   .gameboy {
     background: none;
     width: auto;
     height: auto;
     box-shadow: none;
-}
   }
+
   .wrapper {
-    width: 0 auto;
+    width: auto;
+    margin: 0 auto;
   }
+
   .gameboy__screen {
     margin: 0 0 30px;
-
   }
 }
