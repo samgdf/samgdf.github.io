@@ -64,56 +64,48 @@
     </div>
 
     <script>
-    var arr = ['SAM GOLDFIELD works at GALILEO', 'Press SELECT to visit my LINKEDIN', 'Press START to email me at HELLO@SAMGDF.COM', 'THANK YOU for visiting, have a great day'];
-    var i = 0;
+    const arr = ['SAM GOLDFIELD works at GALILEO', 'Press SELECT to visit my LINKEDIN', 'Press START to email me at HELLO@SAMGDF.COM', 'THANK YOU for visiting, have a great day'];
+    let i = 0;
+    const textBox = document.getElementById('text__box');
+
+    function updateText(text) {
+        textBox.textContent = text;
+    }
 
     function nextItem() {
-    i = i + 1; // increase i by one
-    i = i % arr.length; // if we've gone too high, start from `0` again
-    return arr[i]; // give us back the item of where we are now
+        i = (i + 1) % arr.length;
+        updateText(arr[i]);
     }
+
     function prevItem() {
-    if (i === 0) { // i would become 0
-        i = arr.length; // so put it at the other end of the array
+        i = (i - 1 + arr.length) % arr.length;
+        updateText(arr[i]);
     }
-    i = i - 1; // decrease by one
-    return arr[i]; // give us back the item of where we are now
-    }
-    window.addEventListener('load', function () {
-    document.getElementById('next_button').addEventListener(
-    'click', // we want to listen for a click
-    function (e) { // the e here is the event itself
-        document.getElementById('text__box').textContent = nextItem();
-        }
-    );
-    document.getElementById('right_button').addEventListener(
-    'click', // we want to listen for a click
-    function (e) { // the e here is the event itself
-        document.getElementById('text__box').textContent = nextItem();
-        }
-    );
-    document.getElementById('prev_button').addEventListener(
-    'click', // we want to listen for a click
-    function (e) { // the e here is the event itself
-        document.getElementById('text__box').textContent = prevItem();
-        }
-    );
-    document.getElementById('left_button').addEventListener(
-    'click', // we want to listen for a click
-    function (e) { // the e here is the event itself
-        document.getElementById('text__box').textContent = prevItem();
-        }
-    );
-    document.getElementById('text__box').textContent = arr[0];
+
+    window.addEventListener('load', () => {
+        // Buttons that go forward (A, right, down)
+        ['next_button', 'right_button', 'down_button'].forEach(id => {
+            document.getElementById(id).addEventListener('click', nextItem);
+        });
+
+        // Buttons that go backward (B, left, up)
+        ['prev_button', 'left_button', 'up_button'].forEach(id => {
+            document.getElementById(id).addEventListener('click', prevItem);
+        });
+
+        updateText(arr[0]);
     });
-    document.body.onkeyup = function(y){
-    if(y.keyCode === 65 || y.key === 'a' || y.key === 'A' || y.keyCode === 39){ // keyCodes are ASCII representations of keys on a keyboard
-        document.getElementById('text__box').textContent = nextItem();
-      }
-    if(y.keyCode === 66 || y.key === 'b' || y.key === 'B' || y.keyCode === 37){ // keyCodes are ASCII representations of keys on a keyboard
-        document.getElementById('text__box').textContent = prevItem();
-      }
-    }
+
+    document.body.addEventListener('keyup', (e) => {
+        // A key, right arrow, or down arrow
+        if (e.key === 'a' || e.key === 'A' || e.keyCode === 39 || e.keyCode === 40) {
+            nextItem();
+        }
+        // B key, left arrow, or up arrow
+        if (e.key === 'b' || e.key === 'B' || e.keyCode === 37 || e.keyCode === 38) {
+            prevItem();
+        }
+    });
     </script>
 
   </body>
