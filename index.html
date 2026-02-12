@@ -1,112 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Sam Goldfield's interactive gameboy portfolio website</title>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="mobile-web-app-capable" content="yes" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="#444" />
-      <meta name="theme-color" content="#444" />
-      <meta name="og:creator" content="@samgdf" />
-      <meta name="og:title" content="Sam Goldfield's interactive gameboy portfolio website" />
-      <meta name="og:description" content="Sam Goldfield's interactive gameboy portfolio website" />
-      <meta name="og:url" content="https://www.samgdf.com" />
-      <meta name="description" content="Sam Goldfield's interactive gameboy portfolio website" />
-      <link rel="icon" href="favicon.ico" type="image/x-icon" />
-      <link rel="canonical" href="https://www.samgdf.com/">
-      <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-      <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Sam Goldfield",
-        "url": "https://www.samgdf.com/",
-        "jobTitle": "Strategic Sales Engineer",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Galileo"
-        },
-        "sameAs": [
-          "https://github.com/samgdf",
-          "https://www.linkedin.com/in/samgdf/"
-        ]
-      }
-      </script>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam Goldfield's Interactive Website</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#87CEEB" />
+    <meta name="theme-color" content="#87CEEB" />
+    <meta property="og:creator" content="@samgdf" />
+    <meta property="og:title" content="Sam Goldfield's Interactive Website" />
+    <meta property="og:description" content="Explore Sam Goldfield's interactive website featuring links to LinkedIn and GitHub with a calm landscape, tall grass, and a running river with clouds overhead." />
+    <meta property="og:url" content="https://www.samgdf.com" />
+    <meta name="description" content="Sam Goldfield's interactive website" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="https://www.samgdf.com/" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Sam Goldfield",
+      "url": "https://www.samgdf.com/",
+      "jobTitle": "Sales Engineering Manager",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Galileo"
+      },
+      "sameAs": [
+        "https://github.com/samgdf",
+        "https://www.linkedin.com/in/samgdf/"
+      ]
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
-    <h4>Enjoy this Gameboy web page? The code is available on my <a href="https://github.com/samgdf" target="_top">Github</a>.</br></br></h4>
+        body {
+            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 75%, #98C58E 85%, #6B8E23 100%);
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
 
-    <h3>Hi, my name is Sam Goldfield. Try pressing the buttons or using the <i>A</i> and <i>B</i> keys on your keyboard to interact with the Gameboy. Below are some of my favorite quotes:</br></br>“Love is that condition where the happiness of another is essential to your own.” Robert Heinlein</br></br>“The time is always right to do what is right.” Martin Luther King Jr.</br></br>“Past performance is no indicator of future success.” Financial Disclosure</h3>
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 100px;
+            opacity: 0;
+            z-index: 0;
+        }
 
-    <div class="gameboy">
-      <div class="wrapper">
-      <div class="gameboy__screen" id="text__box">Please enable Javascript for the complete experience.</div>
-      <div class="gameboy__actions">
-        <div class="action" id="next_button">A</div>
-        <div class="action" id="prev_button">B</div>
-      </div>
-      <div class="gameboy__arrows">
-        <div class="gameboy__arrow gameboy__arrow--up" id="up_button">UP</div>
-        <div class="gameboy__arrow gameboy__arrow--down" id="down_button">DOWN</div>
-        <div class="gameboy__arrow gameboy__arrow--left" id="left_button">LEFT</div>
-        <div class="gameboy__arrow gameboy__arrow--right" id="right_button">RIGHT</div>
-        <div class="gameboy__arrow gameboy__arrow--center">o</div>
-      </div>
-      <div id="options">
-        <a href="https://www.linkedin.com/in/samgdf/" target="_top"><div class="btn select">SELECT</div></a>
-        <a href="mailto:hello@samgdf.com" target="_top"><div class="btn start">START</div></a>
-      </div>
-      </div>
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 100px;
+        }
+
+        .cloud::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+
+        .cloud::after {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            right: 10px;
+        }
+
+        @keyframes float-cloud {
+            0% {
+                transform: translateX(-150px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(calc(100vw + 150px));
+                opacity: 0;
+            }
+        }
+
+        #water {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            height: 15%;
+            background: linear-gradient(to bottom, #4a90a4 0%, #3a7a94 50%, #2a6a84 100%);
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple-animation 1.2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        .water-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.1) 75%,
+                transparent 100%);
+            animation: flow 8s linear infinite;
+        }
+
+        .water-wave:nth-child(2) {
+            animation-duration: 12s;
+            opacity: 0.5;
+        }
+
+        @keyframes flow {
+            0% {
+                transform: translateX(-50%);
+            }
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        #links-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            padding: 20px;
+        }
+
+        @keyframes fade-out {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fade-out-reflection {
+            0% {
+                opacity: 0.25;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #links-container a {
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+        .hover-zone {
+            position: fixed;
+            pointer-events: auto;
+            z-index: 99;
+            /* Debug: uncomment to see hover area */
+            /* background: rgba(255, 0, 0, 0.1); */
+        }
+
+        #links-container a:not(.hovered):not(.no-animation) {
+            animation: fade-out 1s ease-out 2s forwards;
+        }
+
+        #links-container a.hovered {
+            opacity: 1;
+        }
+
+        #links-container a.faded {
+            opacity: 0;
+        }
+
+        .reflection {
+            position: fixed;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            transform: scaleY(-1);
+            opacity: 0.25;
+            filter: blur(1.5px);
+            pointer-events: none;
+            z-index: 2;
+            transition: opacity 1s ease-out;
+        }
+
+        .reflection:not(.hovered):not(.no-animation) {
+            animation: fade-out-reflection 1s ease-out 2s forwards;
+        }
+
+        .reflection.hovered {
+            opacity: 0.25;
+        }
+
+        .reflection.faded {
+            opacity: 0;
+        }
+
+        .cloud.brightened {
+            opacity: 0.9 !important;
+        }
+
+        #grass-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .grass-blade {
+            position: absolute;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to top, #4a6e1a 0%, #6B8E23 50%, #7fa632 100%);
+            transform-origin: bottom center;
+            opacity: 0.8;
+            transition: transform 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="clouds-container"></div>
+    <div id="water">
+        <div class="water-wave"></div>
+        <div class="water-wave"></div>
+    </div>
+    <div id="grass-container"></div>
+    <div id="links-container">
+        <a href="https://linkedin.com/in/samgdf" target="_blank" data-text="Linkedin">Linkedin</a>
+        <a href="https://github.com/samgdf" target="_blank" data-text="Github">Github</a>
     </div>
 
     <script>
-    const arr = ['SAM GOLDFIELD works at GALILEO', 'Press SELECT to visit my LINKEDIN', 'Press START to email me at HELLO@SAMGDF.COM', 'THANK YOU for visiting, have a great day'];
-    let i = 0;
-    const textBox = document.getElementById('text__box');
+        // Dynamic Favicon System
+        const faviconCanvas = document.createElement('canvas');
+        faviconCanvas.width = 32;
+        faviconCanvas.height = 32;
+        const faviconCtx = faviconCanvas.getContext('2d');
+        let faviconLink = document.querySelector('link[rel="icon"]');
+        let currentFaviconState = 'default';
+        let faviconAnimationFrame = 0;
 
-    function updateText(text) {
-        textBox.textContent = text;
-    }
+        function updateFavicon(state, animationFrame = 0) {
+            faviconCtx.clearRect(0, 0, 32, 32);
 
-    function nextItem() {
-        i = (i + 1) % arr.length;
-        updateText(arr[i]);
-    }
+            if (state === 'grass-moving') {
+                // Sky
+                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillRect(0, 0, 32, 20);
 
-    function prevItem() {
-        i = (i - 1 + arr.length) % arr.length;
-        updateText(arr[i]);
-    }
+                // Ground
+                faviconCtx.fillStyle = '#6B8E23';
+                faviconCtx.fillRect(0, 20, 32, 12);
 
-    window.addEventListener('load', () => {
-        // Buttons that go forward (A, right, down)
-        ['next_button', 'right_button', 'down_button'].forEach(id => {
-            document.getElementById(id).addEventListener('click', nextItem);
+                // Animated grass blades
+                faviconCtx.strokeStyle = '#4a6e1a';
+                faviconCtx.lineWidth = 1.5;
+                for (let i = 0; i < 8; i++) {
+                    const x = 4 + i * 4;
+                    const sway = Math.sin(animationFrame * 0.3 + i) * 2;
+                    faviconCtx.beginPath();
+                    faviconCtx.moveTo(x, 32);
+                    faviconCtx.lineTo(x + sway, 22);
+                    faviconCtx.stroke();
+                }
+
+                // Wind indicator
+                faviconCtx.fillStyle = '#ffffff';
+                faviconCtx.globalAlpha = 0.6;
+                const windX = 8 + Math.sin(animationFrame * 0.2) * 3;
+                faviconCtx.fillRect(windX, 8, 4, 1);
+                faviconCtx.fillRect(windX + 2, 10, 6, 1);
+                faviconCtx.globalAlpha = 1;
+
+            } else if (state === 'water-ripple') {
+                // Sky
+                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillRect(0, 0, 32, 16);
+
+                // Water with ripple
+                faviconCtx.fillStyle = '#4a90a4';
+                faviconCtx.fillRect(0, 16, 32, 16);
+
+                // Expanding ripple circles
+                const maxRadius = 12;
+                const radius = (animationFrame % 15) / 15 * maxRadius;
+                faviconCtx.strokeStyle = '#ffffff';
+                faviconCtx.globalAlpha = 1 - (radius / maxRadius);
+                faviconCtx.lineWidth = 1.5;
+                faviconCtx.beginPath();
+                faviconCtx.arc(16, 24, radius, 0, Math.PI * 2);
+                faviconCtx.stroke();
+                faviconCtx.globalAlpha = 1;
+
+            } else if (state === 'link-hover') {
+                // Sky
+                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillRect(0, 0, 32, 20);
+
+                // Ground
+                faviconCtx.fillStyle = '#6B8E23';
+                faviconCtx.fillRect(0, 20, 32, 12);
+
+                // Highlighted link indicator (glowing dot)
+                const pulse = Math.sin(animationFrame * 0.4) * 0.3 + 0.7;
+                faviconCtx.fillStyle = '#ffffff';
+                faviconCtx.globalAlpha = pulse;
+                faviconCtx.beginPath();
+                faviconCtx.arc(16, 12, 4, 0, Math.PI * 2);
+                faviconCtx.fill();
+                faviconCtx.globalAlpha = 1;
+
+                // Link text lines
+                faviconCtx.fillStyle = '#ffffff';
+                faviconCtx.fillRect(11, 10, 10, 1);
+                faviconCtx.fillRect(11, 13, 10, 1);
+
+            } else {
+                // Default landscape
+                // Sky
+                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillRect(0, 0, 32, 18);
+
+                // Cloud
+                faviconCtx.fillStyle = '#ffffff';
+                faviconCtx.globalAlpha = 0.7;
+                faviconCtx.beginPath();
+                faviconCtx.arc(20, 8, 3, 0, Math.PI * 2);
+                faviconCtx.arc(24, 8, 4, 0, Math.PI * 2);
+                faviconCtx.arc(28, 8, 3, 0, Math.PI * 2);
+                faviconCtx.fill();
+                faviconCtx.globalAlpha = 1;
+
+                // Water
+                faviconCtx.fillStyle = '#4a90a4';
+                faviconCtx.fillRect(0, 18, 32, 6);
+
+                // Ground/grass
+                faviconCtx.fillStyle = '#6B8E23';
+                faviconCtx.fillRect(0, 24, 32, 8);
+
+                // Static grass blades
+                faviconCtx.strokeStyle = '#4a6e1a';
+                faviconCtx.lineWidth = 1;
+                for (let i = 0; i < 8; i++) {
+                    const x = 4 + i * 4;
+                    faviconCtx.beginPath();
+                    faviconCtx.moveTo(x, 32);
+                    faviconCtx.lineTo(x, 26);
+                    faviconCtx.stroke();
+                }
+            }
+
+            faviconLink.href = faviconCanvas.toDataURL();
+        }
+
+        function setFaviconState(state, duration = 2000) {
+            currentFaviconState = state;
+            faviconAnimationFrame = 0;
+
+            // Animate the favicon
+            const startTime = Date.now();
+            const animateInterval = setInterval(() => {
+                faviconAnimationFrame++;
+                updateFavicon(currentFaviconState, faviconAnimationFrame);
+
+                if (Date.now() - startTime > duration) {
+                    clearInterval(animateInterval);
+                    currentFaviconState = 'default';
+                    updateFavicon('default');
+                }
+            }, 100);
+        }
+
+        // Initialize with default favicon
+        updateFavicon('default');
+
+        const grassContainer = document.getElementById('grass-container');
+        const cloudsContainer = document.getElementById('clouds-container');
+        const grassBlades = [];
+
+        // Generate clouds
+        function createClouds() {
+            const numClouds = 3;
+            for (let i = 0; i < numClouds; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+
+                const size = 80 + Math.random() * 60;
+                cloud.style.width = `${size}px`;
+                cloud.style.height = `${size * 0.6}px`;
+                cloud.style.top = `${5 + Math.random() * 30}%`;
+
+                const duration = 40 + Math.random() * 30;
+                const delay = Math.random() * 30;
+
+                cloud.style.animation = `float-cloud ${duration}s linear ${delay}s infinite`;
+
+                cloudsContainer.appendChild(cloud);
+                trackCloud(cloud);
+            }
+        }
+
+        // Check cloud proximity to text and brighten
+        function updateCloudBrightness() {
+            // Disable on narrow screens to prevent layout issues
+            if (window.innerWidth < 400) {
+                clouds.forEach(cloud => {
+                    cloud.classList.remove('brightened');
+                });
+                return;
+            }
+
+            const links = document.querySelectorAll('#links-container a');
+
+            clouds.forEach(cloud => {
+                const cloudRect = cloud.getBoundingClientRect();
+                let shouldBrighten = false;
+
+                // Only check if cloud is actually visible and has valid dimensions
+                if (cloudRect.width > 0 && cloudRect.height > 0) {
+                    links.forEach(link => {
+                        // Only brighten if link is visible (not faded out)
+                        const linkOpacity = window.getComputedStyle(link).opacity;
+                        if (parseFloat(linkOpacity) > 0.5) {
+                            const linkRect = link.getBoundingClientRect();
+
+                            // Calculate distance between cloud and link
+                            const cloudCenterX = cloudRect.left + cloudRect.width / 2;
+                            const cloudCenterY = cloudRect.top + cloudRect.height / 2;
+                            const linkCenterX = linkRect.left + linkRect.width / 2;
+                            const linkCenterY = linkRect.top + linkRect.height / 2;
+
+                            const distance = Math.sqrt(
+                                Math.pow(cloudCenterX - linkCenterX, 2) +
+                                Math.pow(cloudCenterY - linkCenterY, 2)
+                            );
+
+                            // Brighten if within 200px
+                            if (distance < 200) {
+                                shouldBrighten = true;
+                            }
+                        }
+                    });
+                }
+
+                if (shouldBrighten) {
+                    cloud.classList.add('brightened');
+                } else {
+                    cloud.classList.remove('brightened');
+                }
+            });
+        }
+
+        // Generate grass blades
+        function createGrass() {
+            const numBlades = Math.floor(window.innerWidth / 4);
+            for (let i = 0; i < numBlades; i++) {
+                const blade = document.createElement('div');
+                blade.className = 'grass-blade';
+                blade.style.left = `${Math.random() * 100}%`;
+                blade.style.height = `${Math.random() * 100 + 60}px`;
+                blade.style.transform = `rotate(${(Math.random() - 0.5) * 10}deg)`;
+                blade.style.zIndex = Math.floor(Math.random() * 100);
+                grassContainer.appendChild(blade);
+                grassBlades.push({
+                    element: blade,
+                    baseRotation: (Math.random() - 0.5) * 10,
+                    offset: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        // Animation variables
+        let moveX = 0;
+        let moveY = 0;
+        let time = 0;
+
+        // Keyboard controls
+        const keys = {};
+        let keyPressTimeout = null;
+        window.addEventListener('keydown', (e) => {
+            const isMovementKey = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd'].includes(e.key);
+            if (isMovementKey && !keys[e.key]) {
+                setFaviconState('grass-moving', 2000);
+            }
+            keys[e.key] = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
         });
 
-        // Buttons that go backward (B, left, up)
-        ['prev_button', 'left_button', 'up_button'].forEach(id => {
-            document.getElementById(id).addEventListener('click', prevItem);
+        // Update grass movement
+        function updateGrass() {
+            moveX = 0;
+            moveY = 0;
+
+            if (keys['ArrowUp'] || keys['w']) moveY = 1;
+            if (keys['ArrowDown'] || keys['s']) moveY = -1;
+            if (keys['ArrowLeft'] || keys['a']) moveX = -1;
+            if (keys['ArrowRight'] || keys['d']) moveX = 1;
+
+            time += 0.05;
+
+            grassBlades.forEach((blade) => {
+                const windEffect = Math.sin(time + blade.offset) * 2;
+                const moveEffect = moveX * 15 + moveY * 10;
+                const totalRotation = blade.baseRotation + windEffect + moveEffect;
+                blade.element.style.transform = `rotate(${totalRotation}deg)`;
+            });
+        }
+
+        // Animation loop
+        function animate() {
+            updateGrass();
+            updateCloudBrightness();
+            requestAnimationFrame(animate);
+        }
+
+        // Create reflections
+        const reflections = [];
+        function createReflections() {
+            const links = document.querySelectorAll('#links-container a');
+            links.forEach(link => {
+                const reflection = document.createElement('div');
+                reflection.className = 'reflection';
+                reflection.textContent = link.textContent;
+                reflection.dataset.link = link.textContent;
+                document.body.appendChild(reflection);
+
+                // Create hover zone
+                const hoverZone = document.createElement('div');
+                hoverZone.className = 'hover-zone';
+                document.body.appendChild(hoverZone);
+
+                function updatePositions() {
+                    const linkRect = link.getBoundingClientRect();
+                    const waterTop = window.innerHeight * 0.75; // Water starts at 75% from top
+
+                    // Update reflection position
+                    reflection.style.left = linkRect.left + 'px';
+                    reflection.style.top = waterTop + 10 + 'px';
+
+                    // Update hover zone position (200px above link, extending down to link)
+                    hoverZone.style.left = (linkRect.left - 20) + 'px';
+                    hoverZone.style.top = (linkRect.top - 200) + 'px';
+                    hoverZone.style.width = (linkRect.width + 40) + 'px';
+                    hoverZone.style.height = (200 + linkRect.height) + 'px';
+                }
+
+                updatePositions();
+                window.addEventListener('resize', updatePositions);
+
+                // Handle hover on both link and hover zone
+                const handleHoverStart = () => {
+                    link.classList.add('hovered');
+                    link.classList.add('no-animation');
+                    link.classList.remove('faded');
+                    reflection.classList.add('hovered');
+                    reflection.classList.add('no-animation');
+                    reflection.classList.remove('faded');
+                    // Update favicon to show link hover
+                    setFaviconState('link-hover', 3000);
+                };
+
+                const handleHoverEnd = () => {
+                    link.classList.remove('hovered');
+                    link.classList.add('faded');
+                    reflection.classList.remove('hovered');
+                    reflection.classList.add('faded');
+                };
+
+                link.addEventListener('mouseenter', handleHoverStart);
+                link.addEventListener('mouseleave', handleHoverEnd);
+                hoverZone.addEventListener('mouseenter', handleHoverStart);
+                hoverZone.addEventListener('mouseleave', handleHoverEnd);
+
+                reflections.push({ link, reflection, hoverZone });
+            });
+        }
+
+        // Track clouds for brightening
+        const clouds = [];
+        function trackCloud(cloudElement) {
+            clouds.push(cloudElement);
+        }
+
+        // Water ripple effect
+        const water = document.getElementById('water');
+        water.addEventListener('click', (e) => {
+            const rect = water.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.width = '40px';
+            ripple.style.height = '40px';
+
+            water.appendChild(ripple);
+
+            // Update favicon to show water ripple
+            setFaviconState('water-ripple', 1500);
+
+            // Remove ripple after animation completes
+            setTimeout(() => {
+                ripple.remove();
+            }, 1200);
         });
 
-        updateText(arr[0]);
-    });
-
-    document.body.addEventListener('keyup', (e) => {
-        // A key, right arrow, or down arrow
-        if (e.key === 'a' || e.key === 'A' || e.keyCode === 39 || e.keyCode === 40) {
-            nextItem();
-        }
-        // B key, left arrow, or up arrow
-        if (e.key === 'b' || e.key === 'B' || e.keyCode === 37 || e.keyCode === 38) {
-            prevItem();
-        }
-    });
+        // Initialize
+        createClouds();
+        createGrass();
+        createReflections();
+        animate();
     </script>
-
-  </body>
+</body>
 </html>
