@@ -40,10 +40,23 @@
         }
 
         body {
-            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 75%, #98C58E 85%, #6B8E23 100%);
+            background: #87CEEB;
             width: 100vw;
             height: 100vh;
             position: relative;
+        }
+
+        /* Curved ledge effect using radial gradient */
+        body::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: radial-gradient(ellipse 120% 60% at 50% 100%, #6B8E23 0%, #6B8E23 30%, #98C58E 50%, #87CEEB 70%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .cloud {
@@ -95,9 +108,9 @@
 
         #water {
             position: absolute;
-            bottom: 10%;
+            bottom: 15%;
             width: 100%;
-            height: 15%;
+            height: 12%;
             background: linear-gradient(to bottom, #4a90a4 0%, #3a7a94 50%, #2a6a84 100%);
             overflow: hidden;
             z-index: 1;
@@ -580,7 +593,9 @@
 
                 function updatePositions() {
                     const linkRect = link.getBoundingClientRect();
-                    const waterTop = window.innerHeight * 0.75; // Water starts at 75% from top
+                    const waterElement = document.getElementById('water');
+                    const waterRect = waterElement.getBoundingClientRect();
+                    const waterTop = waterRect.top; // Get actual water position
 
                     // Update reflection position
                     reflection.style.left = linkRect.left + 'px';
