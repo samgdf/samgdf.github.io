@@ -40,10 +40,37 @@
         }
 
         body {
-            background: #87CEEB;
+            --sky-color: #87CEEB;
+            --river-top: #4a90a4;
+            --river-mid: #3a7a94;
+            --river-bottom: #2a6a84;
+            --water-wave-highlight: rgba(255, 255, 255, 0.1);
+            --grass-bottom: #4a6e1a;
+            --grass-mid: #6B8E23;
+            --grass-top: #7fa632;
+            --link-color: #ffffff;
+            --reflection-color: rgba(255, 255, 255, 0.3);
+            --ledge-base: #6B8E23;
+            --ledge-mid: #98C58E;
+            background: var(--sky-color);
             width: 100vw;
             height: 100vh;
             position: relative;
+        }
+
+        body.night-sky {
+            --sky-color: #0b1f4d;
+            --river-top: #2f6278;
+            --river-mid: #244f63;
+            --river-bottom: #1b3d4f;
+            --water-wave-highlight: rgba(226, 236, 255, 0.07);
+            --grass-bottom: #2f4713;
+            --grass-mid: #3f5f1a;
+            --grass-top: #527626;
+            --link-color: #d7e0f2;
+            --reflection-color: rgba(215, 224, 242, 0.22);
+            --ledge-base: #2f4713;
+            --ledge-mid: #395721;
         }
 
         /* Curved ledge effect using radial gradient */
@@ -54,7 +81,7 @@
             left: 0;
             right: 0;
             height: 60%;
-            background: radial-gradient(ellipse 120% 60% at 50% 100%, #6B8E23 0%, #6B8E23 30%, #98C58E 50%, #87CEEB 70%);
+            background: radial-gradient(ellipse 120% 60% at 50% 100%, var(--ledge-base) 0%, var(--ledge-base) 30%, var(--ledge-mid) 50%, var(--sky-color) 70%);
             z-index: 0;
             pointer-events: none;
         }
@@ -111,7 +138,7 @@
             bottom: 15%;
             width: 100%;
             height: 12%;
-            background: linear-gradient(to bottom, #4a90a4 0%, #3a7a94 50%, #2a6a84 100%);
+            background: linear-gradient(to bottom, var(--river-top) 0%, var(--river-mid) 50%, var(--river-bottom) 100%);
             overflow: hidden;
             z-index: 1;
             cursor: pointer;
@@ -143,9 +170,9 @@
             height: 100%;
             background: linear-gradient(90deg,
                 transparent 0%,
-                rgba(255, 255, 255, 0.1) 25%,
+                var(--water-wave-highlight) 25%,
                 transparent 50%,
-                rgba(255, 255, 255, 0.1) 75%,
+                var(--water-wave-highlight) 75%,
                 transparent 100%);
             animation: flow 8s linear infinite;
         }
@@ -195,7 +222,7 @@
         }
 
         #links-container a {
-            color: #fff;
+            color: var(--link-color);
             font-family: Arial, Helvetica, sans-serif;
             font-size: 24px;
             font-weight: bold;
@@ -203,7 +230,7 @@
             position: relative;
             display: inline-block;
             opacity: 1;
-            transition: opacity 1s ease-out;
+            transition: opacity 1s ease-out, color 0.4s ease-out;
         }
 
         .hover-zone {
@@ -228,7 +255,7 @@
 
         .reflection {
             position: fixed;
-            color: rgba(255, 255, 255, 0.3);
+            color: var(--reflection-color);
             font-family: Arial, Helvetica, sans-serif;
             font-size: 24px;
             font-weight: bold;
@@ -237,7 +264,7 @@
             filter: blur(1.5px);
             pointer-events: none;
             z-index: 2;
-            transition: opacity 1s ease-out;
+            transition: opacity 1s ease-out, color 0.4s ease-out;
         }
 
         .reflection:not(.hovered):not(.no-animation) {
@@ -269,7 +296,7 @@
             position: absolute;
             bottom: 0;
             width: 3px;
-            background: linear-gradient(to top, #4a6e1a 0%, #6B8E23 50%, #7fa632 100%);
+            background: linear-gradient(to top, var(--grass-bottom) 0%, var(--grass-mid) 50%, var(--grass-top) 100%);
             transform-origin: bottom center;
             opacity: 0.8;
             transition: transform 0.3s ease-out;
@@ -297,21 +324,51 @@
         let faviconLink = document.querySelector('link[rel="icon"]');
         let currentFaviconState = 'default';
         let faviconAnimationFrame = 0;
+        const DAY_SKY_COLOR = '#87CEEB';
+        const NIGHT_SKY_COLOR = '#0b1f4d';
+
+        function getSkyColor() {
+            const hour = new Date().getHours();
+            const isNight = hour >= 18 || hour < 6;
+            return isNight ? NIGHT_SKY_COLOR : DAY_SKY_COLOR;
+        }
+
+        function applySkyByLocalTime() {
+            const skyColor = getSkyColor();
+            const isNightSky = skyColor === NIGHT_SKY_COLOR;
+            document.body.classList.toggle('night-sky', isNightSky);
+
+            const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute('content', skyColor);
+            }
+
+            const appleStatusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+            if (appleStatusMeta) {
+                appleStatusMeta.setAttribute('content', skyColor);
+            }
+        }
 
         function updateFavicon(state, animationFrame = 0) {
             faviconCtx.clearRect(0, 0, 32, 32);
+            const skyColor = getSkyColor();
+            const isNightSky = skyColor === NIGHT_SKY_COLOR;
+            const waterColor = isNightSky ? '#2f6278' : '#4a90a4';
+            const groundColor = isNightSky ? '#3f5f1a' : '#6B8E23';
+            const grassColor = isNightSky ? '#2f4713' : '#4a6e1a';
+            const linkColor = isNightSky ? '#d7e0f2' : '#ffffff';
 
             if (state === 'grass-moving') {
                 // Sky
-                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillStyle = skyColor;
                 faviconCtx.fillRect(0, 0, 32, 20);
 
                 // Ground
-                faviconCtx.fillStyle = '#6B8E23';
+                faviconCtx.fillStyle = groundColor;
                 faviconCtx.fillRect(0, 20, 32, 12);
 
                 // Animated grass blades
-                faviconCtx.strokeStyle = '#4a6e1a';
+                faviconCtx.strokeStyle = grassColor;
                 faviconCtx.lineWidth = 1.5;
                 for (let i = 0; i < 8; i++) {
                     const x = 4 + i * 4;
@@ -332,11 +389,11 @@
 
             } else if (state === 'water-ripple') {
                 // Sky
-                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillStyle = skyColor;
                 faviconCtx.fillRect(0, 0, 32, 16);
 
                 // Water with ripple
-                faviconCtx.fillStyle = '#4a90a4';
+                faviconCtx.fillStyle = waterColor;
                 faviconCtx.fillRect(0, 16, 32, 16);
 
                 // Expanding ripple circles
@@ -352,11 +409,11 @@
 
             } else if (state === 'link-hover') {
                 // Sky
-                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillStyle = skyColor;
                 faviconCtx.fillRect(0, 0, 32, 20);
 
                 // Ground
-                faviconCtx.fillStyle = '#6B8E23';
+                faviconCtx.fillStyle = groundColor;
                 faviconCtx.fillRect(0, 20, 32, 12);
 
                 // Highlighted link indicator (glowing dot)
@@ -369,14 +426,14 @@
                 faviconCtx.globalAlpha = 1;
 
                 // Link text lines
-                faviconCtx.fillStyle = '#ffffff';
+                faviconCtx.fillStyle = linkColor;
                 faviconCtx.fillRect(11, 10, 10, 1);
                 faviconCtx.fillRect(11, 13, 10, 1);
 
             } else {
                 // Default landscape
                 // Sky
-                faviconCtx.fillStyle = '#87CEEB';
+                faviconCtx.fillStyle = skyColor;
                 faviconCtx.fillRect(0, 0, 32, 18);
 
                 // Cloud
@@ -390,15 +447,15 @@
                 faviconCtx.globalAlpha = 1;
 
                 // Water
-                faviconCtx.fillStyle = '#4a90a4';
+                faviconCtx.fillStyle = waterColor;
                 faviconCtx.fillRect(0, 18, 32, 6);
 
                 // Ground/grass
-                faviconCtx.fillStyle = '#6B8E23';
+                faviconCtx.fillStyle = groundColor;
                 faviconCtx.fillRect(0, 24, 32, 8);
 
                 // Static grass blades
-                faviconCtx.strokeStyle = '#4a6e1a';
+                faviconCtx.strokeStyle = grassColor;
                 faviconCtx.lineWidth = 1;
                 for (let i = 0; i < 8; i++) {
                     const x = 4 + i * 4;
@@ -430,8 +487,13 @@
             }, 100);
         }
 
-        // Initialize with default favicon
+        // Initialize sky theme and favicon
+        applySkyByLocalTime();
         updateFavicon('default');
+        setInterval(() => {
+            applySkyByLocalTime();
+            updateFavicon(currentFaviconState, faviconAnimationFrame);
+        }, 60000);
 
         const grassContainer = document.getElementById('grass-container');
         const cloudsContainer = document.getElementById('clouds-container');
