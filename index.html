@@ -41,10 +41,11 @@
 
         body {
             --sky-color: #87CEEB;
-            --river-top: #4a90a4;
-            --river-mid: #3a7a94;
-            --river-bottom: #2a6a84;
-            --water-wave-highlight: rgba(255, 255, 255, 0.1);
+            --river-top: #79b8c9;
+            --river-mid: #5293ad;
+            --river-bottom: #3a7894;
+            --water-wave-highlight: rgba(229, 247, 255, 0.14);
+            --water-foam: rgba(236, 250, 255, 0.25);
             --grass-bottom: #4a6e1a;
             --grass-mid: #6B8E23;
             --grass-top: #7fa632;
@@ -60,10 +61,11 @@
 
         body.night-sky {
             --sky-color: #0b1f4d;
-            --river-top: #2f6278;
-            --river-mid: #244f63;
-            --river-bottom: #1b3d4f;
-            --water-wave-highlight: rgba(226, 236, 255, 0.07);
+            --river-top: #4f839a;
+            --river-mid: #33627a;
+            --river-bottom: #264e66;
+            --water-wave-highlight: rgba(226, 236, 255, 0.1);
+            --water-foam: rgba(215, 224, 242, 0.16);
             --grass-bottom: #2f4713;
             --grass-mid: #3f5f1a;
             --grass-top: #527626;
@@ -138,56 +140,98 @@
             bottom: 15%;
             width: 100%;
             height: 12%;
-            background: linear-gradient(to bottom, var(--river-top) 0%, var(--river-mid) 50%, var(--river-bottom) 100%);
+            background:
+                linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.09) 0%,
+                    rgba(255, 255, 255, 0.04) 10%,
+                    transparent 24%,
+                    transparent 100%),
+                linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.08) 22%,
+                    transparent 48%,
+                    rgba(255, 255, 255, 0.06) 74%,
+                    transparent 100%),
+                linear-gradient(180deg,
+                    var(--river-top) 0%,
+                    var(--river-mid) 42%,
+                    var(--river-bottom) 100%);
+            background-size: 100% 100%, 260% 100%, 100% 100%;
+            background-position: 0 0, 0 0, 0 0;
+            animation: water-drift 14s linear infinite;
             overflow: hidden;
             z-index: 1;
             cursor: pointer;
+            box-shadow:
+                inset 0 10px 22px rgba(255, 255, 255, 0.12),
+                inset 0 -12px 28px rgba(0, 0, 0, 0.22),
+                0 -2px 8px rgba(255, 255, 255, 0.08);
+        }
+
+        #water::before,
+        #water::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        #water::before {
+            display: none;
+        }
+
+        #water::after {
+            background:
+                linear-gradient(180deg, transparent 0%, rgba(0, 30, 50, 0.12) 100%);
+            animation: water-depth 12s ease-in-out infinite alternate;
         }
 
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.06) 44%, transparent 72%);
             transform: translate(-50%, -50%) scale(0);
-            animation: ripple-animation 1.2s ease-out forwards;
+            animation: ripple-animation var(--ripple-duration, 1500ms) cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
             pointer-events: none;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        }
+
+        .ripple::after {
+            content: '';
+            position: absolute;
+            inset: 24%;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            opacity: 0.6;
         }
 
         @keyframes ripple-animation {
             0% {
                 transform: translate(-50%, -50%) scale(0);
-                opacity: 1;
+                opacity: 0.8;
             }
             100% {
-                transform: translate(-50%, -50%) scale(2.5);
+                transform: translate(-50%, -50%) scale(2.1);
                 opacity: 0;
             }
         }
 
-        .water-wave {
-            position: absolute;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                var(--water-wave-highlight) 25%,
-                transparent 50%,
-                var(--water-wave-highlight) 75%,
-                transparent 100%);
-            animation: flow 8s linear infinite;
-        }
-
-        .water-wave:nth-child(2) {
-            animation-duration: 12s;
-            opacity: 0.5;
-        }
-
-        @keyframes flow {
+        @keyframes water-depth {
             0% {
-                transform: translateX(-50%);
+                opacity: 0.55;
             }
             100% {
-                transform: translateX(0%);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes water-drift {
+            0% {
+                background-position: 0 0, 0 0, 0 0;
+            }
+            100% {
+                background-position: 0 0, 260% 0, 0 0;
             }
         }
 
@@ -306,8 +350,6 @@
 <body>
     <div id="clouds-container"></div>
     <div id="water">
-        <div class="water-wave"></div>
-        <div class="water-wave"></div>
     </div>
     <div id="grass-container"></div>
     <div id="links-container">
@@ -713,13 +755,16 @@
             const rect = water.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+            const rippleSize = 24 + Math.random() * 14;
+            const rippleDuration = 1300 + Math.random() * 500;
 
             const ripple = document.createElement('div');
             ripple.className = 'ripple';
             ripple.style.left = x + 'px';
             ripple.style.top = y + 'px';
-            ripple.style.width = '40px';
-            ripple.style.height = '40px';
+            ripple.style.width = rippleSize + 'px';
+            ripple.style.height = rippleSize + 'px';
+            ripple.style.setProperty('--ripple-duration', rippleDuration + 'ms');
 
             water.appendChild(ripple);
 
@@ -729,7 +774,7 @@
             // Remove ripple after animation completes
             setTimeout(() => {
                 ripple.remove();
-            }, 1200);
+            }, rippleDuration);
         });
 
         // Initialize
