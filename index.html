@@ -1,787 +1,248 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sam Goldfield's Interactive Website</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#87CEEB" />
-    <meta name="theme-color" content="#87CEEB" />
-    <meta property="og:creator" content="@samgdf" />
-    <meta property="og:title" content="Sam Goldfield's Interactive Website" />
-    <meta property="og:description" content="Explore Sam Goldfield's interactive website featuring links to LinkedIn and GitHub with a calm landscape, tall grass, and a running river with clouds overhead." />
-    <meta property="og:url" content="https://www.samgdf.com" />
-    <meta name="description" content="Sam Goldfield's interactive website" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://www.samgdf.com/" />
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Sam Goldfield",
-      "url": "https://www.samgdf.com/",
-      "jobTitle": "Sales Engineering Manager",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Galileo"
-      },
-      "sameAs": [
-        "https://github.com/samgdf",
-        "https://www.linkedin.com/in/samgdf/"
-      ]
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" href="/favicon-pixel.png">
+  <link rel="shortcut icon" type="image/png" href="/favicon-pixel.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
+  <title>Sam Goldfield</title>
+  <style>
+    :root {
+      --bg: #8b6a43;
+      --text: #f7f4ea;
+      --link: #ffffff;
     }
-    </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
 
-        body {
-            --sky-color: #87CEEB;
-            --river-top: #79b8c9;
-            --river-mid: #5293ad;
-            --river-bottom: #3a7894;
-            --water-wave-highlight: rgba(229, 247, 255, 0.14);
-            --water-foam: rgba(236, 250, 255, 0.25);
-            --grass-bottom: #4a6e1a;
-            --grass-mid: #6B8E23;
-            --grass-top: #7fa632;
-            --link-color: #ffffff;
-            --reflection-color: rgba(255, 255, 255, 0.3);
-            --ledge-base: #6B8E23;
-            --ledge-mid: #98C58E;
-            background: var(--sky-color);
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #2a1448;
+        --text: #f3ecff;
+        --link: #ffffff;
+      }
+    }
 
-        body.night-sky {
-            --sky-color: #0b1f4d;
-            --river-top: #4f839a;
-            --river-mid: #33627a;
-            --river-bottom: #264e66;
-            --water-wave-highlight: rgba(226, 236, 255, 0.1);
-            --water-foam: rgba(215, 224, 242, 0.16);
-            --grass-bottom: #2f4713;
-            --grass-mid: #3f5f1a;
-            --grass-top: #527626;
-            --link-color: #d7e0f2;
-            --reflection-color: rgba(215, 224, 242, 0.22);
-            --ledge-base: #2f4713;
-            --ledge-mid: #395721;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        /* Curved ledge effect using radial gradient */
-        body::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: radial-gradient(ellipse 120% 60% at 50% 100%, var(--ledge-base) 0%, var(--ledge-base) 30%, var(--ledge-mid) 50%, var(--sky-color) 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 100px;
-            opacity: 0;
-            z-index: 0;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 1rem;
+    }
 
-        .cloud::before,
-        .cloud::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 100px;
-        }
+    .content {
+      width: min(64vmin, 27rem);
+      aspect-ratio: 1 / 1;
+      background: var(--bg);
+      border: none;
+      border-radius: 1.2rem;
+      display: grid;
+      place-items: center;
+      padding: 1.6rem;
+    }
 
-        .cloud::before {
-            width: 50px;
-            height: 50px;
-            top: -25px;
-            left: 10px;
-        }
+    p {
+      margin: 0;
+      font-size: clamp(1rem, 1.9vw, 1.35rem);
+      line-height: 1.35;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-wrap: pretty;
+      cursor: default;
+    }
 
-        .cloud::after {
-            width: 60px;
-            height: 60px;
-            top: -30px;
-            right: 10px;
-        }
+    a {
+      color: var(--link);
+      text-underline-offset: 0.2em;
+      filter: brightness(1);
+      transition: filter 220ms ease;
+    }
 
-        @keyframes float-cloud {
-            0% {
-                transform: translateX(-150px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateX(calc(100vw + 150px));
-                opacity: 0;
-            }
-        }
+    a:hover {
+      filter: brightness(1.2);
+    }
 
-        #water {
-            position: absolute;
-            bottom: 15%;
-            width: 100%;
-            height: 12%;
-            background:
-                linear-gradient(180deg,
-                    rgba(255, 255, 255, 0.09) 0%,
-                    rgba(255, 255, 255, 0.04) 10%,
-                    transparent 24%,
-                    transparent 100%),
-                linear-gradient(90deg,
-                    transparent 0%,
-                    rgba(255, 255, 255, 0.08) 22%,
-                    transparent 48%,
-                    rgba(255, 255, 255, 0.06) 74%,
-                    transparent 100%),
-                linear-gradient(180deg,
-                    var(--river-top) 0%,
-                    var(--river-mid) 42%,
-                    var(--river-bottom) 100%);
-            background-size: 100% 100%, 260% 100%, 100% 100%;
-            background-position: 0 0, 0 0, 0 0;
-            animation: water-drift 14s linear infinite;
-            overflow: hidden;
-            z-index: 1;
-            cursor: pointer;
-            box-shadow:
-                inset 0 10px 22px rgba(255, 255, 255, 0.12),
-                inset 0 -12px 28px rgba(0, 0, 0, 0.22),
-                0 -2px 8px rgba(255, 255, 255, 0.08);
-        }
+    .word {
+      display: inline-block;
+      line-height: 1.1;
+      transform: translateX(0) scale(1);
+      transform-origin: center 75%;
+      transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      will-change: transform;
+    }
 
-        #water::before,
-        #water::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
+    .word.name-focus {
+      filter: brightness(1);
+      transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1), filter 220ms ease;
+    }
 
-        #water::before {
-            display: none;
-        }
-
-        #water::after {
-            background:
-                linear-gradient(180deg, transparent 0%, rgba(0, 30, 50, 0.12) 100%);
-            animation: water-depth 12s ease-in-out infinite alternate;
-        }
-
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.26);
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.06) 44%, transparent 72%);
-            transform: translate(-50%, -50%) scale(0);
-            animation: ripple-animation var(--ripple-duration, 1500ms) cubic-bezier(0.2, 0.65, 0.25, 1) forwards;
-            pointer-events: none;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-        }
-
-        .ripple::after {
-            content: '';
-            position: absolute;
-            inset: 24%;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            opacity: 0.6;
-        }
-
-        @keyframes ripple-animation {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(2.1);
-                opacity: 0;
-            }
-        }
-
-        @keyframes water-depth {
-            0% {
-                opacity: 0.55;
-            }
-            100% {
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes water-drift {
-            0% {
-                background-position: 0 0, 0 0, 0 0;
-            }
-            100% {
-                background-position: 0 0, 260% 0, 0 0;
-            }
-        }
-
-        #links-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 100;
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            padding: 20px;
-        }
-
-        @keyframes fade-out {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-
-        @keyframes fade-out-reflection {
-            0% {
-                opacity: 0.25;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-
-        #links-container a {
-            color: var(--link-color);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-            opacity: 1;
-            transition: opacity 1s ease-out, color 0.4s ease-out;
-        }
-
-        .hover-zone {
-            position: fixed;
-            pointer-events: auto;
-            z-index: 99;
-            /* Debug: uncomment to see hover area */
-            /* background: rgba(255, 0, 0, 0.1); */
-        }
-
-        #links-container a:not(.hovered):not(.no-animation) {
-            animation: fade-out 1s ease-out 2s forwards;
-        }
-
-        #links-container a.hovered {
-            opacity: 1;
-        }
-
-        #links-container a.faded {
-            opacity: 0;
-        }
-
-        .reflection {
-            position: fixed;
-            color: var(--reflection-color);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 24px;
-            font-weight: bold;
-            transform: scaleY(-1);
-            opacity: 0.25;
-            filter: blur(1.5px);
-            pointer-events: none;
-            z-index: 2;
-            transition: opacity 1s ease-out, color 0.4s ease-out;
-        }
-
-        .reflection:not(.hovered):not(.no-animation) {
-            animation: fade-out-reflection 1s ease-out 2s forwards;
-        }
-
-        .reflection.hovered {
-            opacity: 0.25;
-        }
-
-        .reflection.faded {
-            opacity: 0;
-        }
-
-        .cloud.brightened {
-            opacity: 0.9 !important;
-        }
-
-        #grass-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .grass-blade {
-            position: absolute;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to top, var(--grass-bottom) 0%, var(--grass-mid) 50%, var(--grass-top) 100%);
-            transform-origin: bottom center;
-            opacity: 0.8;
-            transition: transform 0.3s ease-out;
-        }
-    </style>
+    .word.name-focus:hover {
+      filter: brightness(1.2);
+    }
+  </style>
 </head>
 <body>
-    <div id="clouds-container"></div>
-    <div id="water">
-    </div>
-    <div id="grass-container"></div>
-    <div id="links-container">
-        <a href="https://linkedin.com/in/samgdf" target="_blank" data-text="Linkedin">Linkedin</a>
-        <a href="https://github.com/samgdf" target="_blank" data-text="Github">Github</a>
-    </div>
+  <main class="content">
+    <p id="bubble-text">
+      Hello, my name is Sam Goldfield. Here is my
+      <a href="https://www.linkedin.com/in/samgoldfield" target="_blank" rel="noopener noreferrer">Linkedin</a>
+      and here is my
+      <a href="https://github.com/samgdf" target="_blank" rel="noopener noreferrer">Github</a>.
+    </p>
+  </main>
+  <script>
+    const bubbleText = document.getElementById('bubble-text');
 
-    <script>
-        // Dynamic Favicon System
-        const faviconCanvas = document.createElement('canvas');
-        faviconCanvas.width = 32;
-        faviconCanvas.height = 32;
-        const faviconCtx = faviconCanvas.getContext('2d');
-        let faviconLink = document.querySelector('link[rel="icon"]');
-        let currentFaviconState = 'default';
-        let faviconAnimationFrame = 0;
-        const DAY_SKY_COLOR = '#87CEEB';
-        const NIGHT_SKY_COLOR = '#0b1f4d';
+    function wrapWords(node) {
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      let current;
 
-        function getSkyColor() {
-            const hour = new Date().getHours();
-            const isNight = hour >= 18 || hour < 6;
-            return isNight ? NIGHT_SKY_COLOR : DAY_SKY_COLOR;
+      while ((current = walker.nextNode())) {
+        if (current.textContent.trim()) {
+          textNodes.push(current);
         }
+      }
 
-        function applySkyByLocalTime() {
-            const skyColor = getSkyColor();
-            const isNightSky = skyColor === NIGHT_SKY_COLOR;
-            document.body.classList.toggle('night-sky', isNightSky);
+      textNodes.forEach((textNode) => {
+        const fragment = document.createDocumentFragment();
+        const parts = textNode.textContent.split(/(\s+)/);
 
-            const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-            if (themeColorMeta) {
-                themeColorMeta.setAttribute('content', skyColor);
-            }
-
-            const appleStatusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-            if (appleStatusMeta) {
-                appleStatusMeta.setAttribute('content', skyColor);
-            }
-        }
-
-        function updateFavicon(state, animationFrame = 0) {
-            faviconCtx.clearRect(0, 0, 32, 32);
-            const skyColor = getSkyColor();
-            const isNightSky = skyColor === NIGHT_SKY_COLOR;
-            const waterColor = isNightSky ? '#2f6278' : '#4a90a4';
-            const groundColor = isNightSky ? '#3f5f1a' : '#6B8E23';
-            const grassColor = isNightSky ? '#2f4713' : '#4a6e1a';
-            const linkColor = isNightSky ? '#d7e0f2' : '#ffffff';
-
-            if (state === 'grass-moving') {
-                // Sky
-                faviconCtx.fillStyle = skyColor;
-                faviconCtx.fillRect(0, 0, 32, 20);
-
-                // Ground
-                faviconCtx.fillStyle = groundColor;
-                faviconCtx.fillRect(0, 20, 32, 12);
-
-                // Animated grass blades
-                faviconCtx.strokeStyle = grassColor;
-                faviconCtx.lineWidth = 1.5;
-                for (let i = 0; i < 8; i++) {
-                    const x = 4 + i * 4;
-                    const sway = Math.sin(animationFrame * 0.3 + i) * 2;
-                    faviconCtx.beginPath();
-                    faviconCtx.moveTo(x, 32);
-                    faviconCtx.lineTo(x + sway, 22);
-                    faviconCtx.stroke();
-                }
-
-                // Wind indicator
-                faviconCtx.fillStyle = '#ffffff';
-                faviconCtx.globalAlpha = 0.6;
-                const windX = 8 + Math.sin(animationFrame * 0.2) * 3;
-                faviconCtx.fillRect(windX, 8, 4, 1);
-                faviconCtx.fillRect(windX + 2, 10, 6, 1);
-                faviconCtx.globalAlpha = 1;
-
-            } else if (state === 'water-ripple') {
-                // Sky
-                faviconCtx.fillStyle = skyColor;
-                faviconCtx.fillRect(0, 0, 32, 16);
-
-                // Water with ripple
-                faviconCtx.fillStyle = waterColor;
-                faviconCtx.fillRect(0, 16, 32, 16);
-
-                // Expanding ripple circles
-                const maxRadius = 12;
-                const radius = (animationFrame % 15) / 15 * maxRadius;
-                faviconCtx.strokeStyle = '#ffffff';
-                faviconCtx.globalAlpha = 1 - (radius / maxRadius);
-                faviconCtx.lineWidth = 1.5;
-                faviconCtx.beginPath();
-                faviconCtx.arc(16, 24, radius, 0, Math.PI * 2);
-                faviconCtx.stroke();
-                faviconCtx.globalAlpha = 1;
-
-            } else if (state === 'link-hover') {
-                // Sky
-                faviconCtx.fillStyle = skyColor;
-                faviconCtx.fillRect(0, 0, 32, 20);
-
-                // Ground
-                faviconCtx.fillStyle = groundColor;
-                faviconCtx.fillRect(0, 20, 32, 12);
-
-                // Highlighted link indicator (glowing dot)
-                const pulse = Math.sin(animationFrame * 0.4) * 0.3 + 0.7;
-                faviconCtx.fillStyle = '#ffffff';
-                faviconCtx.globalAlpha = pulse;
-                faviconCtx.beginPath();
-                faviconCtx.arc(16, 12, 4, 0, Math.PI * 2);
-                faviconCtx.fill();
-                faviconCtx.globalAlpha = 1;
-
-                // Link text lines
-                faviconCtx.fillStyle = linkColor;
-                faviconCtx.fillRect(11, 10, 10, 1);
-                faviconCtx.fillRect(11, 13, 10, 1);
-
-            } else {
-                // Default landscape
-                // Sky
-                faviconCtx.fillStyle = skyColor;
-                faviconCtx.fillRect(0, 0, 32, 18);
-
-                // Cloud
-                faviconCtx.fillStyle = '#ffffff';
-                faviconCtx.globalAlpha = 0.7;
-                faviconCtx.beginPath();
-                faviconCtx.arc(20, 8, 3, 0, Math.PI * 2);
-                faviconCtx.arc(24, 8, 4, 0, Math.PI * 2);
-                faviconCtx.arc(28, 8, 3, 0, Math.PI * 2);
-                faviconCtx.fill();
-                faviconCtx.globalAlpha = 1;
-
-                // Water
-                faviconCtx.fillStyle = waterColor;
-                faviconCtx.fillRect(0, 18, 32, 6);
-
-                // Ground/grass
-                faviconCtx.fillStyle = groundColor;
-                faviconCtx.fillRect(0, 24, 32, 8);
-
-                // Static grass blades
-                faviconCtx.strokeStyle = grassColor;
-                faviconCtx.lineWidth = 1;
-                for (let i = 0; i < 8; i++) {
-                    const x = 4 + i * 4;
-                    faviconCtx.beginPath();
-                    faviconCtx.moveTo(x, 32);
-                    faviconCtx.lineTo(x, 26);
-                    faviconCtx.stroke();
-                }
-            }
-
-            faviconLink.href = faviconCanvas.toDataURL();
-        }
-
-        function setFaviconState(state, duration = 2000) {
-            currentFaviconState = state;
-            faviconAnimationFrame = 0;
-
-            // Animate the favicon
-            const startTime = Date.now();
-            const animateInterval = setInterval(() => {
-                faviconAnimationFrame++;
-                updateFavicon(currentFaviconState, faviconAnimationFrame);
-
-                if (Date.now() - startTime > duration) {
-                    clearInterval(animateInterval);
-                    currentFaviconState = 'default';
-                    updateFavicon('default');
-                }
-            }, 100);
-        }
-
-        // Initialize sky theme and favicon
-        applySkyByLocalTime();
-        updateFavicon('default');
-        setInterval(() => {
-            applySkyByLocalTime();
-            updateFavicon(currentFaviconState, faviconAnimationFrame);
-        }, 60000);
-
-        const grassContainer = document.getElementById('grass-container');
-        const cloudsContainer = document.getElementById('clouds-container');
-        const grassBlades = [];
-
-        // Generate clouds
-        function createClouds() {
-            const numClouds = 3;
-            for (let i = 0; i < numClouds; i++) {
-                const cloud = document.createElement('div');
-                cloud.className = 'cloud';
-
-                const size = 80 + Math.random() * 60;
-                cloud.style.width = `${size}px`;
-                cloud.style.height = `${size * 0.6}px`;
-                cloud.style.top = `${5 + Math.random() * 30}%`;
-
-                const duration = 40 + Math.random() * 30;
-                const delay = Math.random() * 30;
-
-                cloud.style.animation = `float-cloud ${duration}s linear ${delay}s infinite`;
-
-                cloudsContainer.appendChild(cloud);
-                trackCloud(cloud);
-            }
-        }
-
-        // Check cloud proximity to text and brighten
-        function updateCloudBrightness() {
-            // Disable on narrow screens to prevent layout issues
-            if (window.innerWidth < 400) {
-                clouds.forEach(cloud => {
-                    cloud.classList.remove('brightened');
-                });
-                return;
-            }
-
-            const links = document.querySelectorAll('#links-container a');
-
-            clouds.forEach(cloud => {
-                const cloudRect = cloud.getBoundingClientRect();
-                let shouldBrighten = false;
-
-                // Only check if cloud is actually visible and has valid dimensions
-                if (cloudRect.width > 0 && cloudRect.height > 0) {
-                    links.forEach(link => {
-                        // Only brighten if link is visible (not faded out)
-                        const linkOpacity = window.getComputedStyle(link).opacity;
-                        if (parseFloat(linkOpacity) > 0.5) {
-                            const linkRect = link.getBoundingClientRect();
-
-                            // Calculate distance between cloud and link
-                            const cloudCenterX = cloudRect.left + cloudRect.width / 2;
-                            const cloudCenterY = cloudRect.top + cloudRect.height / 2;
-                            const linkCenterX = linkRect.left + linkRect.width / 2;
-                            const linkCenterY = linkRect.top + linkRect.height / 2;
-
-                            const distance = Math.sqrt(
-                                Math.pow(cloudCenterX - linkCenterX, 2) +
-                                Math.pow(cloudCenterY - linkCenterY, 2)
-                            );
-
-                            // Brighten if within 200px
-                            if (distance < 200) {
-                                shouldBrighten = true;
-                            }
-                        }
-                    });
-                }
-
-                if (shouldBrighten) {
-                    cloud.classList.add('brightened');
-                } else {
-                    cloud.classList.remove('brightened');
-                }
-            });
-        }
-
-        // Generate grass blades
-        function createGrass() {
-            const numBlades = Math.floor(window.innerWidth / 4);
-            for (let i = 0; i < numBlades; i++) {
-                const blade = document.createElement('div');
-                blade.className = 'grass-blade';
-                blade.style.left = `${Math.random() * 100}%`;
-                blade.style.height = `${Math.random() * 100 + 60}px`;
-                blade.style.transform = `rotate(${(Math.random() - 0.5) * 10}deg)`;
-                blade.style.zIndex = Math.floor(Math.random() * 100);
-                grassContainer.appendChild(blade);
-                grassBlades.push({
-                    element: blade,
-                    baseRotation: (Math.random() - 0.5) * 10,
-                    offset: Math.random() * Math.PI * 2
-                });
-            }
-        }
-
-        // Animation variables
-        let moveX = 0;
-        let moveY = 0;
-        let time = 0;
-
-        // Keyboard controls
-        const keys = {};
-        let keyPressTimeout = null;
-        window.addEventListener('keydown', (e) => {
-            const isMovementKey = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd'].includes(e.key);
-            if (isMovementKey && !keys[e.key]) {
-                setFaviconState('grass-moving', 2000);
-            }
-            keys[e.key] = true;
-        });
-        window.addEventListener('keyup', (e) => {
-            keys[e.key] = false;
+        parts.forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            fragment.appendChild(document.createTextNode(part));
+            return;
+          }
+          const span = document.createElement('span');
+          span.className = 'word';
+          span.textContent = part;
+          fragment.appendChild(span);
         });
 
-        // Update grass movement
-        function updateGrass() {
-            moveX = 0;
-            moveY = 0;
+        textNode.parentNode.replaceChild(fragment, textNode);
+      });
+    }
 
-            if (keys['ArrowUp'] || keys['w']) moveY = 1;
-            if (keys['ArrowDown'] || keys['s']) moveY = -1;
-            if (keys['ArrowLeft'] || keys['a']) moveX = -1;
-            if (keys['ArrowRight'] || keys['d']) moveX = 1;
+    wrapWords(bubbleText);
+    const words = Array.from(document.querySelectorAll('.word'));
+    words.forEach((word) => {
+      const normalized = word.textContent.replace(/[^\w]/g, '').toLowerCase();
+      if (normalized === 'sam' || normalized === 'goldfield') {
+        word.classList.add('name-focus');
+      }
+    });
+    let metrics = [];
+    const radius = 90;
+    const maxScale = 1.55;
+    const minGap = 1;
 
-            time += 0.05;
+    function cacheMetrics() {
+      words.forEach((word) => {
+        word.style.transform = 'translateX(0px) scale(1)';
+      });
+      metrics = words.map((word) => {
+        const rect = word.getBoundingClientRect();
+        return {
+          centerX: rect.left + rect.width / 2,
+          centerY: rect.top + rect.height / 2,
+          width: rect.width,
+          lineKey: Math.round(rect.top)
+        };
+      });
+    }
 
-            grassBlades.forEach((blade) => {
-                const windEffect = Math.sin(time + blade.offset) * 2;
-                const moveEffect = moveX * 15 + moveY * 10;
-                const totalRotation = blade.baseRotation + windEffect + moveEffect;
-                blade.element.style.transform = `rotate(${totalRotation}deg)`;
-            });
-        }
+    cacheMetrics();
 
-        // Animation loop
-        function animate() {
-            updateGrass();
-            updateCloudBrightness();
-            requestAnimationFrame(animate);
-        }
+    function resetWords() {
+      words.forEach((word) => {
+        word.style.transform = 'translateX(0px) scale(1)';
+      });
+    }
 
-        // Create reflections
-        const reflections = [];
-        function createReflections() {
-            const links = document.querySelectorAll('#links-container a');
-            links.forEach(link => {
-                const reflection = document.createElement('div');
-                reflection.className = 'reflection';
-                reflection.textContent = link.textContent;
-                reflection.dataset.link = link.textContent;
-                document.body.appendChild(reflection);
+    bubbleText.addEventListener('mousemove', (event) => {
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
 
-                // Create hover zone
-                const hoverZone = document.createElement('div');
-                hoverZone.className = 'hover-zone';
-                document.body.appendChild(hoverZone);
+      const scales = metrics.map((meta) => {
+        const dx = mouseX - meta.centerX;
+        const dy = mouseY - meta.centerY;
+        const distance = Math.hypot(dx, dy);
+        const influence = Math.max(0, 1 - distance / radius);
+        return {
+          influence,
+          scale: 1 + influence * (maxScale - 1)
+        };
+      });
 
-                function updatePositions() {
-                    const linkRect = link.getBoundingClientRect();
-                    const waterElement = document.getElementById('water');
-                    const waterRect = waterElement.getBoundingClientRect();
-                    const waterTop = waterRect.top; // Get actual water position
+      const lineMap = new Map();
+      metrics.forEach((meta, index) => {
+        const key = meta.lineKey;
+        if (!lineMap.has(key)) lineMap.set(key, []);
+        lineMap.get(key).push(index);
+      });
 
-                    // Update reflection position
-                    reflection.style.left = linkRect.left + 'px';
-                    reflection.style.top = waterTop + 10 + 'px';
+      const translations = new Array(words.length).fill(0);
 
-                    // Update hover zone position (200px above link, extending down to link)
-                    hoverZone.style.left = (linkRect.left - 20) + 'px';
-                    hoverZone.style.top = (linkRect.top - 200) + 'px';
-                    hoverZone.style.width = (linkRect.width + 40) + 'px';
-                    hoverZone.style.height = (200 + linkRect.height) + 'px';
-                }
-
-                updatePositions();
-                window.addEventListener('resize', updatePositions);
-
-                // Handle hover on both link and hover zone
-                const handleHoverStart = () => {
-                    link.classList.add('hovered');
-                    link.classList.add('no-animation');
-                    link.classList.remove('faded');
-                    reflection.classList.add('hovered');
-                    reflection.classList.add('no-animation');
-                    reflection.classList.remove('faded');
-                    // Update favicon to show link hover
-                    setFaviconState('link-hover', 3000);
-                };
-
-                const handleHoverEnd = () => {
-                    link.classList.remove('hovered');
-                    link.classList.add('faded');
-                    reflection.classList.remove('hovered');
-                    reflection.classList.add('faded');
-                };
-
-                link.addEventListener('mouseenter', handleHoverStart);
-                link.addEventListener('mouseleave', handleHoverEnd);
-                hoverZone.addEventListener('mouseenter', handleHoverStart);
-                hoverZone.addEventListener('mouseleave', handleHoverEnd);
-
-                reflections.push({ link, reflection, hoverZone });
-            });
-        }
-
-        // Track clouds for brightening
-        const clouds = [];
-        function trackCloud(cloudElement) {
-            clouds.push(cloudElement);
-        }
-
-        // Water ripple effect
-        const water = document.getElementById('water');
-        water.addEventListener('click', (e) => {
-            const rect = water.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const rippleSize = 24 + Math.random() * 14;
-            const rippleDuration = 1300 + Math.random() * 500;
-
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.style.width = rippleSize + 'px';
-            ripple.style.height = rippleSize + 'px';
-            ripple.style.setProperty('--ripple-duration', rippleDuration + 'ms');
-
-            water.appendChild(ripple);
-
-            // Update favicon to show water ripple
-            setFaviconState('water-ripple', 1500);
-
-            // Remove ripple after animation completes
-            setTimeout(() => {
-                ripple.remove();
-            }, rippleDuration);
+      lineMap.forEach((indices) => {
+        let focus = indices[0];
+        let bestInfluence = -1;
+        indices.forEach((idx) => {
+          if (scales[idx].influence > bestInfluence) {
+            bestInfluence = scales[idx].influence;
+            focus = idx;
+          }
         });
 
-        // Initialize
-        createClouds();
-        createGrass();
-        createReflections();
-        animate();
-    </script>
+        const focusPos = indices.indexOf(focus);
+        translations[focus] = 0;
+
+        for (let p = focusPos + 1; p < indices.length; p += 1) {
+          const prev = indices[p - 1];
+          const curr = indices[p];
+          const prevHalf = (metrics[prev].width * scales[prev].scale) / 2;
+          const currHalf = (metrics[curr].width * scales[curr].scale) / 2;
+          const prevRight = metrics[prev].centerX + translations[prev] + prevHalf;
+          const currLeft = metrics[curr].centerX - currHalf;
+          const neededShift = prevRight + minGap - currLeft;
+          translations[curr] = Math.max(0, neededShift);
+        }
+
+        for (let p = focusPos - 1; p >= 0; p -= 1) {
+          const next = indices[p + 1];
+          const curr = indices[p];
+          const nextHalf = (metrics[next].width * scales[next].scale) / 2;
+          const currHalf = (metrics[curr].width * scales[curr].scale) / 2;
+          const nextLeft = metrics[next].centerX + translations[next] - nextHalf;
+          const currRight = metrics[curr].centerX + currHalf;
+          const neededShift = nextLeft - minGap - currRight;
+          translations[curr] = Math.min(0, neededShift);
+        }
+      });
+
+      words.forEach((word, index) => {
+        word.style.transform = `translateX(${translations[index]}px) scale(${scales[index].scale})`;
+      });
+    });
+
+    bubbleText.addEventListener('mouseleave', resetWords);
+    window.addEventListener('resize', cacheMetrics);
+  </script>
 </body>
 </html>
