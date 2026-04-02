@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <link rel="icon" type="image/png" href="/favicon-pixel.png">
-  <link rel="shortcut icon" type="image/png" href="/favicon-pixel.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
@@ -49,8 +48,6 @@
     .content {
       width: min(64vmin, 27rem);
       aspect-ratio: 1 / 1;
-      background: var(--bg);
-      border: none;
       border-radius: 1.2rem;
       display: grid;
       place-items: center;
@@ -108,6 +105,12 @@
   </main>
   <script>
     const bubbleText = document.getElementById('bubble-text');
+    const NAME_WORDS = new Set(['sam', 'goldfield']);
+    const radius = 90;
+    const maxScale = 1.55;
+    const minGap = 1;
+    let metrics = [];
+    let lineGroups = [];
 
     function wrapWords(node) {
       const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
@@ -144,19 +147,19 @@
     const words = Array.from(document.querySelectorAll('.word'));
     words.forEach((word) => {
       const normalized = word.textContent.replace(/[^\w]/g, '').toLowerCase();
-      if (normalized === 'sam' || normalized === 'goldfield') {
+      if (NAME_WORDS.has(normalized)) {
         word.classList.add('name-focus');
       }
     });
-    let metrics = [];
-    const radius = 90;
-    const maxScale = 1.55;
-    const minGap = 1;
 
-    function cacheMetrics() {
+    function resetWords() {
       words.forEach((word) => {
         word.style.transform = 'translateX(0px) scale(1)';
       });
+    }
+
+    function cacheMetrics() {
+      resetWords();
       metrics = words.map((word) => {
         const rect = word.getBoundingClientRect();
         return {
@@ -166,15 +169,18 @@
           lineKey: Math.round(rect.top)
         };
       });
+      lineGroups = Array.from(
+        metrics.reduce((groups, meta, index) => {
+          if (!groups.has(meta.lineKey)) groups.set(meta.lineKey, []);
+          groups.get(meta.lineKey).push(index);
+          return groups;
+        }, new Map()).values()
+      );
     }
 
     cacheMetrics();
-
-    function resetWords() {
-      words.forEach((word) => {
-        word.style.transform = 'translateX(0px) scale(1)';
-      });
-    }
+    window.addEventListener('load', cacheMetrics);
+    document.fonts?.ready.then(cacheMetrics);
 
     bubbleText.addEventListener('mousemove', (event) => {
       const mouseX = event.clientX;
@@ -191,16 +197,9 @@
         };
       });
 
-      const lineMap = new Map();
-      metrics.forEach((meta, index) => {
-        const key = meta.lineKey;
-        if (!lineMap.has(key)) lineMap.set(key, []);
-        lineMap.get(key).push(index);
-      });
-
       const translations = new Array(words.length).fill(0);
 
-      lineMap.forEach((indices) => {
+      lineGroups.forEach((indices) => {
         let focus = indices[0];
         let bestInfluence = -1;
         indices.forEach((idx) => {
