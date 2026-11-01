@@ -42,37 +42,32 @@ There is no automated test or lint command configured in this repository at pres
   - Two introductory text blocks (`<h4>` and `<h3>`) explaining the portfolio, with links to GitHub and a set of favorite quotes.
   - `.gameboy` container with nested `.wrapper`, `.gameboy__screen`, `.gameboy__actions`, `.gameboy__arrows`, and `#options` elements forming the visual Game Boy interface.
   - `#text__box` is the main screen area that displays a rotating set of messages.
-  - A and B buttons (`#next_button`, `#prev_button`) and arrow buttons (`#up_button`, `#down_button`, `#left_button`, `#right_button`) are clickable divs styled via CSS.
-  - `SELECT` and `START` buttons are links to LinkedIn and an email `mailto:` link respectively.
+  - A/B buttons (`.action`) and D-pad arrows (`.gameboy__arrow--*`) are clickable divs carrying a `data-step` attribute (`1` = next, `-1` = previous).
+  - `SELECT` and `START` are `<a class="btn">` links to LinkedIn and an email `mailto:` link respectively.
 
-- **Inline JavaScript behavior**
-  - Defines an array `arr` of messages shown on the Game Boy screen.
-  - Maintains a current index `i` and exposes two functions:
-    - `nextItem()`: increments `i` modulo `arr.length` and returns the next message.
-    - `prevItem()`: decrements `i` with wraparound and returns the previous message.
-  - On `window.load`:
-    - Attaches click listeners to `#next_button` and `#right_button` and `#down_button` to advance messages.
-    - Attaches click listeners to `#prev_button` and `#left_button` and `#up_button` to go backwards.
-    - Initializes `#text__box` with the first message (`arr[0]`).
-  - Global `document.body.onkeyup` handler:
-    - A / Right / Down arrow keys advance messages.
-    - B / Left / Up arrow keys go backwards.
+- **Inline JavaScript behavior** (script sits at the end of `<body>`, so no load handler is needed)
+  - `messages` holds the strings shown on the Game Boy screen; `i` is the current index.
+  - `step(d)` moves the index by `d` with wraparound and updates `#text__box`; `step(0)` renders the first message.
+  - Every `[data-step]` element gets a click listener calling `step(+dataset.step)`.
+  - A `keyup` listener on `document` maps keys via `keySteps`: A / ArrowRight / ArrowDown advance, B / ArrowLeft / ArrowUp go back.
 
-Future agents editing behavior should respect these bindings: changes to button IDs, structure, or key bindings must be mirrored consistently in both HTML and JavaScript.
+- **Night mode**: an inline script in `<head>` adds `.night` to `<html>` from 18:00 to 06:00 local time (re-scheduling itself for the next switch) and swaps the favicon to `favicon-night.ico` (sleeping sprite). In `css/style.css`, page colors are the `--bg`/`--fg` custom properties; `.night` swaps them inside `@media (min-width: 481px)`, so the Game Boy itself and the full-screen phone layout are unchanged.
+
+To add a new control, give it a `data-step` attribute; to add a key binding, add it to `keySteps`.
 
 ### Styling and layout (`css/style.css`)
 
 - Global styles:
   - `body` background color and adjustments for mobile via media queries.
   - Custom fonts `Alert` and `Publico` loaded via `@font-face` from the `font/` directory.
-  - Typography for `h2`, `h3`, `h4`, `p`, and `<i>` elements.
+  - Typography for the `h3`/`h4` side columns and `<i>` key caps.
 
 - **Game Boy UI components**
   - `.gameboy` and `.wrapper` define the outer shell, dimensions, margin, and base layout.
   - `.gameboy__screen` styles the screen area with greenish background, inset shadow, border framing, and small decorative element via `::after`.
   - `.gameboy__actions` and `.action` classes style the A/B buttons as circular, pressable buttons with shadows and active state.
   - `#options` and nested `.btn` elements style the `SELECT` and `START` buttons, including rotated orientation.
-  - `.gameboy__arrows` and `.gameboy__arrow` (+ modifier classes like `--up`, `--down`, `--left`, `--right`, `--center`) define the D-pad; arrows are drawn using `::before`/`::after` pseudo-elements.
+  - `.gameboy__arrows` and `.gameboy__arrow` (+ modifier classes like `--up`, `--down`, `--left`, `--right`, `--center`) define the D-pad; each arrow is two stacked CSS triangles (`::before` highlight, `::after` shadow) colored via a `--c` custom property.
 
 - **Responsive behavior**
   - At high resolutions (`min-width: 1824px`): text gets larger and the Game Boy screen font size increases.

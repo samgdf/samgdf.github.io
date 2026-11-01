@@ -1,246 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <link rel="icon" type="image/png" href="/favicon-pixel.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
-  <title>Sam Goldfield</title>
-  <style>
-    :root {
-      --bg: #8b6a43;
-      --text: #f7f4ea;
-      --link: #ffffff;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #2a1448;
-        --text: #f3ecff;
-      }
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    .content {
-      width: min(64vmin, 27rem);
-      aspect-ratio: 1 / 1;
-      border-radius: 1.2rem;
-      display: grid;
-      place-items: center;
-      padding: 1.6rem;
-    }
-
-    p {
-      margin: 0;
-      font-size: clamp(1rem, 1.9vw, 1.35rem);
-      line-height: 1.35;
-      font-weight: 400;
-      letter-spacing: 0.01em;
-      text-wrap: pretty;
-      cursor: default;
-    }
-
-    a {
-      color: var(--link);
-      text-underline-offset: 0.2em;
-      filter: brightness(1);
-      transition: filter 220ms ease;
-    }
-
-    a:hover {
-      filter: brightness(1.2);
-    }
-
-    .word {
-      display: inline-block;
-      line-height: 1.1;
-      transform: translateX(0) scale(1);
-      transform-origin: center 75%;
-      transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
-      will-change: transform;
-    }
-
-    .word.name-focus {
-      filter: brightness(1);
-      transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1), filter 220ms ease;
-    }
-
-    .word.name-focus:hover {
-      filter: brightness(1.2);
-    }
-  </style>
+  <title>Sam Goldfield's interactive gameboy portfolio website</title>
+  <meta name="description" content="Sam Goldfield's interactive gameboy portfolio website">
+  <meta name="theme-color" content="#444">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta property="og:title" content="Sam Goldfield's interactive gameboy portfolio website">
+  <meta property="og:description" content="Sam Goldfield's interactive gameboy portfolio website">
+  <meta property="og:url" content="https://www.samgdf.com/">
+  <meta name="twitter:creator" content="@samgdf">
+  <link rel="canonical" href="https://www.samgdf.com/">
+  <link rel="icon" href="favicon.ico" id="favicon">
+  <link rel="preload" href="font/Alert.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Night mode from 6 pm to 6 am local time; re-runs at the next switch so an open tab flips over.
+    (function setNight() {
+      const now = new Date();
+      const night = now.getHours() >= 18 || now.getHours() < 6;
+      document.documentElement.classList.toggle('night', night);
+      document.getElementById('favicon').href = night ? 'favicon-night.ico' : 'favicon.ico';
+      const next = new Date(now);
+      next.setHours(night ? 6 : 18, 0, 0, 0);
+      if (next <= now) next.setDate(next.getDate() + 1);
+      setTimeout(setNight, next - now);
+    })();
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sam Goldfield",
+    "url": "https://www.samgdf.com/",
+    "jobTitle": "Strategic Sales Engineer",
+    "worksFor": { "@type": "Organization", "name": "Cisco" },
+    "sameAs": ["https://github.com/samgdf", "https://www.linkedin.com/in/samgdf/"]
+  }
+  </script>
 </head>
 <body>
-  <main class="content">
-    <p id="bubble-text">
-      Hello, my name is Sam Goldfield. Here is my
-      <a href="https://www.linkedin.com/in/samgdf" target="_blank" rel="noopener noreferrer">Linkedin</a>
-      and here is my
-      <a href="https://github.com/samgdf" target="_blank" rel="noopener noreferrer">Github</a>.
-    </p>
-  </main>
+
+  <h4>Enjoy this Gameboy web page? The code is available on my <a href="https://github.com/samgdf">Github</a>.</h4>
+
+  <h3>Hi, my name is Sam Goldfield. Try pressing the buttons or using the <i>A</i> and <i>B</i> keys on your keyboard to interact with the Gameboy. Below is my favorite quote, and some thoughts I've had:<br><br>“Past performance is no indicator of future success.” Financial Disclosure<br><br>“Disagreement means someone is still engaged. Apathy is what you should prevent.”<br><br>“If something is really good, it will be worth more than what you paid for it.”<br><br>“Inaction is a luxury.”<br><br>“Knowledge is knowing the answer, wisdom is knowing when to answer.”</h3>
+
+  <div class="gameboy">
+    <div class="wrapper">
+      <div class="gameboy__screen" id="text__box" aria-live="polite">Please enable Javascript for the complete experience.</div>
+      <div class="gameboy__actions">
+        <div class="action" data-step="1">A</div>
+        <div class="action" data-step="-1">B</div>
+      </div>
+      <div class="gameboy__arrows">
+        <div class="gameboy__arrow gameboy__arrow--up" data-step="-1">UP</div>
+        <div class="gameboy__arrow gameboy__arrow--down" data-step="1">DOWN</div>
+        <div class="gameboy__arrow gameboy__arrow--left" data-step="-1">LEFT</div>
+        <div class="gameboy__arrow gameboy__arrow--right" data-step="1">RIGHT</div>
+        <div class="gameboy__arrow gameboy__arrow--center">o</div>
+      </div>
+      <div id="options">
+        <a class="btn" href="https://www.linkedin.com/in/samgdf/">SELECT</a>
+        <a class="btn" href="mailto:hello@samgdf.com">START</a>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const bubbleText = document.getElementById('bubble-text');
-    const NAME_WORDS = new Set(['sam', 'goldfield']);
-    const radius = 90;
-    const maxScale = 1.55;
-    const minGap = 1;
-    let metrics = [];
-    let lineGroups = [];
+    const messages = [
+      'SAM GOLDFIELD works at CISCO',
+      'Press SELECT to visit my LINKEDIN',
+      'Press START to email me at HELLO@SAMGDF.COM',
+      'THANK YOU for visiting, have a great day'
+    ];
+    const keySteps = { a: 1, ArrowRight: 1, ArrowDown: 1, b: -1, ArrowLeft: -1, ArrowUp: -1 };
+    const textBox = document.getElementById('text__box');
+    let i = 0;
 
-    function wrapWords(node) {
-      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
-      const textNodes = [];
-      let current;
+    const step = (d) => {
+      i = (i + d + messages.length) % messages.length;
+      textBox.textContent = messages[i];
+    };
 
-      while ((current = walker.nextNode())) {
-        if (current.textContent.trim()) {
-          textNodes.push(current);
-        }
-      }
-
-      textNodes.forEach((textNode) => {
-        const fragment = document.createDocumentFragment();
-        const parts = textNode.textContent.split(/(\s+)/);
-
-        parts.forEach((part) => {
-          if (!part) return;
-          if (/^\s+$/.test(part)) {
-            fragment.appendChild(document.createTextNode(part));
-            return;
-          }
-          const span = document.createElement('span');
-          span.className = 'word';
-          span.textContent = part;
-          fragment.appendChild(span);
-        });
-
-        textNode.parentNode.replaceChild(fragment, textNode);
-      });
-    }
-
-    wrapWords(bubbleText);
-    const words = Array.from(document.querySelectorAll('.word'));
-    words.forEach((word) => {
-      const normalized = word.textContent.replace(/[^\w]/g, '').toLowerCase();
-      if (NAME_WORDS.has(normalized)) {
-        word.classList.add('name-focus');
-      }
+    document.querySelectorAll('[data-step]').forEach((el) => {
+      el.addEventListener('click', () => step(+el.dataset.step));
     });
 
-    function resetWords() {
-      words.forEach((word) => {
-        word.style.transform = 'translateX(0px) scale(1)';
-      });
-    }
-
-    function cacheMetrics() {
-      resetWords();
-      metrics = words.map((word) => {
-        const rect = word.getBoundingClientRect();
-        return {
-          centerX: rect.left + rect.width / 2,
-          centerY: rect.top + rect.height / 2,
-          width: rect.width,
-          lineKey: Math.round(rect.top)
-        };
-      });
-      lineGroups = Array.from(
-        metrics.reduce((groups, meta, index) => {
-          if (!groups.has(meta.lineKey)) groups.set(meta.lineKey, []);
-          groups.get(meta.lineKey).push(index);
-          return groups;
-        }, new Map()).values()
-      );
-    }
-
-    cacheMetrics();
-    window.addEventListener('load', cacheMetrics);
-    document.fonts?.ready.then(cacheMetrics);
-
-    bubbleText.addEventListener('mousemove', (event) => {
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-
-      const scales = metrics.map((meta) => {
-        const dx = mouseX - meta.centerX;
-        const dy = mouseY - meta.centerY;
-        const distance = Math.hypot(dx, dy);
-        const influence = Math.max(0, 1 - distance / radius);
-        return {
-          influence,
-          scale: 1 + influence * (maxScale - 1)
-        };
-      });
-
-      const translations = new Array(words.length).fill(0);
-
-      lineGroups.forEach((indices) => {
-        let focus = indices[0];
-        let bestInfluence = -1;
-        indices.forEach((idx) => {
-          if (scales[idx].influence > bestInfluence) {
-            bestInfluence = scales[idx].influence;
-            focus = idx;
-          }
-        });
-
-        const focusPos = indices.indexOf(focus);
-        translations[focus] = 0;
-
-        for (let p = focusPos + 1; p < indices.length; p += 1) {
-          const prev = indices[p - 1];
-          const curr = indices[p];
-          const prevHalf = (metrics[prev].width * scales[prev].scale) / 2;
-          const currHalf = (metrics[curr].width * scales[curr].scale) / 2;
-          const prevRight = metrics[prev].centerX + translations[prev] + prevHalf;
-          const currLeft = metrics[curr].centerX - currHalf;
-          const neededShift = prevRight + minGap - currLeft;
-          translations[curr] = Math.max(0, neededShift);
-        }
-
-        for (let p = focusPos - 1; p >= 0; p -= 1) {
-          const next = indices[p + 1];
-          const curr = indices[p];
-          const nextHalf = (metrics[next].width * scales[next].scale) / 2;
-          const currHalf = (metrics[curr].width * scales[curr].scale) / 2;
-          const nextLeft = metrics[next].centerX + translations[next] - nextHalf;
-          const currRight = metrics[curr].centerX + currHalf;
-          const neededShift = nextLeft - minGap - currRight;
-          translations[curr] = Math.min(0, neededShift);
-        }
-      });
-
-      words.forEach((word, index) => {
-        word.style.transform = `translateX(${translations[index]}px) scale(${scales[index].scale})`;
-      });
+    document.addEventListener('keyup', (e) => {
+      const d = keySteps[e.key.length === 1 ? e.key.toLowerCase() : e.key];
+      if (d) step(d);
     });
 
-    bubbleText.addEventListener('mouseleave', resetWords);
-    window.addEventListener('resize', cacheMetrics);
+    step(0);
   </script>
+
 </body>
 </html>

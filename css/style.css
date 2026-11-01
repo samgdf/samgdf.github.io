@@ -1,0 +1,313 @@
+@font-face {
+  font-family: Alert;
+  src: url('../font/Alert.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: Publico;
+  src: url('../font/PublicoText.woff') format('woff');
+  font-display: swap;
+}
+
+/* Page colors; night mode swaps them (see bottom) */
+:root {
+  --bg: #DBDBDB;
+  --fg: #151515;
+}
+body {
+  background-color: var(--bg);
+}
+
+/* Side text columns */
+h3, h4 {
+  color: var(--fg);
+  font-family: Publico, sans-serif;
+  font-weight: normal;
+  width: 410px;
+  margin: 0;
+  padding: 0;
+  line-height: 1.43;
+}
+h3 {
+  float: left;
+  margin-left: 15px;
+}
+h4 {
+  float: right;
+  margin-right: 5px;
+  font-size: 18.7167px;
+  overflow: hidden;
+}
+h3 a, h4 a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed;
+}
+h3 a:hover, h4 a:hover {
+  border-bottom-style: solid;
+}
+
+/* Inline key caps */
+i {
+  font-family: Publico, sans-serif;
+  font-size: 17.6px;
+  font-style: normal;
+  color: var(--bg);
+  background-color: var(--fg);
+  padding: 1px 5px;
+  border-radius: 25%;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Game Boy shell */
+.gameboy {
+  width: 420px;
+  height: 650px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  background: #a9a9a9;
+  border-radius: 16px;
+}
+.wrapper {
+  width: 360px;
+  margin: 20px auto;
+  padding-top: 25px;
+}
+.gameboy__screen {
+  background: #E3EBBB;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, .8);
+  font-family: Alert, monospace;
+  font-size: 20px;
+  width: 240px;
+  height: 240px;
+  margin: 0 0 30px;
+  padding: 10px;
+  border: 20px solid #878787;
+  border-width: 20px 50px;
+  border-bottom-right-radius: 16px;
+}
+.gameboy__screen::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 15px;
+  margin: 0 0 -2px 5px;
+  background: #151515;
+}
+
+/* A / B buttons */
+.gameboy__actions {
+  float: right;
+  width: 110px;
+  margin-bottom: 20px;
+  padding: 10px 0 10px 10px;
+  user-select: none;
+}
+.action {
+  float: left;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  text-align: center;
+  color: #531212;
+  background-color: #7C1D4F;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: -1px 0 0 rgba(0, 0, 0, 0.5), 1px 0 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: box-shadow .1s linear;
+}
+.action:first-child {
+  margin: 30px 10px 0 0;
+}
+.action:active {
+  box-shadow: inset 4px 4px 0 #000;
+}
+
+/* SELECT / START */
+#options {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  margin: 20px 0 0 120px;
+  padding: 10px;
+  user-select: none;
+}
+#options .btn {
+  float: left;
+  display: block;
+  width: 40px;
+  height: 10px;
+  line-height: 35px;
+  font-size: 10px;
+  text-align: center;
+  color: #444;
+  text-decoration: none;
+  background-color: #444;
+  border-radius: 5px;
+  transform: rotate(-30deg);
+  cursor: pointer;
+  transition: box-shadow .1s linear;
+}
+#options .btn:first-child {
+  margin-right: 10px;
+}
+#options .btn:active {
+  box-shadow: inset 0 4px 0 #000;
+}
+
+/* D-pad */
+.gameboy__arrows {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  user-select: none;
+}
+.gameboy__arrow {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #444;
+  text-indent: -10000px;
+  cursor: pointer;
+  transition: box-shadow .1s linear;
+}
+/* Each arrow glyph is two stacked triangles: ::before is the highlight, ::after the shadow */
+.gameboy__arrow::before,
+.gameboy__arrow::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+}
+.gameboy__arrow::before { --c: #5e5e5e; z-index: 1; }
+.gameboy__arrow::after  { --c: #373737; z-index: 2; }
+
+.gameboy__arrow--up,
+.gameboy__arrow--down {
+  left: 30px;
+}
+.gameboy__arrow--up {
+  border-radius: 5px 5px 0 0;
+}
+.gameboy__arrow--down {
+  bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+.gameboy__arrow--up::before,
+.gameboy__arrow--up::after {
+  border-top: 0;
+  border-bottom-color: var(--c);
+}
+.gameboy__arrow--down::before,
+.gameboy__arrow--down::after {
+  border-bottom: 0;
+  border-top-color: var(--c);
+}
+.gameboy__arrow--up::before,
+.gameboy__arrow--down::before { left: 8px; top: 10px; }
+.gameboy__arrow--up::after,
+.gameboy__arrow--down::after  { left: 7px; top: 11px; }
+.gameboy__arrow--up:active {
+  box-shadow: inset 4px 0 0 #000, inset 0 4px 2px #000;
+}
+.gameboy__arrow--down:active {
+  box-shadow: inset 4px 0 0 #000, inset 0 -4px 2px #000;
+}
+
+.gameboy__arrow--left,
+.gameboy__arrow--right {
+  top: 30px;
+}
+.gameboy__arrow--left {
+  border-radius: 5px 0 0 5px;
+}
+.gameboy__arrow--right {
+  right: 0;
+  border-radius: 0 5px 5px 0;
+}
+.gameboy__arrow--left::before,
+.gameboy__arrow--left::after {
+  border-left: 0;
+  border-right-color: var(--c);
+}
+.gameboy__arrow--right::before,
+.gameboy__arrow--right::after {
+  border-right: 0;
+  border-left-color: var(--c);
+}
+.gameboy__arrow--left::before,
+.gameboy__arrow--right::before { left: 12px; top: 7px; }
+.gameboy__arrow--left::after,
+.gameboy__arrow--right::after  { left: 11px; top: 7px; }
+.gameboy__arrow--left:active,
+.gameboy__arrow--right:active {
+  box-shadow: inset 0 4px 2px #000;
+}
+
+.gameboy__arrow--center {
+  left: 29px;
+  top: 30px;
+  border: solid #444;
+  border-width: 0 1px;
+  cursor: default;
+}
+.gameboy__arrow--center::before,
+.gameboy__arrow--center::after {
+  width: 15px;
+  height: 15px;
+  top: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--c);
+}
+.gameboy__arrow--center::before { left: 8px; }
+.gameboy__arrow--center::after  { left: 7px; }
+
+/* Responsive */
+@media (min-width: 1824px) {
+  h3, h4 {
+    width: 36%;
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .gameboy__screen {
+    font-size: 30px;
+  }
+}
+@media (max-width: 1287px) {
+  h3, h4 {
+    width: 26%;
+    font-size: 17px;
+  }
+}
+@media (max-width: 976px) {
+  h3, h4 {
+    display: none;
+  }
+}
+/* Night mode (6 pm–6 am, class set by script in index.html): invert page colors.
+   Skipped at phone width, where the Game Boy fills the screen. */
+@media (min-width: 481px) {
+  .night {
+    --bg: #151515;
+    --fg: #DBDBDB;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    background-color: #a9a9a9;
+  }
+  .gameboy {
+    width: auto;
+    height: auto;
+    background: none;
+  }
+  .wrapper {
+    width: auto;
+    margin: 0 auto;
+  }
+}
