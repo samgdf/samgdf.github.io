@@ -10,6 +10,9 @@ Key files:
 - `index.html`: HTML document, SEO/meta tags, JSON-LD person schema, Game Boy markup, and inline JavaScript for button/keyboard interaction.
 - `css/style.css`: All layout and styling for the Game Boy UI and surrounding text, including responsive media queries.
 - `font/Alert.ttf`, `font/PublicoText.woff`: Custom fonts used by the page.
+- `favicon.ico`, `favicon-night.ico`, `favicon-pixel.png`: Favicons (day, night, and a pixel-art version).
+- `CNAME`: Custom domain for GitHub Pages (`samgdf.com`).
+- `keybase.txt`: Keybase domain-ownership proof; leave untouched.
 
 There is no build system, bundler, or JavaScript package manager in use; the site is served directly as static assets by GitHub Pages.
 
@@ -36,10 +39,10 @@ There is no automated test or lint command configured in this repository at pres
   - Standard meta tags for charset, viewport, theme color, and mobile web app capabilities.
   - Open Graph and description meta tags pointing to `https://www.samgdf.com`.
   - JSON-LD `<script type="application/ld+json">` block defining a `Person` schema with name, job title, employer, and social profiles.
-  - Links to `favicon.ico` and the main stylesheet `css/style.css`.
+  - Links to `favicon.ico` (swapped to `favicon-night.ico` at night), a preload for `font/Alert.ttf`, and the main stylesheet `css/style.css`.
 
 - **Body content**
-  - Two introductory text blocks (`<h4>` and `<h3>`) explaining the portfolio, with links to GitHub and a set of favorite quotes.
+  - Two introductory text blocks (`<h4>` and `<h3>`) explaining the portfolio, with a link to GitHub and a short list of quotes (currently three: the "Past performance" quote with its financial disclosure, "Inaction is a luxury," and the knowledge/wisdom quote). To add or remove a quote, edit the `<h3>` text, separating quotes with `<br><br>`.
   - `.gameboy` container with nested `.wrapper`, `.gameboy__screen`, `.gameboy__actions`, `.gameboy__arrows`, and `#options` elements forming the visual Game Boy interface.
   - `#text__box` is the main screen area that displays a rotating set of messages.
   - A/B buttons (`.action`) and D-pad arrows (`.gameboy__arrow--*`) are clickable divs carrying a `data-step` attribute (`1` = next, `-1` = previous).
