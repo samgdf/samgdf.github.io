@@ -40,60 +40,772 @@
     "sameAs": ["https://github.com/samgdf", "https://www.linkedin.com/in/samgdf/"]
   }
   </script>
+  <style>
+    /* Game screen: the canvas fills the whole screen area at an exact 2x pixel scale */
+    .gameboy__screen.game {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      padding: 0;
+      overflow: hidden;
+      font-size: 16px;
+    }
+    .gameboy__screen.game::after { display: none; }
+    #game {
+      display: block;
+      width: 260px;
+      height: 260px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    /* Inner shadow sits on top of the canvas so the screen keeps its recessed look */
+    .gameboy__screen.game::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, .8);
+      pointer-events: none;
+      z-index: 2;
+    }
+    #dialog {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      min-height: 58px;
+      padding: 8px 10px 10px;
+      font-family: Alert, monospace;
+      font-size: 16px;
+      line-height: 1.3;
+      color: #151515;
+      background: #E3EBBB;
+      border: 3px double #151515;
+      border-radius: 4px;
+      z-index: 1;
+    }
+    #dialog[hidden] { display: none; }
+    #dialog.done::after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      bottom: 6px;
+      border: 5px solid transparent;
+      border-bottom: 0;
+      border-top: 7px solid #151515;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .action, .gameboy__arrow { touch-action: none; }
+    /* Key caps (A, B, SELECT, START) match the size of the text around them */
+    h3 i { font-size: inherit; }
+  </style>
 </head>
 <body>
 
-  <h4>Enjoy this Gameboy web page? The code is available on my <a href="https://github.com/samgdf">Github</a>.</h4>
+  <h4>Here are some of my favorite quotes:<br><br>“Past performance is no indicator of future success.” Financial Disclosure<br><br>“The arc of the moral universe is long, but it bends toward justice.” Martin Luther King Jr.<br><br>“Love is that condition in which the happiness of another person is essential to your own.” Robert A. Heinlein</h4>
 
-  <h3>Hi, my name is Sam Goldfield. Try pressing the buttons or using the <i>A</i> and <i>B</i> keys on your keyboard to interact with the Gameboy. Below is my favorite quote, and some thoughts I've had:<br><br>“Past performance is no indicator of future success.” Financial Disclosure<br><br>“Inaction is a luxury.”<br><br>“Knowledge is knowing the answer, wisdom is knowing when to answer.”</h3>
+  <h3>Hello, this is Sam Goldfield's webpage. I work at Cisco. You can use the buttons on the gameboy or the arrow, <i>A</i>, and <i>B</i> keys on your keyboard to explore. See if you can discover all of the secrets!<br><br>Use the <i>SELECT</i> button to visit my Linkedin.<br><br>Use the <i>START</i> button to visit my Github.</h3>
 
   <div class="gameboy">
     <div class="wrapper">
-      <div class="gameboy__screen" id="text__box" aria-live="polite">Please enable Javascript for the complete experience.</div>
+      <div class="gameboy__screen game">
+        <canvas id="game" width="130" height="130">Please enable Javascript for the complete experience.</canvas>
+        <div id="dialog" aria-live="polite" hidden></div>
+      </div>
       <div class="gameboy__actions">
-        <div class="action" data-step="1">A</div>
-        <div class="action" data-step="-1">B</div>
+        <div class="action" data-btn="a">A</div>
+        <div class="action" data-btn="b">B</div>
       </div>
       <div class="gameboy__arrows">
-        <div class="gameboy__arrow gameboy__arrow--up" data-step="-1">UP</div>
-        <div class="gameboy__arrow gameboy__arrow--down" data-step="1">DOWN</div>
-        <div class="gameboy__arrow gameboy__arrow--left" data-step="-1">LEFT</div>
-        <div class="gameboy__arrow gameboy__arrow--right" data-step="1">RIGHT</div>
+        <div class="gameboy__arrow gameboy__arrow--up" data-dir="up">UP</div>
+        <div class="gameboy__arrow gameboy__arrow--down" data-dir="down">DOWN</div>
+        <div class="gameboy__arrow gameboy__arrow--left" data-dir="left">LEFT</div>
+        <div class="gameboy__arrow gameboy__arrow--right" data-dir="right">RIGHT</div>
         <div class="gameboy__arrow gameboy__arrow--center">o</div>
       </div>
       <div id="options">
         <a class="btn" href="https://www.linkedin.com/in/samgdf/">SELECT</a>
-        <a class="btn" href="mailto:hello@samgdf.com">START</a>
+        <a class="btn" href="https://github.com/samgdf">START</a>
       </div>
     </div>
   </div>
 
   <script>
-    const messages = [
-      'SAM GOLDFIELD works at CISCO',
-      'Press SELECT to visit my LINKEDIN',
-      'Press START to email me at HELLO@SAMGDF.COM',
-      'THANK YOU for visiting, have a great day'
-    ];
-    const keySteps = { a: 1, ArrowRight: 1, ArrowDown: 1, b: -1, ArrowLeft: -1, ArrowUp: -1 };
-    const textBox = document.getElementById('text__box');
-    let i = 0;
+    const T = 16;                       // tile size in game pixels
+    const STEP_MS = 220;                // time to walk one tile
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const VIEW = canvas.width;          // 130 game px, shown at 2x
+    const dialog = document.getElementById('dialog');
 
-    const step = (d) => {
-      i = (i + d + messages.length) % messages.length;
-      textBox.textContent = messages[i];
+    // ---------- Character sprites ----------
+    // K black, B brown, S skin, W white (white touching the border is transparent),
+    // H black hair, P pink, G green, N tanned skin
+    const PAL = { K: '#000000', B: '#743426', S: '#e2d28d', W: '#ffffff', H: '#2e2a36', P: '#e98bb5', G: '#a9e3a0', N: '#dcc485' };
+
+    function makeSprite(rows, mirror) {
+      const grid = rows.map((r) => (mirror ? [...r].reverse() : [...r]));
+      const clear = grid.map((r) => r.map(() => false));
+      const stack = [];
+      for (let i = 0; i < 16; i++) stack.push([i, 0], [i, 15], [0, i], [15, i]);
+      while (stack.length) {
+        const [x, y] = stack.pop();
+        if (x < 0 || y < 0 || x > 15 || y > 15 || clear[y][x] || grid[y][x] !== 'W') continue;
+        clear[y][x] = true;
+        stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+      }
+      const c = document.createElement('canvas');
+      c.width = c.height = 16;
+      const g = c.getContext('2d');
+      grid.forEach((r, y) => r.forEach((ch, x) => {
+        if (clear[y][x]) return;
+        g.fillStyle = PAL[ch];
+        g.fillRect(x, y, 1, 1);
+      }));
+      return c;
+    }
+
+    // Player (from favicon.ico): 13 rows of body + 3 rows of legs
+    const LEGS = {
+      idle:  ['WWWKBKWWWWKBKWWW', 'WWWKBBBKKBBBKWWW', 'WWWWKKKWWKKKWWWW'],
+      walk:  ['WWWKBKWWWWKBKWWW', 'WWWKKKWWKBBBKWWW', 'WWWWWWWWWKKKWWWW'],
+      sIdle: ['WWWKKKKKKKKKKWWW', 'WWWWKBBKKBBKWWWW', 'WWWWKKKWWKKKWWWW'],
+      sWalk: ['WWWKKKKKKKKKKWWW', 'WWWKBBKWWKBBKWWW', 'WWWKKKWWWWKKKWWW'],
+    };
+    const FRONT = [
+      'WWWWWKKKKKKWWWWW', 'WWWWKBBBBBBKWWWW', 'WWWKBBBBBBBBKWWW', 'WWWKBBBKBKBBKWWW',
+      'WWKKKBKBBKKKKKWW', 'WWKKSKKBKKSSKKWW', 'WKSKSSSSSSSSKSKW', 'WKSBSSKSSKSSBSKW',
+      'WWKKBSKSSKSBKKWW', 'WWKKKBBBBBBKKKWW', 'WKSSKKKKKKKKSSKW', 'WKSSKWKKKKWKSSKW',
+      'WWKKKWWWWWWKKKWW',
+    ];
+    const BACK = [
+      'WWWWWKKKKKKWWWWW', 'WWWWKBBBBBBKWWWW', 'WWWKBBBBBBBBKWWW', 'WWWKBBBBBBBBKWWW',
+      'WWKBBBBBBBBBBKWW', 'WWKSKBBBBBBKSKWW', 'WKSKBBBBBBBBKSKW', 'WKSKBBBBBBBBKSKW',
+      'WWKKBBBBBBBBKKWW', 'WWKKKBBBBBBKKKWW', 'WKSSKKKKKKKKSSKW', 'WKSSKWWWWWWKSSKW',
+      'WWKKKWWWWWWKKKWW',
+    ];
+    const SIDE = [
+      'WWWWWKKKKKKWWWWW', 'WWWWKBBBBBBKWWWW', 'WWWKBBBBBBBBKWWW', 'WWWKBBBBBBBBBKWW',
+      'WWKBBBBBBBKKKKWW', 'WWKBBBBBKKSSSKWW', 'WWKBBSKSSSSKSKWW', 'WWKBBKSSSSSKSSKW',
+      'WWWKBSSSSSSSSKWW', 'WWWKKBBBBBBBKWWW', 'WWWWKKKKKKKKWWWW', 'WWWKWWKSSKWWKWWW',
+      'WWWKWWKSSKWWKWWW',
+    ];
+    // Each direction: [idle, walkA, walkB]
+    const SPRITES = {
+      down:  [makeSprite([...FRONT, ...LEGS.idle]), makeSprite([...FRONT, ...LEGS.walk]), makeSprite([...FRONT, ...LEGS.walk], true)],
+      up:    [makeSprite([...BACK, ...LEGS.idle]),  makeSprite([...BACK, ...LEGS.walk]),  makeSprite([...BACK, ...LEGS.walk], true)],
+      right: [makeSprite([...SIDE, ...LEGS.sIdle]), makeSprite([...SIDE, ...LEGS.sWalk]), makeSprite([...SIDE, ...LEGS.sWalk])],
+      left:  [makeSprite([...SIDE, ...LEGS.sIdle], true), makeSprite([...SIDE, ...LEGS.sWalk], true), makeSprite([...SIDE, ...LEGS.sWalk], true)],
     };
 
-    document.querySelectorAll('[data-step]').forEach((el) => {
-      el.addEventListener('click', () => step(+el.dataset.step));
-    });
+    // Wife: black hair, pink body suit, tanned skin; tall two-pixel eyes like the player, no beard
+    const WIFE_LOWER = ['WWWKNKPPPPKNKWWW', 'WWWWKPPKKPPKWWWW', 'WWWWKPPKKPPKWWWW', 'WWWWKKKWWKKKWWWW'];
+    const WIFE_FRONT = [
+      'WWWWWKKKKKKWWWWW', 'WWWWKHHHHHHKWWWW', 'WWWKHHHHHHHHKWWW', 'WWKHHHHHHHHHHKWW',
+      'WWKHHHHHHHHHHKWW', 'WWKHHNNNNNNHHKWW', 'WWKHNNNNNNNNHKWW', 'WWKHNNKNNKNNHKWW',
+      'WWKHNNKNNKNNHKWW', 'WWKHHKNNNNKHHKWW', 'WWKHKPPPPPPKHKWW', 'WWKKNKPPPPKNKKWW',
+      ...WIFE_LOWER,
+    ];
+    const WIFE_BACK = [
+      'WWWWWKKKKKKWWWWW', 'WWWWKHHHHHHKWWWW', 'WWWKHHHHHHHHKWWW', 'WWKHHHHHHHHHHKWW',
+      'WWKHHHHHHHHHHKWW', 'WWKHHHHHHHHHHKWW', 'WWKHHHHHHHHHHKWW', 'WWKHHHHHHHHHHKWW',
+      'WWKHHHHHHHHHHKWW', 'WWKHHHHHHHHHHKWW', 'WWKHHHHHHHHHHKWW', 'WWKKNKPHHPKNKKWW',
+      ...WIFE_LOWER,
+    ];
+    const WIFE_SIDE = [
+      'WWWWWKKKKKKWWWWW', 'WWWWKHHHHHHKWWWW', 'WWWKHHHHHHHHKWWW', 'WWKHHHHHHHHHHKWW',
+      'WWKHHHHHHHNNNKWW', 'WWKHHHHHHNNKNKWW', 'WWKHHHHHHNNKNNKW', 'WWKHHHHHHNNNNKWW',
+      'WWKHHHHHHHNNKWWW', 'WWKHHHHHHKKKWWWW', 'WWKHHHKPPPKWWWWW', 'WWWKKKPNNPKWWWWW',
+      'WWWWWKPNNPKWWWWW', 'WWWWWKPPPPKWWWWW', 'WWWWWKPKKPKWWWWW', 'WWWWWKKWWKKWWWWW',
+    ];
+    const WIFE = {
+      down: makeSprite(WIFE_FRONT), up: makeSprite(WIFE_BACK),
+      right: makeSprite(WIFE_SIDE), left: makeSprite(WIFE_SIDE, true),
+    };
 
+    // Daughter, seen from behind, sitting on the couch facing the TV (brown hair like her dad)
+    const GIRL = makeSprite([
+      'WWWWWWWWWWWWWWWW', 'WWWWWWWWWWWWWWWW', 'WWWWWWWWWWWWWWWW', 'WWWWWWWWWWWWWWWW',
+      'WWWWWWKKKKWWWWWW', 'WWWWWKBBBBKWWWWW', 'WWWWKBBBBBBKWWWW', 'WWWKBBBBBBBBKWWW',
+      'WWWKBBBBBBBBKWWW', 'WWWKBBBBBBBBKWWW', 'WWWKBBBBBBBBKWWW', 'WWKGKBBBBBBKGKWW',
+      'WWKGKBBBBBBKGKWW', 'WWKGGKBBBBKGGKWW', 'WWKSGGKKKKGGSKWW', 'WWWKKKKKKKKKKWWW',
+    ]);
+
+    // Small item art (16x16)
+    function art(draw) {
+      const c = document.createElement('canvas');
+      c.width = c.height = 16;
+      const g = c.getContext('2d');
+      draw((x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); });
+      return c;
+    }
+    const keyArt = (main, dark, shine) => art((p) => {
+      p(3, 4, 4, 1, main); p(2, 5, 1, 4, main); p(7, 5, 1, 4, main); p(3, 9, 4, 1, main);   // ring
+      p(3, 10, 4, 1, dark); p(8, 6, 6, 2, main); p(8, 8, 6, 1, dark);                       // shaft
+      p(11, 8, 1, 2, main); p(13, 8, 1, 2, main); p(11, 10, 1, 1, dark); p(13, 10, 1, 1, dark); // teeth
+      p(3, 5, 1, 1, shine); p(9, 6, 3, 1, shine);
+    });
+    const ITEMS = {
+      key: keyArt('#f2c230', '#a37a12', '#fff3b0'),
+      silver: keyArt('#c8ced6', '#6f7782', '#ffffff'),
+      remote: art((p) => {
+        p(6, 4, 4, 9, '#2f2f2f'); p(6, 12, 4, 1, '#151515');
+        p(7, 5, 2, 1, '#e04040'); p(7, 7, 1, 1, '#bbbbbb'); p(8, 8, 1, 1, '#bbbbbb');
+        p(7, 9, 1, 1, '#bbbbbb'); p(8, 10, 1, 1, '#bbbbbb');
+      }),
+    };
+
+    // ---------- Rooms ----------
+    // # wall  . floor  D office door  S bookshelf  C computer  K keyboard  k golden key
+    // O outside door  R bathroom door  d open doorway  < > openings  b baby swing
+    // V TV  t glass table  c couch  s sink  u toilet  r bathroom exit  g grass  h front door (outside)
+    const ROOMS = {
+      office: {
+        floor: 'carpet',
+        map: [
+          '############',
+          '##D#########',
+          '#........SS#',
+          '#..........#',
+          '#..........#',
+          '#..........#',
+          '#..........#',
+          '#....CK....#',
+          '#k.........#',
+          '############',
+        ],
+        exits: { D: () => ({ room: 'hall', x: 5, y: 8, dir: 'up' }) },
+      },
+      hall: {
+        floor: 'tile',
+        map: [
+          '############',
+          '#####O######',
+          '#..........#',
+          '#..........#',
+          '#..........#',
+          '<..........R',
+          '#..........#',
+          '#..........#',
+          '#..........#',
+          '#####d######',
+        ],
+        exits: {
+          d: () => ({ room: 'office', x: 2, y: 2, dir: 'down' }),
+          '<': () => ({ room: 'living', x: 10, y: 5, dir: 'left' }),
+          O: () => ({ room: 'outside', x: 5, y: 8, dir: 'up' }),
+          R: () => ({ room: 'bath', x: 1, y: 4, dir: 'right' }),
+        },
+      },
+      bath: {
+        floor: 'bath',
+        map: [
+          '######',
+          '######',
+          '#s.u.#',
+          '#....#',
+          'r....#',
+          '######',
+        ],
+        exits: { r: () => ({ room: 'hall', x: 10, y: 5, dir: 'left' }) },
+      },
+      outside: {
+        floor: 'grass',
+        map: [
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'gggggggggggg',
+          'ggggghgggggg',
+        ],
+        exits: { h: () => ({ room: 'hall', x: 5, y: 2, dir: 'down' }) },
+      },
+      living: {
+        floor: 'wood',
+        map: [
+          '############',
+          '############',
+          '#b...V.....#',
+          '#..........#',
+          '#..........#',
+          '#..........>',
+          '#....t.....#',
+          '#..........#',
+          '#...ccc....#',
+          '############',
+        ],
+        exits: { '>': () => ({ room: 'hall', x: 1, y: 5, dir: 'right' }) },
+      },
+    };
+
+    // tvOn also means the daughter has left the bathroom, so its door is open
+    const state = { doorOpen: false, keyTaken: false, remoteTaken: false, tvOn: false, silverTaken: false, frontOpen: false };
+    let pocket = null;                  // holds at most one item: 'key', 'remote' or 'silver'
+    let follower = null;                // the pocket item, trailing one tile behind
+
+    const wife = { x: 8, y: 3, dir: 'down', turns: true, sprite: () => WIFE[wife.dir],
+      text: () => (state.tvOn
+        ? "I hope she didn't forget anything in the bathroom!"
+        : "Hello, I'm your wife. I think our daughter is in the bathroom.") };
+    const girl = { x: 5, y: 8, sprite: () => GIRL, text: () => "Move, I'm trying to watch." };
+
+    let roomName, room, MAP, MAP_W, MAP_H;
+    const tileAt = (x, y) => (MAP[y] && MAP[y][x]) || '#';
+    const SOLID = new Set(['#', 'S', 'C', 'K', 'b', 'V', 't', 's', 'u']);
+    const npcs = () => (roomName === 'living' ? (state.tvOn ? [wife, girl] : [wife]) : []);
+
+    function solid(x, y) {
+      if (npcs().some((n) => n.x === x && n.y === y)) return true;
+      const t = tileAt(x, y);
+      if (t === 'D') return !state.doorOpen;
+      if (t === 'k') return !state.keyTaken;
+      if (t === 'O') return !state.frontOpen;
+      if (t === 'R') return !state.tvOn;
+      return SOLID.has(t);
+    }
+
+    // ---------- Drawing the current room (only this room exists) ----------
+    const world = document.createElement('canvas');
+    const w = world.getContext('2d');
+    const px = (x, y, wd, ht, col) => { w.fillStyle = col; w.fillRect(x, y, wd, ht); };
+
+    function drawFloor(ox, oy, x, y) {
+      if (room.floor === 'carpet') {
+        px(ox, oy, T, T, '#b9c4cf');
+        px(ox, oy, T, 1, '#a9b4bf'); px(ox, oy, 1, T, '#a9b4bf');
+        for (const [dx, dy] of [[4, 4], [11, 6], [6, 11], [13, 13], [2, 9]]) px(ox + dx, oy + dy, 1, 1, '#a3afbb');
+      } else if (room.floor === 'tile') {
+        px(ox, oy, T, T, '#ece7da');
+        px(ox, oy, 8, 8, '#d9d2c2'); px(ox + 8, oy + 8, 8, 8, '#d9d2c2');
+      } else if (room.floor === 'bath') {
+        px(ox, oy, T, T, '#dfeef3');
+        for (let i = 0; i < T; i += 4) { px(ox + i, oy, 1, T, '#b9d3dc'); px(ox, oy + i, T, 1, '#b9d3dc'); }
+      } else if (room.floor === 'grass') {
+        px(ox, oy, T, T, '#6fbf4f');
+        for (let i = 0; i < 6; i++) {                    // scattered blades
+          const bx = (x * 7 + y * 13 + i * 5) % 15, by = (x * 11 + y * 5 + i * 7) % 14;
+          px(ox + bx, oy + by, 1, 2, i % 2 ? '#4f9a35' : '#8fd66a');
+        }
+      } else {
+        px(ox, oy, T, T, '#c49a6c');
+        px(ox, oy + 5, T, 1, '#a97f55'); px(ox, oy + 10, T, 1, '#a97f55'); px(ox, oy + 15, T, 1, '#a97f55');
+        px(ox + (x * 7 + y * 3) % T, oy, 1, 5, '#a97f55');
+        px(ox + (x * 5 + y * 11 + 6) % T, oy + 5, 1, 5, '#a97f55');
+        px(ox + (x * 3 + y * 7 + 11) % T, oy + 10, 1, 5, '#a97f55');
+      }
+    }
+    function drawWall(ox, oy, x, y) {
+      if (y <= 1 && x > 0 && x < MAP_W - 1) {           // back wall face, two tiles tall
+        px(ox, oy, T, T, '#e8dcc0');
+        if (y === 0) {
+          px(ox, oy, T, 3, '#6b5a48');
+          px(ox, oy + 3, T, 1, '#cbbd9e');
+        } else {
+          px(ox, oy + 12, T, 4, '#8a6f55');              // baseboard
+          px(ox, oy + 12, T, 1, '#a88a6c');
+        }
+      } else {                                           // side / front walls seen from above
+        px(ox, oy, T, T, '#6b5a48');
+        if (x === 0) px(ox + T - 2, oy, 2, T, '#8a7660');
+        if (x === MAP_W - 1) px(ox, oy, 2, T, '#8a7660');
+        if (y === MAP_H - 1) px(ox, oy, T, 2, '#8a7660');
+      }
+    }
+    function drawDoor(ox, oy, kind) {
+      drawWall(ox, oy, 1, 1);
+      const top = oy - 9;                                // door rises into the upper wall tile
+      px(ox + 2, top, 12, 25, '#4a3526');                // frame
+      if (kind === 'open' || kind === 'openSun') {
+        px(ox + 3, top + 1, 10, 24, kind === 'open' ? '#151515' : '#f7e08a'); // doorway (sunlit for the front door)
+        px(ox + 3, top + 1, 3, 24, '#9b6a3f');           // door swung open
+        px(ox + 5, top + 1, 1, 24, '#87592f');
+        return;
+      }
+      px(ox + 3, top + 1, 10, 24, '#9b6a3f');
+      px(ox + 4, top + 3, 8, 8, '#87592f');              // panels
+      px(ox + 4, top + 13, 8, 10, '#87592f');
+      px(ox + 11, top + 13, 1, 2, '#f2d36b');            // knob
+      if (kind === 'outside') {                          // window with sunlight
+        px(ox + 5, top + 4, 6, 6, '#f7e08a');
+        px(ox + 6, top + 5, 2, 2, '#fff8d0');
+        px(ox + 7, top + 4, 1, 6, '#87592f');
+      }
+    }
+    // Door in a side wall, seen from above; sits on the wall's inner edge
+    function drawSideDoor(ox, oy, x, y, open) {
+      drawWall(ox, oy, x, y);
+      const dx = x === 0 ? T - 5 : 0;
+      px(ox + dx, oy, 5, T, '#4a3526');
+      px(ox + dx + 1, oy + 1, 3, 14, open ? '#151515' : '#9b6a3f');
+      if (!open) px(ox + dx + 2, oy + 7, 1, 2, '#f2d36b');
+    }
+    function drawSink(ox, oy) {
+      px(ox + 6, oy + 6, 4, 9, '#e8eef2');               // pedestal
+      px(ox + 6, oy + 6, 1, 9, '#b9c6cc');
+      px(ox + 1, oy - 2, 14, 9, '#b9c6cc');              // basin rim
+      px(ox + 2, oy - 1, 12, 7, '#ffffff');
+      px(ox + 4, oy + 1, 8, 4, '#cfe3ea');               // bowl
+      px(ox + 7, oy - 4, 2, 4, '#9aa3ab');               // faucet
+      px(ox + 7, oy - 1, 2, 1, '#6f7782');
+    }
+    function drawToilet(ox, oy) {
+      px(ox + 2, oy - 6, 12, 8, '#b9c6cc');              // tank against the wall
+      px(ox + 3, oy - 5, 10, 6, '#ffffff');
+      px(ox + 11, oy - 4, 2, 1, '#9aa3ab');              // handle
+      px(ox + 3, oy + 2, 10, 11, '#b9c6cc');             // bowl
+      px(ox + 4, oy + 3, 8, 9, '#ffffff');
+      px(ox + 6, oy + 5, 4, 5, '#cfe3ea');
+      if (!state.silverTaken) px(ox + 7, oy + 7, 2, 1, '#c8ced6'); // glint of the silver key
+    }
+    function drawShelf(ox, oy, part) {
+      px(ox, oy - 6, T, T + 6, '#5a3d27');               // tall shelf overlaps the wall above
+      const books = ['#b23a3a', '#3a6fb2', '#d9b44a', '#3f8a4f', '#7a4ab2', '#e07a3a', '#2f2f2f'];
+      for (let s = 0; s < 3; s++) {
+        const sy = oy - 5 + s * 7;
+        px(ox + 1, sy, T - 2, 6, '#3b2818');
+        let bx = ox + 1, k = (part * 3 + s) % books.length;
+        while (bx < ox + T - 2) {
+          const bw = 1 + ((bx + s) % 2);
+          const bh = 4 + ((bx * 7 + s) % 3) - 1;
+          px(bx, sy + 6 - bh, bw, bh, books[k++ % books.length]);
+          bx += bw + ((bx + s) % 5 === 0 ? 1 : 0);
+        }
+        px(ox, sy + 6, T, 1, '#7a5636');
+      }
+    }
+    function drawDesk(ox, oy, part) {
+      px(ox, oy + 3, T, 10, '#a0703f');                  // desk top
+      px(ox, oy + 12, T, 1, '#6d4b2a');
+      px(ox + (part ? T - 2 : 1), oy + 13, 1, 3, '#6d4b2a'); // legs
+      px(ox, oy + 3, T, 1, '#b8854f');
+      if (part === 0) {                                  // monitor
+        px(ox + 2, oy - 3, 12, 10, '#3a3a3a');
+        px(ox + 3, oy - 2, 10, 7, '#5fa3d9');
+        px(ox + 4, oy - 1, 5, 1, '#e8f4ff');             // message lines on screen
+        px(ox + 4, oy + 1, 7, 1, '#e8f4ff');
+        px(ox + 4, oy + 3, 4, 1, '#e8f4ff');
+        px(ox + 11, oy - 1, 1, 1, '#e05050');            // unread badge
+        px(ox + 7, oy + 7, 2, 2, '#3a3a3a');             // stand
+        px(ox + 5, oy + 9, 6, 1, '#3a3a3a');
+      } else {                                           // keyboard + mouse
+        px(ox + 1, oy + 6, 11, 5, '#d8d8d8');
+        for (let r = 0; r < 2; r++) for (let c = 0; c < 5; c++) px(ox + 2 + c * 2, oy + 7 + r * 2, 1, 1, '#8a8a8a');
+        px(ox + 13, oy + 7, 2, 3, '#d8d8d8');
+      }
+    }
+    function drawTV(ox, oy) {
+      px(ox + 1, oy + 6, 14, 7, '#5a3d27');              // low stand
+      px(ox + 1, oy + 12, 14, 1, '#3b2818');
+      px(ox - 1, oy - 9, 18, 14, '#1e1e1e');             // TV body overhangs the wall
+      px(ox, oy - 8, 16, 11, state.tvOn ? '#f4d84a' : '#050505');
+      if (!state.tvOn) px(ox + 2, oy - 7, 3, 1, '#3a3a3a');
+      px(ox + 7, oy + 4, 2, 2, '#1e1e1e');
+    }
+    function drawTable(ox, oy) {
+      px(ox + 3, oy + 10, 1, 5, '#7fb3c4'); px(ox + 12, oy + 10, 1, 5, '#7fb3c4'); // legs
+      px(ox + 1, oy + 4, 14, 7, '#7fb3c4');              // glass top
+      px(ox + 2, oy + 5, 12, 5, '#cfeaf2');
+      px(ox + 3, oy + 5, 3, 1, '#ffffff');
+      if (!state.remoteTaken) w.drawImage(ITEMS.remote, ox, oy - 1);
+    }
+    function drawCouch(ox, oy, x, y) {
+      const left = tileAt(x - 1, y) !== 'c', right = tileAt(x + 1, y) !== 'c';
+      px(ox, oy + 2, T, 9, '#c4605a');                   // seat
+      px(ox, oy + 2, T, 1, '#d8817b');
+      if (!left) px(ox, oy + 2, 1, 9, '#a14b45');        // cushion seam
+      px(ox, oy + 10, T, 6, '#8f403b');                  // backrest faces the TV
+      px(ox, oy + 10, T, 1, '#a14b45');
+      if (left) px(ox, oy + 1, 3, 15, '#8f403b');        // arms
+      if (right) px(ox + T - 3, oy + 1, 3, 15, '#8f403b');
+    }
+    function drawSwing(ox, oy) {
+      px(ox + 1, oy - 7, 1, 23, '#8a8f99'); px(ox + 14, oy - 7, 1, 23, '#8a8f99'); // frame
+      px(ox + 1, oy - 7, 14, 2, '#8a8f99');
+      px(ox + 4, oy - 5, 1, 9, '#5d6168'); px(ox + 11, oy - 5, 1, 9, '#5d6168');   // ropes
+      px(ox + 3, oy + 9, 10, 4, '#c98b4a');              // seat
+      px(ox + 4, oy + 1, 8, 10, '#3b4a66');              // blanket outline
+      px(ox + 5, oy + 2, 6, 8, '#9cc3e6');               // blanket
+      px(ox + 6, oy + 2, 4, 4, '#e2d28d');               // face
+      px(ox + 6, oy + 3, 1, 1, '#000'); px(ox + 9, oy + 3, 1, 1, '#000');
+      px(ox + 8, oy + 1, 1, 1, '#743426'); px(ox + 9, oy, 1, 1, '#743426'); // tiny curl
+    }
+
+    function buildWorld() {
+      world.width = MAP_W * T;
+      world.height = MAP_H * T;
+      for (let y = 0; y < MAP_H; y++) for (let x = 0; x < MAP_W; x++) {
+        const t = tileAt(x, y), ox = x * T, oy = y * T;
+        if (t === '#') drawWall(ox, oy, x, y);
+        else if (t === 'D') drawDoor(ox, oy, state.doorOpen ? 'open' : 'closed');
+        else if (t === 'O') drawDoor(ox, oy, state.frontOpen ? 'openSun' : 'outside');
+        else if (t === 'R') drawSideDoor(ox, oy, x, y, state.tvOn);
+        else if (t === 'r') drawSideDoor(ox, oy, x, y, true);
+        else if (t === 'd' || t === 'h') {
+          drawFloor(ox, oy, x, y);
+          px(ox, oy, 2, T, '#4a3526'); px(ox + T - 2, oy, 2, T, '#4a3526');
+          px(ox + 2, oy + 10, T - 4, 6, 'rgba(0, 0, 0, 0.25)');
+        } else drawFloor(ox, oy, x, y);
+      }
+      // Furniture second so it can overhang the tile above
+      for (let y = 0; y < MAP_H; y++) for (let x = 0; x < MAP_W; x++) {
+        const t = tileAt(x, y), ox = x * T, oy = y * T;
+        if (t === 'S') drawShelf(ox, oy, tileAt(x - 1, y) === 'S' ? 1 : 0);
+        else if (t === 'C') drawDesk(ox, oy, 0);
+        else if (t === 'K') drawDesk(ox, oy, 1);
+        else if (t === 'V') drawTV(ox, oy);
+        else if (t === 't') drawTable(ox, oy);
+        else if (t === 'c') drawCouch(ox, oy, x, y);
+        else if (t === 'b') drawSwing(ox, oy);
+        else if (t === 's') drawSink(ox, oy);
+        else if (t === 'u') drawToilet(ox, oy);
+        else if (t === 'k' && !state.keyTaken) w.drawImage(ITEMS.key, ox, oy);
+      }
+    }
+
+    // ---------- Player, movement, camera ----------
+    const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+    const OPP = { up: 'down', down: 'up', left: 'right', right: 'left' };
+    const player = { x: 5, y: 4, dir: 'down', from: null, start: 0, moving: false, steps: 0 };
+    const held = [];                    // directions currently held, most recent last
+    let queued = null;                  // a tap that arrived mid-step
+    let lift = 0;                       // extra camera offset while a message is open
+
+    function enterRoom({ room: name, x, y, dir }) {
+      roomName = name;
+      room = ROOMS[name];
+      MAP = room.map;
+      MAP_W = MAP[0].length;
+      MAP_H = MAP.length;
+      Object.assign(player, { x, y, dir, from: null });
+      follower = pocket ? { x, y, from: null } : null;
+      lift = 0;
+      buildWorld();
+    }
+
+    function tryStep(dir, now) {
+      const [dx, dy] = DIRS[dir];
+      player.dir = dir;
+      player.from = { x: player.x, y: player.y };
+      if (follower) follower.from = { x: follower.x, y: follower.y };
+      const nx = player.x + dx, ny = player.y + dy;
+      if (!solid(nx, ny)) {
+        // The item always takes the tile the player just left, so walking into it swaps places
+        if (follower) Object.assign(follower, { x: player.x, y: player.y });
+        player.x = nx;
+        player.y = ny;
+      }
+      // Blocked steps still play the walk cycle in place, like bumping into the wall
+      player.moving = true;
+      player.start = now;
+      player.steps++;
+    }
+
+    function update(now) {
+      if (player.moving && now - player.start >= STEP_MS) {
+        player.moving = false;
+        const exit = room.exits[tileAt(player.x, player.y)];
+        if (exit) enterRoom(exit(player.x, player.y));
+        const next = queued || held[held.length - 1];
+        queued = null;
+        if (next && dialog.hidden) tryStep(next, now);
+      }
+    }
+
+    const camClamp = (v, size) => (size <= VIEW ? (size - VIEW) / 2 : Math.max(0, Math.min(size - VIEW, v)));
+    const lerp = (o, p) => (o.from ? o.from.x + (o.x - o.from.x) * p : o.x) * T;
+    const lerpY = (o, p) => (o.from ? o.from.y + (o.y - o.from.y) * p : o.y) * T;
+
+    function render(now) {
+      const p = player.moving ? Math.min(1, (now - player.start) / STEP_MS) : 1;
+      const wx = lerp(player, p), wy = lerpY(player, p);
+
+      // Keep the player centered, but stop scrolling at the walls
+      const cx = Math.round(camClamp(wx + T / 2 - VIEW / 2, world.width));
+      let cy = Math.round(camClamp(wy + T / 2 - VIEW / 2, world.height));
+
+      // While a message is open, nudge the view down so the player stays above the text box
+      let want = 0;
+      if (!dialog.hidden) {
+        const boxTop = (dialog.offsetTop - 2) * VIEW / canvas.clientWidth;
+        const bottom = wy + T + (player.dir === 'down' ? T : 0) - cy;
+        want = Math.max(0, bottom - boxTop);
+      }
+      lift += (want - lift) * 0.2;
+      if (Math.abs(want - lift) < 0.5) lift = want;
+      cy += Math.round(lift);
+
+      ctx.fillStyle = '#151515';
+      ctx.fillRect(0, 0, VIEW, VIEW);
+      ctx.drawImage(world, -cx, -cy);
+
+      // Draw people and the carried item back to front
+      const draws = [];
+      if (follower) {
+        const fx = lerp(follower, p), fy = lerpY(follower, p);
+        const bob = Math.round(Math.sin(now / 180));
+        draws.push([fy - 0.5, () => ctx.drawImage(ITEMS[pocket], Math.round(fx) - cx, Math.round(fy) - cy + bob)]);
+      }
+      for (const n of npcs()) draws.push([n.y * T, () => ctx.drawImage(n.sprite(), n.x * T - cx, n.y * T - cy - 4)]);
+      const frames = SPRITES[player.dir];
+      const walking = player.moving && p > 0.2 && p < 0.8;
+      const frame = walking ? frames[1 + (player.steps % 2)] : frames[0];
+      draws.push([wy + 0.1, () => ctx.drawImage(frame, Math.round(wx) - cx, Math.round(wy) - cy - 4 - (walking ? 1 : 0))]);
+      draws.sort((a, b) => a[0] - b[0]).forEach(([, d]) => d());
+    }
+
+    function loop(now) {
+      update(now);
+      render(now);
+      requestAnimationFrame(loop);
+    }
+
+    // ---------- Dialog ----------
+    let typing = null;
+    function say(text) {
+      dialog.hidden = false;
+      dialog.classList.remove('done');
+      dialog.textContent = '';
+      dialog.dataset.full = text;
+      let n = 0;
+      clearInterval(typing);
+      typing = setInterval(() => {
+        dialog.textContent = text.slice(0, ++n);
+        if (n >= text.length) { clearInterval(typing); typing = null; dialog.classList.add('done'); }
+      }, 28);
+    }
+    function closeOrFinish() {
+      if (typing) {
+        clearInterval(typing); typing = null;
+        dialog.textContent = dialog.dataset.full;
+        dialog.classList.add('done');
+      } else {
+        dialog.hidden = true;
+      }
+    }
+
+    // ---------- Pocket and interactions ----------
+    function pickUp(item, x, y, text) {
+      if (pocket) return say('Your pocket is full.');
+      state[{ key: 'keyTaken', remote: 'remoteTaken', silver: 'silverTaken' }[item]] = true;
+      pocket = item;
+      follower = { x, y, from: null };
+      buildWorld();
+      say(text);
+    }
+    function usePocket() {
+      pocket = null;
+      follower = null;
+      buildWorld();
+    }
+
+    const MESSAGES = 'Wow, there are a lot of messages! Who sends all of these?';
+    function interact() {
+      if (roomName === 'outside') return say('You touch grass. The sun feels nice.');
+      const [dx, dy] = DIRS[player.dir];
+      const tx = player.x + dx, ty = player.y + dy;
+      const npc = npcs().find((n) => n.x === tx && n.y === ty);
+      if (npc) {
+        if (npc.turns) npc.dir = OPP[player.dir];
+        return say(npc.text());
+      }
+      switch (tileAt(tx, ty)) {
+        case 'D':
+          if (state.doorOpen) return;
+          if (pocket === 'key') { state.doorOpen = true; usePocket(); return say('The door opened!'); }
+          return say('It is a door. It is locked.');
+        case 'S': return say('There are a number of thoughtful books on the bookshelf.');
+        case 'C': case 'K': return say(MESSAGES);
+        case 'k':
+          if (!state.keyTaken) pickUp('key', tx, ty, 'A golden key! I wonder if this opens anything? Golden key added to pocket.');
+          return;
+        case 'O':
+          if (state.frontOpen) return;
+          if (pocket === 'silver') { state.frontOpen = true; usePocket(); return say('The door opened!'); }
+          return say('It is locked. You can see the sun glistening outside.');
+        case 'R':
+          if (state.tvOn) return;
+          return say('This is the bathroom. It is occupied.');
+        case 's': return say("Don't waste water.");
+        case 'u':
+          if (!state.silverTaken) pickUp('silver', tx, ty, 'It looks like there is something here! Silver key added to pocket.');
+          return;
+        case 'b': return say('Goo.');
+        case 't':
+          if (!state.remoteTaken) pickUp('remote', tx, ty, 'Remote added to your pocket. My daughter does love watching Curly Pop.');
+          return;
+        case 'V':
+          if (!state.tvOn && pocket === 'remote') {
+            state.tvOn = true;
+            usePocket();
+            say('Curly Pop Dostito Hungers is playing.');
+          }
+          return;
+      }
+    }
+
+    // ---------- Input ----------
+    function press(btn) {
+      if (!dialog.hidden) return closeOrFinish();
+      if (btn === 'a' && !player.moving) interact();
+    }
+    // Dismiss a message right away, even mid-typing
+    function closeDialog() {
+      clearInterval(typing);
+      typing = null;
+      dialog.hidden = true;
+    }
+    function dirDown(dir) {
+      if (!held.includes(dir)) held.push(dir);
+      closeDialog();                    // walking away clears any message
+      if (player.moving) queued = dir;
+      else tryStep(dir, performance.now());
+    }
+    function dirUp(dir) {
+      const k = held.indexOf(dir);
+      if (k >= 0) held.splice(k, 1);
+    }
+
+    const KEY_DIRS = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
+    document.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const dir = KEY_DIRS[e.key];
+      if (dir) {
+        e.preventDefault();
+        if (!e.repeat) dirDown(dir);
+        return;
+      }
+      if (e.repeat) return;
+      const k = e.key.toLowerCase();
+      if (k === 'a' || k === 'enter' || k === ' ') { e.preventDefault(); press('a'); }
+      else if (k === 'b' || k === 'escape') press('b');
+    });
     document.addEventListener('keyup', (e) => {
-      const d = keySteps[e.key.length === 1 ? e.key.toLowerCase() : e.key];
-      if (d) step(d);
+      const dir = KEY_DIRS[e.key];
+      if (dir) dirUp(dir);
+    });
+    window.addEventListener('blur', () => { held.length = 0; });
+
+    document.querySelectorAll('[data-dir]').forEach((el) => {
+      const dir = el.dataset.dir;
+      el.addEventListener('pointerdown', (e) => { e.preventDefault(); el.setPointerCapture(e.pointerId); dirDown(dir); });
+      el.addEventListener('pointerup', () => dirUp(dir));
+      el.addEventListener('pointercancel', () => dirUp(dir));
+    });
+    // Clicking or tapping the screen clears a message
+    document.querySelector('.gameboy__screen').addEventListener('pointerdown', (e) => {
+      if (!dialog.hidden) { e.preventDefault(); closeDialog(); }
+    });
+    document.querySelectorAll('[data-btn]').forEach((el) => {
+      el.addEventListener('pointerdown', (e) => { e.preventDefault(); press(el.dataset.btn); });
     });
 
-    step(0);
+    enterRoom({ room: 'office', x: 5, y: 4, dir: 'down' });
+    requestAnimationFrame(loop);
   </script>
 
 </body>
