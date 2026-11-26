@@ -40,23 +40,26 @@ There is no automated test or lint command configured in this repository at pres
   - Open Graph and description meta tags pointing to `https://www.samgdf.com`.
   - JSON-LD `<script type="application/ld+json">` block defining a `Person` schema with name, job title, employer, and social profiles.
   - Links to `favicon.ico` (swapped to `favicon-night.ico` at night), a preload for `font/Alert.ttf`, and the main stylesheet `css/style.css`.
+  - An inline `<style>` block with the game-specific styles: the `.gameboy__screen.game` canvas screen (260px, exact 2x pixel scale, padding removed), the `#dialog` text box at the bottom of the screen (Alert font, typewriter "done" arrow), and `h3 i { font-size: inherit }` so key caps match the side text.
 
 - **Body content**
-  - Two introductory text blocks (`<h4>` and `<h3>`) explaining the portfolio, with a link to GitHub and a short list of quotes (currently three: the "Past performance" quote with its financial disclosure, "Inaction is a luxury," and the knowledge/wisdom quote). To add or remove a quote, edit the `<h3>` text, separating quotes with `<br><br>`.
-  - `.gameboy` container with nested `.wrapper`, `.gameboy__screen`, `.gameboy__actions`, `.gameboy__arrows`, and `#options` elements forming the visual Game Boy interface.
-  - `#text__box` is the main screen area that displays a rotating set of messages.
-  - A/B buttons (`.action`) and D-pad arrows (`.gameboy__arrow--*`) are clickable divs carrying a `data-step` attribute (`1` = next, `-1` = previous).
-  - `SELECT` and `START` are `<a class="btn">` links to LinkedIn and an email `mailto:` link respectively.
+  - `<h3>` (left): intro and instructions, then the SELECT → LinkedIn and START → GitHub lines. `<h4>` (right): favorite quotes. Both separate paragraphs with `<br><br>`; key names (A, B, SELECT, START) use `<i>` key caps.
+  - `.gameboy` container with nested `.wrapper`, `.gameboy__screen.game`, `.gameboy__actions`, `.gameboy__arrows`, and `#options` elements forming the visual Game Boy interface.
+  - The screen holds `<canvas id="game">` (130×130 game pixels, shown at 260×260) and the `#dialog` message box.
+  - A/B buttons (`.action`) carry `data-btn="a|b"`; D-pad arrows (`.gameboy__arrow--*`) carry `data-dir="up|down|left|right"`.
+  - `SELECT` and `START` are `<a class="btn">` links to LinkedIn and GitHub respectively.
 
-- **Inline JavaScript behavior** (script sits at the end of `<body>`, so no load handler is needed)
-  - `messages` holds the strings shown on the Game Boy screen; `i` is the current index.
-  - `step(d)` moves the index by `d` with wraparound and updates `#text__box`; `step(0)` renders the first message.
-  - Every `[data-step]` element gets a click listener calling `step(+dataset.step)`.
-  - A `keyup` listener on `document` maps keys via `keySteps`: A / ArrowRight / ArrowDown advance, B / ArrowLeft / ArrowUp go back.
+- **Inline JavaScript: a small tile-based adventure game** (script at the end of `<body>`)
+  - **Sprites** are 16×16 string grids drawn by `makeSprite(rows, mirror)` using the `PAL` color letters; white touching the border becomes transparent. The player (`SPRITES`, from `favicon.ico`) has idle and walk frames per direction; also `WIFE` (four directions) and `GIRL` (sitting, seen from behind). Small items (`ITEMS`: golden key, silver key, remote) are drawn with `art()`.
+  - **Rooms** live in `ROOMS` (`office`, `hall`, `living`, `bath`, `outside`). Each has a `floor` style, a `map` of tile characters (legend in the comment above `ROOMS`), and `exits` keyed by tile character, returning the destination room and position. Only the current room is drawn: `enterRoom()` swaps the map and `buildWorld()` redraws it into an offscreen canvas (also called whenever `state` changes something visible).
+  - **State**: `state` holds door/item/TV flags, `pocket` holds at most one item, and `follower` is that item trailing one tile behind the player (it takes the tile the player just left, so walking into it swaps places). `solid()` handles collisions, including state-dependent doors and the NPCs from `npcs()`.
+  - **Movement**: one tile per step (`tryStep`, `STEP_MS`); holding a direction keeps walking. The camera centers on the player and clamps at the room edges (rooms smaller than the screen are centered), and nudges down while a message is open so the player stays above the text box.
+  - **Interaction**: A calls `interact()`, which checks the NPC or tile the player faces and calls `say(text)` (typewriter text in `#dialog`). A/B finish or close a message; arrow keys, the D-pad, or clicking/tapping the screen close it immediately.
+  - **Input**: arrow keys, A (also Enter/Space), B (also Escape), plus pointer events on the D-pad and A/B buttons.
+
+To add a room, add an entry to `ROOMS` and an exit pointing to it; to add something to interact with, give it a tile character, draw it in `buildWorld()`, add it to `SOLID` if it blocks, and add a `case` in `interact()`.
 
 - **Night mode**: an inline script in `<head>` adds `.night` to `<html>` from 18:00 to 06:00 local time (re-scheduling itself for the next switch) and swaps the favicon to `favicon-night.ico` (sleeping sprite). In `css/style.css`, page colors are the `--bg`/`--fg` custom properties; `.night` swaps them inside `@media (min-width: 481px)`, so the Game Boy itself and the full-screen phone layout are unchanged.
-
-To add a new control, give it a `data-step` attribute; to add a key binding, add it to `keySteps`.
 
 ### Styling and layout (`css/style.css`)
 
