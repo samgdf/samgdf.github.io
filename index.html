@@ -95,7 +95,11 @@
       animation: blink 1s steps(1) infinite;
     }
     @keyframes blink { 50% { opacity: 0; } }
+    /* No double-tap zoom anywhere (pinch zoom still works); buttons also skip panning */
+    html { touch-action: manipulation; }
     .action, .gameboy__arrow { touch-action: none; }
+    /* Fast double clicks/taps on the Game Boy shouldn't select text */
+    .gameboy { user-select: none; -webkit-user-select: none; }
     /* Key caps (A, B, SELECT, START) match the size of the text around them */
     h3 i { font-size: inherit; }
   </style>
@@ -124,8 +128,8 @@
         <div class="gameboy__arrow gameboy__arrow--center">o</div>
       </div>
       <div id="options">
-        <a class="btn" href="https://www.linkedin.com/in/samgdf/">SELECT</a>
-        <a class="btn" href="https://github.com/samgdf">START</a>
+        <a class="btn" href="https://www.linkedin.com/in/samgdf/" target="_blank" rel="noopener">SELECT</a>
+        <a class="btn" href="https://github.com/samgdf" target="_blank" rel="noopener">START</a>
       </div>
     </div>
   </div>
