@@ -95,9 +95,10 @@
       animation: blink 1s steps(1) infinite;
     }
     @keyframes blink { 50% { opacity: 0; } }
-    /* No double-tap zoom anywhere (pinch zoom still works); buttons also skip panning */
-    html { touch-action: manipulation; }
-    .action, .gameboy__arrow { touch-action: none; }
+    /* No double-tap zoom anywhere (pinch zoom still works). touch-action isn't inherited, so set it
+       on every element. iOS Safari ignores "none", so the buttons list "manipulation" first as its fallback. */
+    * { touch-action: manipulation; }
+    .action, .gameboy__arrow { touch-action: manipulation; touch-action: none; }
     /* Fast double clicks/taps on the Game Boy shouldn't select text */
     .gameboy { user-select: none; -webkit-user-select: none; }
     /* Key caps (A, B, SELECT, START) match the size of the text around them */
@@ -800,6 +801,12 @@
       el.addEventListener('pointerup', () => dirUp(dir));
       el.addEventListener('pointercancel', () => dirUp(dir));
     });
+    // Cancelling the touch itself is what reliably stops iOS Safari's double-tap zoom on the
+    // controls and screen; the pointer events the game listens to still fire
+    document.querySelectorAll('.action, .gameboy__arrow, .gameboy__screen').forEach((el) => {
+      el.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+    });
+
     // Clicking or tapping the screen clears a message
     document.querySelector('.gameboy__screen').addEventListener('pointerdown', (e) => {
       if (!dialog.hidden) { e.preventDefault(); closeDialog(); }
